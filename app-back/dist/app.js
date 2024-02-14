@@ -16,10 +16,7 @@ const express_1 = __importDefault(require("express"));
 const db = require("./db");
 const app = (0, express_1.default)();
 const port = 3001;
-// app.get("/", (req, res) => {
-//   res.send("Hello World!");
-// });
-app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield db.query(`SELECT * FROM "Province"`);
         res.json(result.rows);

@@ -43,8 +43,8 @@ const Table = ({
                 </th>
               );
             })}
-            {actions?.showEdit && <th className="px-6 py-4">Edit</th>}
-            {actions?.showDelete && <th className="px-6 py-4">Delete</th>}
+            {actions?.showEdit && <th className="px-6 py-4">ویرایش</th>}
+            {actions?.showDelete && <th className="px-6 py-4">حذف</th>}
           </tr>
         </thead>
         <tbody>
@@ -90,7 +90,7 @@ const Table = ({
                     <td key={dataIndex} className="px-6 py-4">
                       <Button
                         isIconOnly
-                        color="danger"
+                        className="text-red-800 hover:text-red-600"
                         onClick={() => onDelete && onDelete(row.id)}
                       >
                         <FaTrash />
