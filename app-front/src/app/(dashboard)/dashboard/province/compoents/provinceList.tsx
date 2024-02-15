@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Input, Pagination } from "@nextui-org/react";
 import { IProvince } from "@/type/province";
 import { ConfirmModal, CustomModal } from "@/components/UI";
@@ -8,16 +8,17 @@ import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/province/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/province/edit/[id]/page";
 import axios from "axios";
+import { useData } from "../useData";
 
-async function deleteProvince(id: number) {
-  const response = await axios.delete(
-    `http://localhost:3001/api/province/${id}`
-  );
-  return response.data;
-}
+// async function deleteProvince(id: number) {
+//   const response = await axios.delete(
+//     `http://localhost:3001/api/province/${id}`
+//   );
+//   return response.data;
+// }
 
 interface ProvinceListProps {
-  getAll: (
+  getAll?: (
     page?: number,
     filter?: string
   ) => Promise<{
@@ -37,30 +38,21 @@ export default function ProvinceList({
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [provinceName, setProvinceName] = useState("");
-  const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState<number | undefined>();
-  const [provinces, setProvinces] = useState<IProvince[]>([]);
-  const [province, setProvince] = useState<IProvince>();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsCount, setRowsCount] = useState(0);
+  // const [province, setProvince] = useState<IProvince>();
 
-  const fetchProvinces = async () => {
-    setLoading(true);
-    const data =
-      search !== ""
-        ? await getAll(currentPage, search)
-        : await getAll(currentPage);
-    setLoading(false);
-    setProvinces(data.data);
-    setRowsCount(data.rowsCount);
-  };
-
-  useEffect(() => {
-    fetchProvinces();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, search]);
+  const {
+    provinces,
+    province,
+    refetch,
+    deleteProvince,
+    isLoading,
+    currentPage,
+    setCurrentPage,
+    filter,
+    setFilter,
+  } = useData(selectedId);
 
   const openDeleteConfirm = async (id: number) => {
     const province = getById && (await getById(id));
@@ -70,28 +62,25 @@ export default function ProvinceList({
   };
 
   const openEditModal = async (id: number) => {
-    const province = getById && (await getById(id));
-    province && setProvince(province);
+    // const province = getById && (await getById(id));
+    // province && setProvince(province);
     setSelectedId(id);
     setShowEditModal(true);
   };
 
   const handleDeleteConfirmed = () => {
-    selectedId && deleteProvince(selectedId);
+    selectedId && deleteProvince.mutate(selectedId);
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setProvinceName("");
-    fetchProvinces();
   };
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-  const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
     setCurrentPage(1);
-    setSearch(event.target.value);
+    setFilter(event.target.value);
   };
   const handleClearSearch = () => {
-    setSearch("");
+    setFilter("");
   };
   return (
     <>
@@ -101,7 +90,7 @@ export default function ProvinceList({
         onCloseModal={() => setShowCreateModal(false)}
       >
         <CreatePage
-          onSuccess={() => fetchProvinces()}
+          onSuccess={() => refetch()}
           onClose={() => setShowCreateModal(false)}
         />
       </CustomModal>
@@ -113,7 +102,7 @@ export default function ProvinceList({
         <EditPage
           province={province}
           id={selectedId ?? 0}
-          onSuccess={() => fetchProvinces()}
+          onSuccess={() => refetch()}
           onClose={() => setShowEditModal(false)}
         />
       </CustomModal>
@@ -131,30 +120,33 @@ export default function ProvinceList({
         isClearable
         placeholder="Search..."
         name="filter"
-        value={search}
+        value={filter}
         onChange={handleSearch}
         onClear={handleClearSearch}
       />
-      <Table
-        loading={loading}
-        heads={["نام استان"]}
-        data={provinces}
-        actions={{
-          showEdit: true,
-          showDelete: true,
-          baseActionURL: "/dashboard/province",
-        }}
-        onDelete={openDeleteConfirm}
-        onEdit={openEditModal}
-      ></Table>
-      {rowsCount > 1 && (
+      {provinces && (
+        <Table
+          loading={isLoading}
+          heads={["نام استان"]}
+          data={provinces.data}
+          actions={{
+            showEdit: true,
+            showDelete: true,
+            baseActionURL: "/dashboard/province",
+          }}
+          onDelete={openDeleteConfirm}
+          onEdit={openEditModal}
+        ></Table>
+      )}
+      {provinces && provinces.rowsCount > 1 && (
         <Pagination
           className="w-full"
-          total={rowsCount}
+          page={currentPage}
+          total={provinces.rowsCount}
           siblings={5}
           initialPage={1}
           showControls
-          onChange={handlePageChange}
+          onChange={setCurrentPage}
         ></Pagination>
       )}
     </>

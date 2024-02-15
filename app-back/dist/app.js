@@ -45,6 +45,14 @@ app.get("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(500).send("Internal Server Error");
     }
 }));
+app.get("/api/province/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const query = `SELECT * FROM "Province" WHERE "Id"=${id}`;
+    const result = yield db.query(query);
+    res.json({
+        data: result,
+    });
+}));
 app.post("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     const query = 'INSERT INTO "Province" ("Name") VALUES ($1) RETURNING *';

@@ -46,6 +46,15 @@ app.get("/api/province", async (req, res) => {
   }
 });
 
+app.get("/api/province/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = `SELECT * FROM "Province" WHERE "Id"=${id}`;
+  const result = await db.query(query);
+
+  res.json({
+    data: result.rows,
+  });
+});
 app.post("/api/province", async (req, res) => {
   const data = req.body;
   const query = 'INSERT INTO "Province" ("Name") VALUES ($1) RETURNING *';
