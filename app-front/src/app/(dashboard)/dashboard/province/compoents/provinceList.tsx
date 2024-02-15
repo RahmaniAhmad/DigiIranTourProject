@@ -5,16 +5,25 @@ import { Button, Input, Pagination } from "@nextui-org/react";
 import { IProvince } from "@/type/province";
 import { ConfirmModal, CustomModal } from "@/components/UI";
 import Table from "@/components/UI/table";
+import CreatePage from "@/app/(dashboard)/dashboard/province/create/page";
+import EditPage from "@/app/(dashboard)/dashboard/province/edit/[id]/page";
+import axios from "axios";
+
+async function deleteProvince(id: number) {
+  const response = await axios.delete(
+    `http://localhost:3001/api/province/${id}`
+  );
+  return response.data;
+}
 
 interface ProvinceListProps {
-  getAll: () => any;
-  //   getAll: (
-  //     filter?: string,
-  //     page?: number
-  //   ) => Promise<{
-  //     data: IProvince[];
-  //     total: number;
-  //   }>;
+  getAll: (
+    page?: number,
+    filter?: string
+  ) => Promise<{
+    data: IProvince[];
+    rowsCount: number;
+  }>;
   getById?: (id: number) => Promise<IProvince | null>;
 
   onDelete?: (id: number) => void;
@@ -32,20 +41,20 @@ export default function ProvinceList({
   const [provinceName, setProvinceName] = useState("");
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState<number | undefined>();
-  const [provinces, setProvinces] = useState<IProvince[]>();
+  const [provinces, setProvinces] = useState<IProvince[]>([]);
   const [province, setProvince] = useState<IProvince>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [total, setTotal] = useState(0);
+  const [rowsCount, setRowsCount] = useState(0);
 
   const fetchProvinces = async () => {
     setLoading(true);
-    const data = await getAll();
-    //   search !== ""
-    //     ? await getAll(search, currentPage)
-    //     : await getAll(undefined, currentPage);
+    const data =
+      search !== ""
+        ? await getAll(currentPage, search)
+        : await getAll(currentPage);
     setLoading(false);
-    setProvinces(data);
-    // setTotal(data.total);
+    setProvinces(data.data);
+    setRowsCount(data.rowsCount);
   };
 
   useEffect(() => {
@@ -67,19 +76,19 @@ export default function ProvinceList({
     setShowEditModal(true);
   };
 
-  const handleConfirm = () => {
-    onDelete && selectedId && onDelete(selectedId);
+  const handleDeleteConfirmed = () => {
+    selectedId && deleteProvince(selectedId);
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setProvinceName("");
     fetchProvinces();
   };
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
   const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentPage(1);
     setSearch(event.target.value);
-  };
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
   };
   const handleClearSearch = () => {
     setSearch("");
@@ -87,35 +96,33 @@ export default function ProvinceList({
   return (
     <>
       <CustomModal
-        title="Create Province"
+        title="ایجاد استان جدید"
         openModal={showCreateModal}
         onCloseModal={() => setShowCreateModal(false)}
       >
-        <h1>create</h1>
-        {/* <CreatePage
+        <CreatePage
           onSuccess={() => fetchProvinces()}
           onClose={() => setShowCreateModal(false)}
-        /> */}
+        />
       </CustomModal>
       <CustomModal
-        title="Edit Province"
+        title="ویرایش استان"
         openModal={showEditModal}
         onCloseModal={() => setShowEditModal(false)}
       >
-        <h1>edit</h1>
-        {/* <EditPage
+        <EditPage
           province={province}
           id={selectedId ?? 0}
           onSuccess={() => fetchProvinces()}
           onClose={() => setShowEditModal(false)}
-        /> */}
+        />
       </CustomModal>
       <ConfirmModal
-        title="Delete"
+        title="حذف استان"
         name={provinceName}
         openModal={showDeleteConfirm}
         onCloseModal={() => setShowDeleteConfirm(false)}
-        onConfirm={handleConfirm}
+        onConfirm={handleDeleteConfirmed}
       />
       <Button onClick={() => setShowCreateModal(true)} color="primary">
         ایجاد استان جدید
@@ -140,10 +147,10 @@ export default function ProvinceList({
         onDelete={openDeleteConfirm}
         onEdit={openEditModal}
       ></Table>
-      {total > 1 && (
+      {rowsCount > 1 && (
         <Pagination
           className="w-full"
-          total={total}
+          total={rowsCount}
           siblings={5}
           initialPage={1}
           showControls

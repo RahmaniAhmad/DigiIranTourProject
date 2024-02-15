@@ -40,7 +40,9 @@ export const CustomModal = ({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1 text-center pt-4">
+              {title}
+            </ModalHeader>
             <ModalBody>{children}</ModalBody>
           </>
         )}

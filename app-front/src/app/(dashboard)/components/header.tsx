@@ -7,7 +7,10 @@ import { useEffect, useLayoutEffect, useState } from "react";
 
 const Header = () => {
   const { systemTheme, theme, setTheme } = useTheme();
-
+  useLayoutEffect(() => {
+    setTheme(systemTheme ?? "dark");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const pathname = usePathname();
 
   return (

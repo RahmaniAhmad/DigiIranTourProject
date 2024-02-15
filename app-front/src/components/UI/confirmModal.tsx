@@ -42,10 +42,11 @@ export const ConfirmModal = ({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
+            <ModalHeader className="flex flex-col text-center gap-1">
+              {title}
+            </ModalHeader>
             <ModalBody>
-              <p>{`You are going to delete ${name}`}</p>
-              <p>Are you sure?</p>
+              <p>آیا از حذف مورد انتخاب شده اطمینان دارید؟</p>
             </ModalBody>
             <ModalFooter>
               <div className="w-full grid grid-cols-2 place-items-center gap-2 mt-4">
@@ -54,7 +55,7 @@ export const ConfirmModal = ({
                   color="danger"
                   onPress={onConfirm}
                 >
-                  Delete
+                  حذف
                 </Button>
                 <Button
                   className="w-full mb-2"
@@ -62,7 +63,7 @@ export const ConfirmModal = ({
                   variant="light"
                   onPress={handleClose}
                 >
-                  Close
+                  بستن
                 </Button>
               </div>
             </ModalFooter>
