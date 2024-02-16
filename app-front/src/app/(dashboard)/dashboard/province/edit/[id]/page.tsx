@@ -5,28 +5,26 @@ import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { useProvince } from "../../hooks/useProvince";
 
 async function editProvince(data: IEditProvince) {
   const response = await axios.put("http://localhost:3001/api/province", data);
   return response.data;
 }
-async function getProvince(id: number) {
-  const response = await axios.get(`http://localhost:3001/api/province/${id}`);
-  return response.data;
-}
+
 interface IPageProps {
-  province?: IEditProvince;
   id: number;
   onClose?: () => void;
   onSuccess?: () => void;
 }
 
-const Page = ({ province, id, onClose, onSuccess }: IPageProps) => {
+const Page = ({ id, onClose, onSuccess }: IPageProps) => {
+  const { province, isLoading } = useProvince(id);
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm();
+  } = useForm({ defaultValues: province });
 
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as IEditProvince;
@@ -34,15 +32,18 @@ const Page = ({ province, id, onClose, onSuccess }: IPageProps) => {
     await editProvince(data);
     onClose && onClose();
   };
-
+  if (isLoading) {
+    //TODO
+    return <p>Loading...</p>;
+  }
   return (
     <form onSubmit={handleSubmit(formSubmit)} className="text-neutral-100">
-      <label className="text-default-600" htmlFor="name">
+      <label className="text-default-600" htmlFor="Name">
         نام استان
       </label>
       <Input
-        defaultValue={province?.name}
-        {...register("name", { required: true })}
+        defaultValue={province?.Name}
+        {...register("Name", { required: true })}
       />
       {errors.name && (
         <p className="text-danger-600">نام استان اجباری می باشد</p>

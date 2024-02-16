@@ -8,7 +8,7 @@ import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/province/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/province/edit/[id]/page";
 import axios from "axios";
-import { useData } from "../useData";
+import { useProvinces } from "../hooks/useProvinces";
 
 // async function deleteProvince(id: number) {
 //   const response = await axios.delete(
@@ -44,15 +44,13 @@ export default function ProvinceList({
 
   const {
     provinces,
-    province,
     refetch,
-    deleteProvince,
     isLoading,
     currentPage,
     setCurrentPage,
     filter,
     setFilter,
-  } = useData(selectedId);
+  } = useProvinces();
 
   const openDeleteConfirm = async (id: number) => {
     const province = getById && (await getById(id));
@@ -69,7 +67,7 @@ export default function ProvinceList({
   };
 
   const handleDeleteConfirmed = () => {
-    selectedId && deleteProvince.mutate(selectedId);
+    // selectedId && deleteProvince.mutate(selectedId);
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setProvinceName("");
@@ -100,7 +98,7 @@ export default function ProvinceList({
         onCloseModal={() => setShowEditModal(false)}
       >
         <EditPage
-          province={province}
+          // province={province}
           id={selectedId ?? 0}
           onSuccess={() => refetch()}
           onClose={() => setShowEditModal(false)}

@@ -49,9 +49,7 @@ app.get("/api/province/:id", (req, res) => __awaiter(void 0, void 0, void 0, fun
     const id = req.params.id;
     const query = `SELECT * FROM "Province" WHERE "Id"=${id}`;
     const result = yield db.query(query);
-    res.json({
-        data: result,
-    });
+    res.json(result.rows[0]);
 }));
 app.post("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
