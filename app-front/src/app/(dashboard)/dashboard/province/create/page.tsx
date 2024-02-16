@@ -5,18 +5,19 @@ import { useForm, FieldValues } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { ICreateProvince } from "@/type/province";
 import axios from "axios";
+import { useCreateProvince } from "../hooks/useCreateProvince";
 
-async function createProvince(data: ICreateProvince) {
-  const response = await axios.post("http://localhost:3001/api/province", data);
-  return response.data;
-}
+// async function createProvince(data: ICreateProvince) {
+//   const response = await axios.post("http://localhost:3001/api/province", data);
+//   return response.data;
+//}
 
 interface IPageProps {
   onClose?: () => void;
   onSuccess?: () => void;
 }
 const Page = ({ onSuccess, onClose }: IPageProps) => {
-  const router = useRouter();
+  const { createProvince } = useCreateProvince({ onSuccess });
   const {
     register,
     handleSubmit,
@@ -25,13 +26,12 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
 
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as ICreateProvince;
-    await createProvince(data)
-      .then(() => {
-        onSuccess && onSuccess();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    try {
+      createProvince.mutate(data);
+      onSuccess && onSuccess();
+    } catch (error) {
+      console.error(error);
+    }
 
     onClose && onClose();
   };

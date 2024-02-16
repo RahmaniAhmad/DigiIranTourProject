@@ -1,16 +1,17 @@
 "use client";
 
-import { IEditProvince } from "@/type/province";
+import { IUpdateProvince } from "@/type/province";
 import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useProvince } from "../../hooks/useProvince";
+import { useUpdateProvince } from "../../hooks/useUpdateProvince";
 
-async function editProvince(data: IEditProvince) {
-  const response = await axios.put("http://localhost:3001/api/province", data);
-  return response.data;
-}
+// async function editProvince(data: IEditProvince) {
+//   const response = await axios.put("http://localhost:3001/api/province", data);
+//   return response.data;
+// }
 
 interface IPageProps {
   id: number;
@@ -20,6 +21,8 @@ interface IPageProps {
 
 const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const { province, isLoading } = useProvince(id);
+  const { updateProvince } = useUpdateProvince({ id, onSuccess });
+
   const {
     register,
     handleSubmit,
@@ -27,9 +30,9 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   } = useForm({ defaultValues: province });
 
   const formSubmit = async (filedValues: FieldValues) => {
-    const data = filedValues as IEditProvince;
+    const data = filedValues as IUpdateProvince;
     data.id = id;
-    await editProvince(data);
+    updateProvince.mutate(data);
     onClose && onClose();
   };
   if (isLoading) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Button, Input, Pagination } from "@nextui-org/react";
 import { IProvince } from "@/type/province";
 import { ConfirmModal, CustomModal } from "@/components/UI";
@@ -98,7 +98,6 @@ export default function ProvinceList({
         onCloseModal={() => setShowEditModal(false)}
       >
         <EditPage
-          // province={province}
           id={selectedId ?? 0}
           onSuccess={() => refetch()}
           onClose={() => setShowEditModal(false)}

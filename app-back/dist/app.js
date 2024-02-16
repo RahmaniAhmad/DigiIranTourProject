@@ -27,11 +27,11 @@ app.get("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, functio
         let resultPromise;
         let countPromise;
         if (filter !== undefined) {
-            resultPromise = db.query(`SELECT * FROM "Province" WHERE "Name" LIKE '${filter}%' LIMIT 2 OFFSET ${(page - 1) * 2}`);
+            resultPromise = db.query(`SELECT * FROM "Province" WHERE "Name" LIKE '${filter}%'  ORDER BY "Id" ASC LIMIT 2 OFFSET ${(page - 1) * 2}`);
             countPromise = db.query(`SELECT count(*) as "rowsCount" from "Province" WHERE "Name" LIKE '${filter}%'`);
         }
         else {
-            resultPromise = db.query(`SELECT * FROM "Province" LIMIT 2 OFFSET ${(page - 1) * 2}`);
+            resultPromise = db.query(`SELECT * FROM "Province" ORDER BY "Id" ASC LIMIT 2 OFFSET ${(page - 1) * 2}`);
             countPromise = db.query(`SELECT count(*) as "rowsCount" from "Province"`);
         }
         const [result, count] = yield Promise.all([resultPromise, countPromise]);
@@ -56,6 +56,13 @@ app.post("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, functi
     const query = 'INSERT INTO "Province" ("Name") VALUES ($1) RETURNING *';
     const values = [data.name];
     const result = yield db.query(query, values);
+    res.json({ message: "Data inserted successfully", data: result.rows[0] });
+}));
+app.put("/api/province/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const data = req.body;
+    const query = `UPDATE "Province" SET "Name"='${data.Name}' WHERE "Id"=${id}`;
+    const result = yield db.query(query);
     res.json({ message: "Data inserted successfully", data: result.rows[0] });
 }));
 app.delete("/api/province/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

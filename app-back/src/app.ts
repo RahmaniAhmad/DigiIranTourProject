@@ -20,7 +20,7 @@ app.get("/api/province", async (req, res) => {
 
     if (filter !== undefined) {
       resultPromise = db.query(
-        `SELECT * FROM "Province" WHERE "Name" LIKE '${filter}%' LIMIT 2 OFFSET ${
+        `SELECT * FROM "Province" WHERE "Name" LIKE '${filter}%'  ORDER BY "Id" ASC LIMIT 2 OFFSET ${
           (page - 1) * 2
         }`
       );
@@ -29,7 +29,9 @@ app.get("/api/province", async (req, res) => {
       );
     } else {
       resultPromise = db.query(
-        `SELECT * FROM "Province" LIMIT 2 OFFSET ${(page - 1) * 2}`
+        `SELECT * FROM "Province" ORDER BY "Id" ASC LIMIT 2 OFFSET ${
+          (page - 1) * 2
+        }`
       );
       countPromise = db.query(`SELECT count(*) as "rowsCount" from "Province"`);
     }
@@ -60,6 +62,16 @@ app.post("/api/province", async (req, res) => {
   const values = [data.name];
 
   const result = await db.query(query, values);
+
+  res.json({ message: "Data inserted successfully", data: result.rows[0] });
+});
+
+app.put("/api/province/:id", async (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+  const query = `UPDATE "Province" SET "Name"='${data.Name}' WHERE "Id"=${id}`;
+
+  const result = await db.query(query);
 
   res.json({ message: "Data inserted successfully", data: result.rows[0] });
 });
