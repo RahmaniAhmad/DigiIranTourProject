@@ -1,7 +1,9 @@
 import express from "express";
+import { PrismaClient } from "@prisma/client";
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./db");
+const dbPrisma = require("./dbPrisma");
 
 const app = express();
 const port = 3001;
@@ -9,6 +11,8 @@ const port = 3001;
 app.use(cors());
 
 app.use(bodyParser.json());
+
+const prisma = new PrismaClient();
 
 app.get("/api/province", async (req, res) => {
   try {
@@ -20,7 +24,7 @@ app.get("/api/province", async (req, res) => {
 
     if (filter !== undefined) {
       resultPromise = db.query(
-        `SELECT * FROM "Province" WHERE "Name" LIKE '${filter}%'  ORDER BY "Id" ASC LIMIT 2 OFFSET ${
+        `SELECT * FROM "Province" WHERE "name" LIKE '${filter}%'  ORDER BY "Id" ASC LIMIT 2 OFFSET ${
           (page - 1) * 2
         }`
       );
@@ -47,18 +51,26 @@ app.get("/api/province", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+// app.get("/api/province/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const query = `SELECT * FROM "Province" WHERE "Id"=${id}`;
+//   const result = await db.query(query);
+
+//   res.json(result.rows[0]);
+// });
 
 app.get("/api/province/:id", async (req, res) => {
   const id = req.params.id;
-  const query = `SELECT * FROM "Province" WHERE "Id"=${id}`;
-  const result = await db.query(query);
-
-  res.json(result.rows[0]);
+  const province = await prisma.province.findUnique({
+    where: { id: Number(id) },
+    select: { id: true, name: true },
+  });
+  res.json(province);
 });
 
 app.post("/api/province", async (req, res) => {
   const data = req.body;
-  const query = 'INSERT INTO "Province" ("Name") VALUES ($1) RETURNING *';
+  const query = 'INSERT INTO "Province" ("name") VALUES ($1) RETURNING *';
   const values = [data.name];
 
   const result = await db.query(query, values);
@@ -69,7 +81,7 @@ app.post("/api/province", async (req, res) => {
 app.put("/api/province/:id", async (req, res) => {
   const id = req.params.id;
   const data = req.body;
-  const query = `UPDATE "Province" SET "Name"='${data.Name}' WHERE "Id"=${id}`;
+  const query = `UPDATE "Province" SET "name"='${data.name}' WHERE "Id"=${id}`;
 
   const result = await db.query(query);
 

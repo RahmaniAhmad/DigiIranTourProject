@@ -13,13 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const client_1 = require("@prisma/client");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./db");
+const dbPrisma = require("./dbPrisma");
 const app = (0, express_1.default)();
 const port = 3001;
 app.use(cors());
 app.use(bodyParser.json());
+const prisma = new client_1.PrismaClient();
 app.get("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const filter = req.query.filter;
@@ -27,7 +30,7 @@ app.get("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, functio
         let resultPromise;
         let countPromise;
         if (filter !== undefined) {
-            resultPromise = db.query(`SELECT * FROM "Province" WHERE "Name" LIKE '${filter}%'  ORDER BY "Id" ASC LIMIT 2 OFFSET ${(page - 1) * 2}`);
+            resultPromise = db.query(`SELECT * FROM "Province" WHERE "name" LIKE '${filter}%'  ORDER BY "Id" ASC LIMIT 2 OFFSET ${(page - 1) * 2}`);
             countPromise = db.query(`SELECT count(*) as "rowsCount" from "Province" WHERE "Name" LIKE '${filter}%'`);
         }
         else {
@@ -51,9 +54,17 @@ app.get("/api/province/:id", (req, res) => __awaiter(void 0, void 0, void 0, fun
     const result = yield db.query(query);
     res.json(result.rows[0]);
 }));
+app.get("/api/province1/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const province = yield prisma.province.findUnique({
+        where: { id: Number(id) },
+        select: { id: true, name: true },
+    });
+    res.json(province);
+}));
 app.post("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
-    const query = 'INSERT INTO "Province" ("Name") VALUES ($1) RETURNING *';
+    const query = 'INSERT INTO "Province" ("name") VALUES ($1) RETURNING *';
     const values = [data.name];
     const result = yield db.query(query, values);
     res.json({ message: "Data inserted successfully", data: result.rows[0] });
@@ -61,7 +72,7 @@ app.post("/api/province", (req, res) => __awaiter(void 0, void 0, void 0, functi
 app.put("/api/province/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const data = req.body;
-    const query = `UPDATE "Province" SET "Name"='${data.Name}' WHERE "Id"=${id}`;
+    const query = `UPDATE "Province" SET "name"='${data.name}' WHERE "Id"=${id}`;
     const result = yield db.query(query);
     res.json({ message: "Data inserted successfully", data: result.rows[0] });
 }));
