@@ -80,7 +80,7 @@ const Table = ({
                       <Button
                         isIconOnly
                         className="text-green-800 hover:text-green-600"
-                        onClick={() => onEdit && onEdit(row.Id)}
+                        onClick={() => onEdit && onEdit(row.id)}
                       >
                         <FaEdit />
                       </Button>
@@ -91,7 +91,7 @@ const Table = ({
                       <Button
                         isIconOnly
                         className="text-red-800 hover:text-red-600"
-                        onClick={() => onDelete && onDelete(row.Id)}
+                        onClick={() => onDelete && onDelete(row.id)}
                       >
                         <FaTrash />
                       </Button>

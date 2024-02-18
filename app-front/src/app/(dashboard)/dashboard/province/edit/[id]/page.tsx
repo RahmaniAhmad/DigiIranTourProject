@@ -45,8 +45,8 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         نام استان
       </label>
       <Input
-        defaultValue={province?.Name}
-        {...register("Name", { required: true })}
+        defaultValue={province?.name}
+        {...register("name", { required: true })}
       />
       {errors.name && (
         <p className="text-danger-600">نام استان اجباری می باشد</p>
