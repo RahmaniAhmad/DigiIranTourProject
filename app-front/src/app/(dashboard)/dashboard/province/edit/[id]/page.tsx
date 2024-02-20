@@ -2,16 +2,10 @@
 
 import { IUpdateProvince } from "@/type/province";
 import { Button, Input } from "@nextui-org/react";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useProvince } from "../../hooks/useProvince";
 import { useUpdateProvince } from "../../hooks/useUpdateProvince";
-
-// async function editProvince(data: IEditProvince) {
-//   const response = await axios.put("http://localhost:3001/api/province", data);
-//   return response.data;
-// }
 
 interface IPageProps {
   id: number;
@@ -27,7 +21,12 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
   } = useForm({ defaultValues: province });
+
+  useEffect(() => {
+    setValue("name", province?.name || "");
+  }, [province, setValue]);
 
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as IUpdateProvince;
