@@ -7,10 +7,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const provinceController_1 = __importDefault(require("../controllers/provinceController"));
 const router = express_1.default.Router();
-router.get("/", provinceController_1.default.getProvinces);
-router.get("/:id", provinceController_1.default.getProvinceById);
-router.post("/", provinceController_1.default.createProvince);
-router.put("/:id", provinceController_1.default.updateProvince);
-router.delete("/:id", provinceController_1.default.deleteProvince);
+router.get("/", provinceController_1.default.getAll);
+router.get("/:id", provinceController_1.default.getById);
+router.post("/", provinceController_1.default.create);
+router.put("/:id", provinceController_1.default.update);
+router.delete("/:id", provinceController_1.default.delete);
 exports.default = router;
 //# sourceMappingURL=provinceRoutes.js.map

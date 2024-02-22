@@ -12,14 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const provinceService_1 = __importDefault(require("../services/provinceService"));
-const provinceController = {
+const accommodationTypeService_1 = __importDefault(require("../services/accommodationTypeService"));
+const accommodationTypeController = {
     getAll: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const filter = req.query.filter;
             const limit = req.query.limit ? Number(req.query.limit) : 10;
             const page = req.query.page ? parseInt(req.query.page) : 1;
-            const result = yield provinceService_1.default.getProvinces(filter, page, limit);
+            const result = yield accommodationTypeService_1.default.getAll(filter, page, limit);
             res.json(result);
         }
         catch (err) {
@@ -29,25 +29,25 @@ const provinceController = {
     }),
     getById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const id = parseInt(req.params.id, 10);
-        const result = yield provinceService_1.default.getProvinceById(id);
+        const result = yield accommodationTypeService_1.default.getById(id);
         res.json(result);
     }),
     create: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const data = req.body;
-        const result = yield provinceService_1.default.createProvince(data);
+        const result = yield accommodationTypeService_1.default.create(data);
         res.json(result);
     }),
     update: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const id = parseInt(req.params.id, 10);
         const data = req.body;
-        const result = yield provinceService_1.default.updateProvince(id, data);
+        const result = yield accommodationTypeService_1.default.update(id, data);
         res.json(result);
     }),
     delete: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const id = parseInt(req.params.id, 10);
-        const result = yield provinceService_1.default.deleteProvince(id);
+        const result = yield accommodationTypeService_1.default.delete(id);
         res.json(result);
     }),
 };
-exports.default = provinceController;
-//# sourceMappingURL=provinceController.js.map
+exports.default = accommodationTypeController;
+//# sourceMappingURL=accommodationTypeController.js.map

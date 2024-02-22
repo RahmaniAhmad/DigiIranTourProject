@@ -40,6 +40,18 @@ const Header = () => {
                 استان
               </Link>
             </li>
+            <li>
+              <Link
+                className={
+                  pathname.includes("/dashboard/accommodationType")
+                    ? "font-bold text-neutral-400"
+                    : ""
+                }
+                href="/dashboard/accommodationType"
+              >
+                نوع اقامت
+              </Link>
+            </li>
           </ul>
         </nav>
         <div className="flex">
