@@ -5,7 +5,7 @@ const provinceController = {
   getProvinces: async (req: Request, res: Response) => {
     try {
       const filter = req.query.filter as string;
-      const limit = req.query.filter ? Number(req.query.filter) : 10;
+      const limit = req.query.limit ? Number(req.query.limit) : 10;
       const page = req.query.page ? parseInt(req.query.page as string) : 1;
 
       const result = await provinceService.getProvinces(filter, page, limit);

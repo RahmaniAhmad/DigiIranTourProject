@@ -17,7 +17,7 @@ const provinceController = {
     getProvinces: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const filter = req.query.filter;
-            const limit = req.query.filter ? Number(req.query.filter) : 10;
+            const limit = req.query.limit ? Number(req.query.limit) : 10;
             const page = req.query.page ? parseInt(req.query.page) : 1;
             const result = yield provinceService_1.default.getProvinces(filter, page, limit);
             res.json(result);

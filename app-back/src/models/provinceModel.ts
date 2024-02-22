@@ -14,9 +14,9 @@ class ProvinceModel {
     if (filter !== undefined) {
       data = await prisma.province.findMany({
         orderBy: { id: "asc" },
+        where: { name: { contains: filter } },
         skip: (page - 1) * limit,
         take: limit,
-        where: { name: { contains: filter } },
         select: { id: true, name: true },
       });
       dataCount = Math.ceil(
