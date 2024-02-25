@@ -8,46 +8,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const accommodationTypeService_1 = __importDefault(require("../services/accommodationTypeService"));
-const accommodationTypeController = {
-    getAll: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const filter = req.query.filter;
-            const limit = req.query.limit ? Number(req.query.limit) : 10;
-            const page = req.query.page ? parseInt(req.query.page) : 1;
-            const result = yield accommodationTypeService_1.default.getAll(filter, page, limit);
+exports.AccommodationTypeController = void 0;
+const accommodationTypeService_1 = require("../services/accommodationTypeService");
+class AccommodationTypeController {
+    constructor() {
+        this.getAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const filter = req.query.filter;
+                const limit = req.query.limit ? Number(req.query.limit) : 10;
+                const page = req.query.page ? parseInt(req.query.page) : 1;
+                const result = yield this.accommodationTypeService.getAll(filter, page, limit);
+                res.json(result);
+            }
+            catch (err) {
+                console.error(err);
+                res.status(500).send("Internal Server Error");
+            }
+        });
+        this.getById = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = parseInt(req.params.id, 10);
+            const result = yield this.accommodationTypeService.getById(id);
             res.json(result);
-        }
-        catch (err) {
-            console.error(err);
-            res.status(500).send("Internal Server Error");
-        }
-    }),
-    getById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = parseInt(req.params.id, 10);
-        const result = yield accommodationTypeService_1.default.getById(id);
-        res.json(result);
-    }),
-    create: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = req.body;
-        const result = yield accommodationTypeService_1.default.create(data);
-        res.json(result);
-    }),
-    update: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = parseInt(req.params.id, 10);
-        const data = req.body;
-        const result = yield accommodationTypeService_1.default.update(id, data);
-        res.json(result);
-    }),
-    delete: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = parseInt(req.params.id, 10);
-        const result = yield accommodationTypeService_1.default.delete(id);
-        res.json(result);
-    }),
-};
-exports.default = accommodationTypeController;
+        });
+        this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = req.body;
+            const result = yield this.accommodationTypeService.create(data);
+            res.json(result);
+        });
+        this.update = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = parseInt(req.params.id, 10);
+            const data = req.body;
+            const result = yield this.accommodationTypeService.update(id, data);
+            res.json(result);
+        });
+        this.delete = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = parseInt(req.params.id, 10);
+            const result = yield this.accommodationTypeService.delete(id);
+            res.json(result);
+        });
+        this.accommodationTypeService = new accommodationTypeService_1.AccommodationTypeService();
+    }
+}
+exports.AccommodationTypeController = AccommodationTypeController;
 //# sourceMappingURL=accommodationTypeController.js.map

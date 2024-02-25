@@ -12,24 +12,73 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const accommodationTypeModel_1 = __importDefault(require("../models/accommodationTypeModel"));
-const model = new accommodationTypeModel_1.default();
-const provinceService = {
-    getAll: (filter, page, limit) => __awaiter(void 0, void 0, void 0, function* () {
-        return model.getAll(filter, page, limit);
-    }),
-    getById: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return model.getById(id);
-    }),
-    create: (data) => __awaiter(void 0, void 0, void 0, function* () {
-        return model.create(data);
-    }),
-    update: (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-        return model.update(id, data);
-    }),
-    delete: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return model.delete(id);
-    }),
-};
-exports.default = provinceService;
+exports.AccommodationTypeService = void 0;
+const dbPrisma_1 = __importDefault(require("../config/dbPrisma"));
+class AccommodationTypeService {
+    getAll(filter, page = 1, limit = 10) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let data;
+            let dataCount = 0;
+            if (filter !== undefined) {
+                data = yield dbPrisma_1.default.accommodation_type.findMany({
+                    orderBy: { id: "asc" },
+                    where: { title: { contains: filter } },
+                    skip: (page - 1) * limit,
+                    take: limit,
+                    select: { id: true, title: true },
+                });
+                dataCount = Math.ceil((yield dbPrisma_1.default.accommodation_type.count({
+                    where: { title: { contains: filter } },
+                })) / limit);
+            }
+            else {
+                data = yield dbPrisma_1.default.accommodation_type.findMany({
+                    orderBy: { id: "asc" },
+                    skip: (page - 1) * limit,
+                    take: limit,
+                    select: { id: true, title: true },
+                });
+                dataCount = Math.ceil((yield dbPrisma_1.default.accommodation_type.count()) / limit);
+            }
+            return {
+                data: data,
+                rowsCount: dataCount,
+            };
+        });
+    }
+    getById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return dbPrisma_1.default.accommodation_type.findUnique({
+                where: { id: id },
+                select: { id: true, title: true },
+            });
+        });
+    }
+    create(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield dbPrisma_1.default.accommodation_type.create({
+                data: data,
+            });
+            return { message: "Data inserted successfully", data: result };
+        });
+    }
+    update(id, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield dbPrisma_1.default.accommodation_type.update({
+                where: { id: id },
+                data: data,
+            });
+            return { message: "Data updated successfully", data: result };
+        });
+    }
+    delete(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield dbPrisma_1.default.accommodation_type.delete({
+                where: { id: id },
+            });
+            return { message: "Data deleted successfully", data: result };
+        });
+    }
+}
+exports.AccommodationTypeService = AccommodationTypeService;
 //# sourceMappingURL=accommodationTypeService.js.map

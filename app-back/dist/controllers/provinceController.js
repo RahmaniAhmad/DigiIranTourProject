@@ -8,46 +8,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const provinceService_1 = __importDefault(require("../services/provinceService"));
-const provinceController = {
-    getAll: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const filter = req.query.filter;
-            const limit = req.query.limit ? Number(req.query.limit) : 10;
-            const page = req.query.page ? parseInt(req.query.page) : 1;
-            const result = yield provinceService_1.default.getProvinces(filter, page, limit);
+exports.ProvinceController = void 0;
+const provinceService_1 = require("../services/provinceService");
+class ProvinceController {
+    constructor() {
+        this.getAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const filter = req.query.filter;
+                const limit = req.query.limit ? Number(req.query.limit) : 10;
+                const page = req.query.page ? parseInt(req.query.page) : 1;
+                const result = yield this.provinceService.getProvinces(filter, page, limit);
+                res.json(result);
+            }
+            catch (err) {
+                console.error(err);
+                res.status(500).send("Internal Server Error");
+            }
+        });
+        this.getById = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = parseInt(req.params.id, 10);
+            const result = yield this.provinceService.getProvinceById(id);
             res.json(result);
-        }
-        catch (err) {
-            console.error(err);
-            res.status(500).send("Internal Server Error");
-        }
-    }),
-    getById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = parseInt(req.params.id, 10);
-        const result = yield provinceService_1.default.getProvinceById(id);
-        res.json(result);
-    }),
-    create: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = req.body;
-        const result = yield provinceService_1.default.createProvince(data);
-        res.json(result);
-    }),
-    update: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = parseInt(req.params.id, 10);
-        const data = req.body;
-        const result = yield provinceService_1.default.updateProvince(id, data);
-        res.json(result);
-    }),
-    delete: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const id = parseInt(req.params.id, 10);
-        const result = yield provinceService_1.default.deleteProvince(id);
-        res.json(result);
-    }),
-};
-exports.default = provinceController;
+        });
+        this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = req.body;
+            const result = yield this.provinceService.createProvince(data);
+            res.json(result);
+        });
+        this.update = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = parseInt(req.params.id, 10);
+            const data = req.body;
+            const result = yield this.provinceService.updateProvince(id, data);
+            res.json(result);
+        });
+        this.delete = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = parseInt(req.params.id, 10);
+            const result = yield this.provinceService.deleteProvince(id);
+            res.json(result);
+        });
+        this.provinceService = new provinceService_1.ProvinceService();
+    }
+}
+exports.ProvinceController = ProvinceController;
 //# sourceMappingURL=provinceController.js.map

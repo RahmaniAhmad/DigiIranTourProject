@@ -4,17 +4,17 @@ interface CustomNodeJsGlobal {
   prisma: PrismaClient;
 }
 
-let db: PrismaClient;
+let prisma: PrismaClient;
 
 declare const global: CustomNodeJsGlobal;
 
 if (process.env.NODE_ENV === "production") {
-  db = new PrismaClient();
+  prisma = new PrismaClient();
 } else {
   if (!global.prisma) {
     global.prisma = new PrismaClient();
   }
-  db = global.prisma;
+  prisma = global.prisma;
 }
 
-export default db;
+export default prisma;
