@@ -1,12 +1,13 @@
 import { IProvinceRepository } from "./contracts/IProvinceRepository";
 import prisma from "../config/dbPrisma";
 import { Province } from "../models/provinceModel";
+import { LIMIT } from "../config/const";
 
 export class ProvinceRepository implements IProvinceRepository {
   async getAll(
     filter?: string,
     page = 1,
-    limit = 10
+    limit = LIMIT
   ): Promise<{ data: Province[]; rowsCount: number }> {
     let data: Province[];
     let dataCount = 0;

@@ -1,3 +1,4 @@
+import { LIMIT } from "../config/const";
 import prisma from "../config/dbPrisma";
 import { AccommodationType } from "../models/accommodationTypeModel";
 import { IAccommodationTypeRepository } from "./contracts/IAccommodationTypeRepository";
@@ -8,7 +9,7 @@ export class AccommodationTypeRepository
   async getAll(
     filter?: string,
     page = 1,
-    limit = 10
+    limit = LIMIT
   ): Promise<{ data: AccommodationType[]; rowsCount: number }> {
     let data: AccommodationType[];
     let dataCount = 0;

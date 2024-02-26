@@ -1,6 +1,5 @@
 import { LIMIT } from "../config/const";
 import { AccommodationType } from "../models/accommodationTypeModel";
-import { Province } from "../models/provinceModel";
 import { IAccommodationTypeRepository } from "../repositories/contracts/IAccommodationTypeRepository";
 import { IAccommodationTypeService } from "./contracts/IAccommodationTypeService";
 

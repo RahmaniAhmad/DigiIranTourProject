@@ -1,3 +1,4 @@
+import { LIMIT } from "../config/const";
 import { IAccommodationTypeRepository } from "../repositories/contracts/IAccommodationTypeRepository";
 import { AccommodationTypeService } from "../services/accommodationTypeService";
 
@@ -12,7 +13,7 @@ export class AccommodationTypeController {
   public getAll = async (req: Request, res: Response) => {
     try {
       const filter = req.query.filter as string;
-      const limit = req.query.limit ? Number(req.query.limit) : 10;
+      const limit = req.query.limit ? Number(req.query.limit) : LIMIT;
       const page = req.query.page ? parseInt(req.query.page as string) : 1;
 
       const result = await this.accommodationTypeService.getAll(
