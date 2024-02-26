@@ -1,8 +1,10 @@
 import express, { Router } from "express";
 import { ProvinceController } from "../controllers/provinceController";
+import { ProvinceRepository } from "../repositories/provinceRepository";
 
 const router: Router = express.Router();
-const controller = new ProvinceController();
+const provinceRepository = new ProvinceRepository();
+const controller = new ProvinceController(provinceRepository);
 
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);

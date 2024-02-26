@@ -1,11 +1,13 @@
+import { IAccommodationTypeRepository } from "../repositories/contracts/IAccommodationTypeRepository";
 import { AccommodationTypeService } from "../services/accommodationTypeService";
+
 import { Request, Response } from "express";
 
 export class AccommodationTypeController {
   private accommodationTypeService: AccommodationTypeService;
 
-  constructor() {
-    this.accommodationTypeService = new AccommodationTypeService();
+  constructor(repository: IAccommodationTypeRepository) {
+    this.accommodationTypeService = new AccommodationTypeService(repository);
   }
   public getAll = async (req: Request, res: Response) => {
     try {

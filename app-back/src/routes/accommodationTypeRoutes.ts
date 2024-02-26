@@ -1,8 +1,10 @@
 import express, { Router } from "express";
 import { AccommodationTypeController } from "../controllers/accommodationTypeController";
+import { AccommodationTypeRepository } from "../repositories/accommodationTypeRepository";
 
 const router: Router = express.Router();
-const controller = new AccommodationTypeController();
+const repository = new AccommodationTypeRepository();
+const controller = new AccommodationTypeController(repository);
 
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);

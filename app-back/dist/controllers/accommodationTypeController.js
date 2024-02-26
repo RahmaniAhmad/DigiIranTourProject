@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccommodationTypeController = void 0;
 const accommodationTypeService_1 = require("../services/accommodationTypeService");
 class AccommodationTypeController {
-    constructor() {
+    constructor(repository) {
         this.getAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const filter = req.query.filter;
@@ -47,7 +47,7 @@ class AccommodationTypeController {
             const result = yield this.accommodationTypeService.delete(id);
             res.json(result);
         });
-        this.accommodationTypeService = new accommodationTypeService_1.AccommodationTypeService();
+        this.accommodationTypeService = new accommodationTypeService_1.AccommodationTypeService(repository);
     }
 }
 exports.AccommodationTypeController = AccommodationTypeController;

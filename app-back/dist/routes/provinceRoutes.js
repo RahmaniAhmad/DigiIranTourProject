@@ -5,8 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const provinceController_1 = require("../controllers/provinceController");
+const provinceRepository_1 = require("../repositories/provinceRepository");
 const router = express_1.default.Router();
-const controller = new provinceController_1.ProvinceController();
+const provinceRepository = new provinceRepository_1.ProvinceRepository();
+const controller = new provinceController_1.ProvinceController(provinceRepository);
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);
 router.post("/", controller.create);

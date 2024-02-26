@@ -1,80 +1,44 @@
-import prisma from "../config/dbPrisma";
+import { LIMIT } from "../config/const";
 import { AccommodationType } from "../models/accommodationTypeModel";
+import { Province } from "../models/provinceModel";
+import { IAccommodationTypeRepository } from "../repositories/contracts/IAccommodationTypeRepository";
+import { IAccommodationTypeService } from "./contracts/IAccommodationTypeService";
 
-export class AccommodationTypeService {
+export class AccommodationTypeService implements IAccommodationTypeService {
+  private repository: IAccommodationTypeRepository;
+
+  constructor(repository: IAccommodationTypeRepository) {
+    this.repository = repository;
+  }
+
   async getAll(
     filter?: string,
     page = 1,
-    limit = 10
+    limit = LIMIT
   ): Promise<{ data: AccommodationType[]; rowsCount: number }> {
-    let data: AccommodationType[];
-    let dataCount = 0;
-
-    if (filter !== undefined) {
-      data = await prisma.accommodation_type.findMany({
-        orderBy: { id: "asc" },
-        where: { title: { contains: filter } },
-        skip: (page - 1) * limit,
-        take: limit,
-        select: { id: true, title: true },
-      });
-      dataCount = Math.ceil(
-        (await prisma.accommodation_type.count({
-          where: { title: { contains: filter } },
-        })) / limit
-      );
-    } else {
-      data = await prisma.accommodation_type.findMany({
-        orderBy: { id: "asc" },
-        skip: (page - 1) * limit,
-        take: limit,
-        select: { id: true, title: true },
-      });
-      dataCount = Math.ceil((await prisma.accommodation_type.count()) / limit);
-    }
-
-    return {
-      data: data,
-      rowsCount: dataCount,
-    };
+    return this.repository.getAll(filter, page, limit);
   }
 
   async getById(id: number): Promise<AccommodationType | null> {
-    return prisma.accommodation_type.findUnique({
-      where: { id: id },
-      select: { id: true, title: true },
-    });
+    return this.repository.getById(id);
   }
 
   async create(data: {
-    title: string;
+    name: string;
   }): Promise<{ message: string; data: AccommodationType }> {
-    const result = await prisma.accommodation_type.create({
-      data: data,
-    });
-
-    return { message: "Data inserted successfully", data: result };
+    return this.repository.create(data);
   }
 
   async update(
     id: number,
-    data: { title: string }
+    data: { name: string }
   ): Promise<{ message: string; data: AccommodationType }> {
-    const result = await prisma.accommodation_type.update({
-      where: { id: id },
-      data: data,
-    });
-
-    return { message: "Data updated successfully", data: result };
+    return this.repository.update(id, data);
   }
 
   async delete(
     id: number
   ): Promise<{ message: string; data: AccommodationType }> {
-    const result = await prisma.accommodation_type.delete({
-      where: { id: id },
-    });
-
-    return { message: "Data deleted successfully", data: result };
+    return this.repository.delete(id);
   }
 }

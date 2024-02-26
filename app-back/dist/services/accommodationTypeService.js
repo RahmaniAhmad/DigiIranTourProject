@@ -8,75 +8,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccommodationTypeService = void 0;
-const dbPrisma_1 = __importDefault(require("../config/dbPrisma"));
+const const_1 = require("../config/const");
 class AccommodationTypeService {
-    getAll(filter, page = 1, limit = 10) {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    getAll(filter, page = 1, limit = const_1.LIMIT) {
         return __awaiter(this, void 0, void 0, function* () {
-            let data;
-            let dataCount = 0;
-            if (filter !== undefined) {
-                data = yield dbPrisma_1.default.accommodation_type.findMany({
-                    orderBy: { id: "asc" },
-                    where: { title: { contains: filter } },
-                    skip: (page - 1) * limit,
-                    take: limit,
-                    select: { id: true, title: true },
-                });
-                dataCount = Math.ceil((yield dbPrisma_1.default.accommodation_type.count({
-                    where: { title: { contains: filter } },
-                })) / limit);
-            }
-            else {
-                data = yield dbPrisma_1.default.accommodation_type.findMany({
-                    orderBy: { id: "asc" },
-                    skip: (page - 1) * limit,
-                    take: limit,
-                    select: { id: true, title: true },
-                });
-                dataCount = Math.ceil((yield dbPrisma_1.default.accommodation_type.count()) / limit);
-            }
-            return {
-                data: data,
-                rowsCount: dataCount,
-            };
+            return this.repository.getAll(filter, page, limit);
         });
     }
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return dbPrisma_1.default.accommodation_type.findUnique({
-                where: { id: id },
-                select: { id: true, title: true },
-            });
+            return this.repository.getById(id);
         });
     }
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield dbPrisma_1.default.accommodation_type.create({
-                data: data,
-            });
-            return { message: "Data inserted successfully", data: result };
+            return this.repository.create(data);
         });
     }
     update(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield dbPrisma_1.default.accommodation_type.update({
-                where: { id: id },
-                data: data,
-            });
-            return { message: "Data updated successfully", data: result };
+            return this.repository.update(id, data);
         });
     }
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield dbPrisma_1.default.accommodation_type.delete({
-                where: { id: id },
-            });
-            return { message: "Data deleted successfully", data: result };
+            return this.repository.delete(id);
         });
     }
 }

@@ -1,11 +1,12 @@
+import { IProvinceRepository } from "../repositories/contracts/IProvinceRepository";
 import { ProvinceService } from "../services/provinceService";
 import { Request, Response } from "express";
 
 export class ProvinceController {
   private provinceService: ProvinceService;
 
-  constructor() {
-    this.provinceService = new ProvinceService();
+  constructor(repository: IProvinceRepository) {
+    this.provinceService = new ProvinceService(repository);
   }
 
   public getAll = async (req: Request, res: Response) => {
@@ -14,11 +15,7 @@ export class ProvinceController {
       const limit = req.query.limit ? Number(req.query.limit) : 10;
       const page = req.query.page ? parseInt(req.query.page as string) : 1;
 
-      const result = await this.provinceService.getProvinces(
-        filter,
-        page,
-        limit
-      );
+      const result = await this.provinceService.getAll(filter, page, limit);
       res.json(result);
     } catch (err) {
       console.error(err);
@@ -28,26 +25,26 @@ export class ProvinceController {
 
   public getById = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
-    const result = await this.provinceService.getProvinceById(id);
+    const result = await this.provinceService.getById(id);
     res.json(result);
   };
 
   public create = async (req: Request, res: Response) => {
     const data = req.body;
-    const result = await this.provinceService.createProvince(data);
+    const result = await this.provinceService.create(data);
     res.json(result);
   };
 
   public update = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
     const data = req.body;
-    const result = await this.provinceService.updateProvince(id, data);
+    const result = await this.provinceService.update(id, data);
     res.json(result);
   };
 
   public delete = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
-    const result = await this.provinceService.deleteProvince(id);
+    const result = await this.provinceService.delete(id);
     res.json(result);
   };
 }

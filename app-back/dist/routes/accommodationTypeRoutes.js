@@ -5,8 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const accommodationTypeController_1 = require("../controllers/accommodationTypeController");
+const accommodationTypeRepository_1 = require("../repositories/accommodationTypeRepository");
 const router = express_1.default.Router();
-const controller = new accommodationTypeController_1.AccommodationTypeController();
+const repository = new accommodationTypeRepository_1.AccommodationTypeRepository();
+const controller = new accommodationTypeController_1.AccommodationTypeController(repository);
 router.get("/", controller.getAll);
 router.get("/:id", controller.getById);
 router.post("/", controller.create);
