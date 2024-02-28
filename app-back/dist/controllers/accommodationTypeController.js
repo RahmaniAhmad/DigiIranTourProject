@@ -10,13 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccommodationTypeController = void 0;
+const const_1 = require("../config/const");
 const accommodationTypeService_1 = require("../services/accommodationTypeService");
 class AccommodationTypeController {
     constructor(repository) {
         this.getAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const filter = req.query.filter;
-                const limit = req.query.limit ? Number(req.query.limit) : 10;
+                const limit = req.query.limit ? Number(req.query.limit) : const_1.LIMIT;
                 const page = req.query.page ? parseInt(req.query.page) : 1;
                 const result = yield this.accommodationTypeService.getAll(filter, page, limit);
                 res.json(result);

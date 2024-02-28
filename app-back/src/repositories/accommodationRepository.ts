@@ -1,6 +1,6 @@
 import { LIMIT } from "../config/const";
 import prisma from "../config/dbPrisma";
-import { Accommodation } from "../models/accommodationTypeModel";
+import { Accommodation } from "../models/accommodationModel";
 import { IAccommodationRepository } from "./contracts/IAccommodationRepository";
 
 export class AccommodationRepository implements IAccommodationRepository {
@@ -18,7 +18,12 @@ export class AccommodationRepository implements IAccommodationRepository {
         where: { title: { contains: filter } },
         skip: (page - 1) * limit,
         take: limit,
-        select: { id: true, title: true },
+        select: {
+          id: true,
+          title: true,
+          accommodationTypeId: true,
+          accommodationType: true,
+        },
       });
       dataCount = Math.ceil(
         (await prisma.accommodation.count({
@@ -30,7 +35,12 @@ export class AccommodationRepository implements IAccommodationRepository {
         orderBy: { id: "asc" },
         skip: (page - 1) * limit,
         take: limit,
-        select: { id: true, title: true },
+        select: {
+          id: true,
+          title: true,
+          accommodationTypeId: true,
+          accommodationType: true,
+        },
       });
       dataCount = Math.ceil((await prisma.accommodation.count()) / limit);
     }
@@ -44,12 +54,18 @@ export class AccommodationRepository implements IAccommodationRepository {
   async getById(id: number): Promise<Accommodation | null> {
     return prisma.accommodation.findUnique({
       where: { id: id },
-      select: { id: true, title: true },
+      select: {
+        id: true,
+        title: true,
+        accommodationTypeId: true,
+        accommodationType: true,
+      },
     });
   }
 
   async create(data: {
     title: string;
+    accommodationTypeId: number;
   }): Promise<{ message: string; data: Accommodation }> {
     const result = await prisma.accommodation.create({
       data: data,
@@ -60,9 +76,9 @@ export class AccommodationRepository implements IAccommodationRepository {
 
   async update(
     id: number,
-    data: { title: string }
+    data: { title: string; accommodationTypeId: number }
   ): Promise<{ message: string; data: Accommodation }> {
-    const result = await prisma.accommodation_type.update({
+    const result = await prisma.accommodation.update({
       where: { id: id },
       data: data,
     });

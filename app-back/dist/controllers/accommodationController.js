@@ -9,17 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProvinceController = void 0;
+exports.AccommodationController = void 0;
 const const_1 = require("../config/const");
-const provinceService_1 = require("../services/provinceService");
-class ProvinceController {
+const accommodationService_1 = require("../services/accommodationService");
+class AccommodationController {
     constructor(repository) {
         this.getAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const filter = req.query.filter;
                 const limit = req.query.limit ? Number(req.query.limit) : const_1.LIMIT;
                 const page = req.query.page ? parseInt(req.query.page) : 1;
-                const result = yield this.provinceService.getAll(filter, page, limit);
+                const result = yield this.accommodationService.getAll(filter, page, limit);
                 res.json(result);
             }
             catch (err) {
@@ -29,27 +29,27 @@ class ProvinceController {
         });
         this.getById = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);
-            const result = yield this.provinceService.getById(id);
+            const result = yield this.accommodationService.getById(id);
             res.json(result);
         });
         this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const data = req.body;
-            const result = yield this.provinceService.create(data);
+            const result = yield this.accommodationService.create(data);
             res.json(result);
         });
         this.update = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);
             const data = req.body;
-            const result = yield this.provinceService.update(id, data);
+            const result = yield this.accommodationService.update(id, data);
             res.json(result);
         });
         this.delete = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);
-            const result = yield this.provinceService.delete(id);
+            const result = yield this.accommodationService.delete(id);
             res.json(result);
         });
-        this.provinceService = new provinceService_1.ProvinceService(repository);
+        this.accommodationService = new accommodationService_1.AccommodationService(repository);
     }
 }
-exports.ProvinceController = ProvinceController;
-//# sourceMappingURL=provinceController.js.map
+exports.AccommodationController = AccommodationController;
+//# sourceMappingURL=accommodationController.js.map

@@ -12,34 +12,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AccommodationTypeRepository = void 0;
+exports.AccommodationRepository = void 0;
 const const_1 = require("../config/const");
 const dbPrisma_1 = __importDefault(require("../config/dbPrisma"));
-class AccommodationTypeRepository {
+class AccommodationRepository {
     getAll(filter, page = 1, limit = const_1.LIMIT) {
         return __awaiter(this, void 0, void 0, function* () {
             let data;
             let dataCount = 0;
             if (filter !== undefined) {
-                data = yield dbPrisma_1.default.accommodationType.findMany({
+                data = yield dbPrisma_1.default.accommodation.findMany({
                     orderBy: { id: "asc" },
                     where: { title: { contains: filter } },
                     skip: (page - 1) * limit,
                     take: limit,
-                    select: { id: true, title: true },
+                    select: {
+                        id: true,
+                        title: true,
+                        accommodationTypeId: true,
+                        accommodationType: true,
+                    },
                 });
-                dataCount = Math.ceil((yield dbPrisma_1.default.accommodationType.count({
+                dataCount = Math.ceil((yield dbPrisma_1.default.accommodation.count({
                     where: { title: { contains: filter } },
                 })) / limit);
             }
             else {
-                data = yield dbPrisma_1.default.accommodationType.findMany({
+                data = yield dbPrisma_1.default.accommodation.findMany({
                     orderBy: { id: "asc" },
                     skip: (page - 1) * limit,
                     take: limit,
-                    select: { id: true, title: true },
+                    select: {
+                        id: true,
+                        title: true,
+                        accommodationTypeId: true,
+                        accommodationType: true,
+                    },
                 });
-                dataCount = Math.ceil((yield dbPrisma_1.default.accommodationType.count()) / limit);
+                dataCount = Math.ceil((yield dbPrisma_1.default.accommodation.count()) / limit);
             }
             return {
                 data: data,
@@ -49,15 +59,20 @@ class AccommodationTypeRepository {
     }
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return dbPrisma_1.default.accommodationType.findUnique({
+            return dbPrisma_1.default.accommodation.findUnique({
                 where: { id: id },
-                select: { id: true, title: true },
+                select: {
+                    id: true,
+                    title: true,
+                    accommodationTypeId: true,
+                    accommodationType: true,
+                },
             });
         });
     }
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield dbPrisma_1.default.accommodationType.create({
+            const result = yield dbPrisma_1.default.accommodation.create({
                 data: data,
             });
             return { message: "Data inserted successfully", data: result };
@@ -65,7 +80,7 @@ class AccommodationTypeRepository {
     }
     update(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield dbPrisma_1.default.accommodationType.update({
+            const result = yield dbPrisma_1.default.accommodation.update({
                 where: { id: id },
                 data: data,
             });
@@ -74,12 +89,12 @@ class AccommodationTypeRepository {
     }
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield dbPrisma_1.default.accommodationType.delete({
+            const result = yield dbPrisma_1.default.accommodation.delete({
                 where: { id: id },
             });
             return { message: "Data deleted successfully", data: result };
         });
     }
 }
-exports.AccommodationTypeRepository = AccommodationTypeRepository;
-//# sourceMappingURL=accommodationTypeRepository.js.map
+exports.AccommodationRepository = AccommodationRepository;
+//# sourceMappingURL=accommodationRepository.js.map

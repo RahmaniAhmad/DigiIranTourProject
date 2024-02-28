@@ -1,14 +1,13 @@
 import { LIMIT } from "../config/const";
-import { IAaccommodationRepository } from "../repositories/contracts/IAaccommodationRepository";
-import { AaccommodationService } from "../services/accommodationService";
-
 import { Request, Response } from "express";
+import { AccommodationService } from "../services/accommodationService";
+import { IAccommodationRepository } from "../repositories/contracts/IAccommodationRepository";
 
-export class accommodationController {
-  private accommodationService: AaccommodationService;
+export class AccommodationController {
+  private accommodationService: AccommodationService;
 
-  constructor(repository: IAaccommodationRepository) {
-    this.accommodationService = new AaccommodationService(repository);
+  constructor(repository: IAccommodationRepository) {
+    this.accommodationService = new AccommodationService(repository);
   }
   public getAll = async (req: Request, res: Response) => {
     try {
