@@ -7,6 +7,6 @@ export interface ICreateAccommodationType {
   title: string;
 }
 
-export interface IUpdateIAccommodationType extends ICreateAccommodationType {
+export interface IUpdateAccommodationType extends ICreateAccommodationType {
   id: number;
 }
