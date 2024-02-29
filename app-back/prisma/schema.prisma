@@ -30,5 +30,6 @@ model Accommodation {
   id                  Int               @id @default(autoincrement())
   title               String            @db.VarChar(30)
   accommodationTypeId Int
+  provinceId Int
   accommodationType   AccommodationType @relation(fields: [accommodationTypeId], references: [id])
 }

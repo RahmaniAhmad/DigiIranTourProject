@@ -6,7 +6,7 @@ export const updateAccommodationTypeApi = async (
   data: ICreateAccommodationType
 ) => {
   const response = await axios.put(
-    `http://localhost:3001/api/accommodation-type/${id}`,
+    `http://localhost:3001/api/accommodationType/${id}`,
     data
   );
   return response.data;

@@ -9,6 +9,7 @@ import EditPage from "@/app/(dashboard)/dashboard/accommodationType/edit/[id]/pa
 import axios from "axios";
 import { useAccommodationTypes } from "../hooks/useAccommodationTypes";
 import { IAccommodationType } from "@/type/accommodationType";
+import { useDeleteAccommodationType } from "../hooks/useDeleteAccommodationType";
 
 // async function deleteAccommodationType(id: number) {
 //   const response = await axios.delete(
@@ -51,6 +52,9 @@ export default function AccommodationTypeList({
     filter,
     setFilter,
   } = useAccommodationTypes();
+  const { deleteAccommodationType } = useDeleteAccommodationType({
+    onSuccess: refetch,
+  });
 
   const openDeleteConfirm = async (id: number) => {
     const accommodationType = getById && (await getById(id));
@@ -67,7 +71,7 @@ export default function AccommodationTypeList({
   };
 
   const handleDeleteConfirmed = () => {
-    // selectedId && deleteAccommodationType.mutate(selectedId);
+    selectedId && deleteAccommodationType.mutate(selectedId);
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setAccommodationTypeName("");
