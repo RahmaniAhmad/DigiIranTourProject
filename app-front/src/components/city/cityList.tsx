@@ -2,22 +2,23 @@
 
 import { ChangeEvent, useState } from "react";
 import { Button, Input, Pagination } from "@nextui-org/react";
-import { ICity } from "@/type/city";
 import { ConfirmModal, CustomModal } from "@/components/UI";
 import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/city/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/city/edit/[id]/page";
-import { useCities } from "../hooks/useCities";
+import { useCities } from "../../hooks/city/useCities";
+import { CityViewModel } from "@/models/city/cityViewModel";
+import { useDeleteCity } from "@/hooks/city/useDeleteCity";
 
 interface CityListProps {
   getAll?: (
     page?: number,
     filter?: string
   ) => Promise<{
-    data: ICity[];
+    data: CityViewModel[];
     rowsCount: number;
   }>;
-  getById?: (id: number) => Promise<ICity | null>;
+  getById?: (id: number) => Promise<CityViewModel | null>;
 
   onDelete?: (id: number) => void;
 }
@@ -32,6 +33,7 @@ export default function CityList({ getById, getAll, onDelete }: CityListProps) {
 
   const {
     cities,
+    rowsCount,
     refetch,
     isLoading,
     currentPage,
@@ -39,6 +41,10 @@ export default function CityList({ getById, getAll, onDelete }: CityListProps) {
     filter,
     setFilter,
   } = useCities();
+  const { deleteCity } = useDeleteCity({
+    onSuccess: refetch,
+  });
+
   const openDeleteConfirm = async (id: number) => {
     const province = getById && (await getById(id));
     setCityName(province?.name ?? "");
@@ -54,7 +60,7 @@ export default function CityList({ getById, getAll, onDelete }: CityListProps) {
   };
 
   const handleDeleteConfirmed = () => {
-    // selectedId && deleteCity.mutate(selectedId);
+    selectedId && deleteCity.mutate(selectedId);
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setCityName("");
@@ -111,8 +117,8 @@ export default function CityList({ getById, getAll, onDelete }: CityListProps) {
       {cities && (
         <Table
           loading={isLoading}
-          heads={["نام استان"]}
-          data={cities.data}
+          heads={["نام استان", "نام شهر"]}
+          data={cities}
           actions={{
             showEdit: true,
             showDelete: true,
@@ -122,11 +128,11 @@ export default function CityList({ getById, getAll, onDelete }: CityListProps) {
           onEdit={openEditModal}
         ></Table>
       )}
-      {cities && cities.rowsCount > 1 && (
+      {cities && rowsCount > 1 && (
         <Pagination
           className="w-full"
           page={currentPage}
-          total={cities.rowsCount}
+          total={rowsCount}
           siblings={5}
           initialPage={1}
           showControls

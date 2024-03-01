@@ -8,7 +8,7 @@ import { useProvinces } from "../../province/hooks/useProvinces";
 import { IProvince } from "@/type/province";
 import { useAccommodationTypes } from "../../accommodationType/hooks/useAccommodationTypes";
 import { IAccommodationType } from "@/type/accommodationType";
-import { useCities } from "../../city/hooks/useCities";
+import { useCities } from "../../../../../hooks/city/useCities";
 
 interface IPageProps {
   onClose?: () => void;

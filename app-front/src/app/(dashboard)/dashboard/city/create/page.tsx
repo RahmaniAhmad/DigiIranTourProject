@@ -1,9 +1,7 @@
 "use client";
 import { Input, Button, Select, SelectItem } from "@nextui-org/react";
-
 import { useForm, FieldValues } from "react-hook-form";
-import { ICreateCity } from "@/type/city";
-import { useCreateCity } from "../hooks/useCreateCity";
+import { useCreateCity } from "../../../../../hooks/city/useCreateCity";
 import { useProvinces } from "../../province/hooks/useProvinces";
 import { IProvince } from "@/type/province";
 
@@ -22,7 +20,7 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
-    const data = filedValues as ICreateCity;
+    const data = filedValues as { name: string; provinceId: string };
     try {
       createCity.mutate({
         name: data.name,

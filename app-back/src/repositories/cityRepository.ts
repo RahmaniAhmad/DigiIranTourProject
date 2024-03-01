@@ -2,7 +2,6 @@ import { ICityRepository } from "./contracts/ICityRepository";
 import prisma from "../config/dbPrisma";
 import { City } from "../models/cityModel";
 import { LIMIT } from "../config/const";
-import { Province } from "../models/provinceModel";
 
 export class CityRepository implements ICityRepository {
   async getAll(
@@ -45,7 +44,7 @@ export class CityRepository implements ICityRepository {
   async getById(id: number): Promise<City | null> {
     return prisma.city.findUnique({
       where: { id: id },
-      select: { id: true, name: true },
+      select: { id: true, name: true, provinceId: true },
     });
   }
 

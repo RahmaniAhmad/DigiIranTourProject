@@ -1,11 +1,12 @@
 "use client";
 
-import { IUpdateCity } from "@/type/city";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useCity } from "../../hooks/useCity";
-import { useUpdateCity } from "../../hooks/useUpdateCity";
+import { useCity } from "../../../../../../hooks/city/useCity";
+import { useUpdateCity } from "../../../../../../hooks/city/useUpdateCity";
+import { City } from "../../../../../../models/city/city";
+import { useProvinces } from "../../../province/hooks/useProvinces";
 
 interface IPageProps {
   id: number;
@@ -16,6 +17,7 @@ interface IPageProps {
 const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const { city, isLoading } = useCity(id);
   const { updateCity } = useUpdateCity({ id, onSuccess });
+  const { provinces } = useProvinces();
 
   const {
     register,
@@ -29,7 +31,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   }, [city, setValue]);
 
   const formSubmit = async (filedValues: FieldValues) => {
-    const data = filedValues as IUpdateCity;
+    const data = filedValues as City;
     data.id = id;
     updateCity.mutate(data);
     onClose && onClose();
@@ -40,15 +42,28 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   }
   return (
     <form onSubmit={handleSubmit(formSubmit)} className="text-neutral-100">
-      <label className="text-default-600" htmlFor="Name">
-        نام شهر
-      </label>
-      <Input
-        defaultValue={city?.name}
-        {...register("name", { required: true })}
-      />
-      {errors.name && <p className="text-danger-600">نام شهر اجباری می باشد</p>}
-      <br />
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          استان
+        </label>
+        <Select {...register("provinceId")}>
+          {provinces &&
+            provinces.data.map((province: Province) => (
+              <SelectItem key={province.id} value={province.id}>
+                {province.name}
+              </SelectItem>
+            ))}
+        </Select>
+      </div>
+      <div className="mb-4">
+        <label className="text-default-600" htmlFor="name">
+          نام شهر
+        </label>
+        <Input {...register("name", { required: true })} />
+        {errors.name && (
+          <p className="text-danger-600">نام شهر اجباری می باشد</p>
+        )}
+      </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">
         <Button
           isDisabled={!isValid}

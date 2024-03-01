@@ -51,7 +51,7 @@ class CityRepository {
         return __awaiter(this, void 0, void 0, function* () {
             return dbPrisma_1.default.city.findUnique({
                 where: { id: id },
-                select: { id: true, name: true },
+                select: { id: true, name: true, provinceId: true },
             });
         });
     }
