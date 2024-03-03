@@ -43,6 +43,18 @@ const Header = () => {
             <li>
               <Link
                 className={
+                  pathname.includes("/dashboard/city")
+                    ? "font-bold text-neutral-400"
+                    : ""
+                }
+                href="/dashboard/city"
+              >
+                شهر
+              </Link>
+            </li>
+            <li>
+              <Link
+                className={
                   pathname.includes("/dashboard/accommodationType")
                     ? "font-bold text-neutral-400"
                     : ""

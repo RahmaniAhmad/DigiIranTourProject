@@ -8,6 +8,7 @@ import { useProvinces } from "../../province/hooks/useProvinces";
 import { IProvince } from "@/type/province";
 import { useAccommodationTypes } from "../../accommodationType/hooks/useAccommodationTypes";
 import { IAccommodationType } from "@/type/accommodationType";
+import { useCities } from "../../../../../hooks/city/useCities";
 
 interface IPageProps {
   onClose?: () => void;
@@ -16,6 +17,7 @@ interface IPageProps {
 const Page = ({ onSuccess, onClose }: IPageProps) => {
   const { createAccommodation } = useCreateAccommodation({ onSuccess });
   const { provinces } = useProvinces();
+  const { cities } = useCities();
   const { accommodationTypes } = useAccommodationTypes();
   const {
     register,
@@ -55,6 +57,19 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
             provinces.data.map((province: IProvince) => (
               <SelectItem key={province.id} value={province.id}>
                 {province.name}
+              </SelectItem>
+            ))}
+        </Select>
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          شهر
+        </label>
+        <Select {...register("cityId")}>
+          {cities &&
+            cities.data.map((city: IProvince) => (
+              <SelectItem key={city.id} value={city.id}>
+                {city.name}
               </SelectItem>
             ))}
         </Select>
