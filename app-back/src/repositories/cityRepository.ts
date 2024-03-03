@@ -18,7 +18,7 @@ export class CityRepository implements ICityRepository {
         where: { name: { contains: filter } },
         skip: (page - 1) * limit,
         take: limit,
-        select: { id: true, name: true, provinceId: true },
+        select: { id: true, name: true, province: true },
       });
       dataCount = Math.ceil(
         (await prisma.city.count({
@@ -44,7 +44,7 @@ export class CityRepository implements ICityRepository {
   async getById(id: number): Promise<City | null> {
     return prisma.city.findUnique({
       where: { id: id },
-      select: { id: true, name: true, provinceId: true },
+      select: { id: true, name: true, province: true },
     });
   }
 
@@ -61,8 +61,12 @@ export class CityRepository implements ICityRepository {
 
   async update(
     id: number,
-    data: { name: string }
+    data: { name: string; provinceId: number }
   ): Promise<{ message: string; data: City }> {
+    const city = prisma.city.findUnique({
+      where: { id: id },
+      select: { id: true, name: true, provinceId: true },
+    });
     const result = await prisma.city.update({
       where: { id: id },
       data: data,

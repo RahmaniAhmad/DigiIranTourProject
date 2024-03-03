@@ -1,15 +1,15 @@
 import { useMutation } from "react-query";
 import { updateCityApi } from "../../apis/city/updateCity";
 import { City } from "@/models/city/city";
+import { CityViewModel } from "@/models/city/cityViewModel";
 
 interface UseUpdateCityProps {
-  id: number;
   onSuccess?: () => void;
 }
-export function useUpdateCity({ id, onSuccess }: UseUpdateCityProps) {
+export function useUpdateCity({ onSuccess }: UseUpdateCityProps) {
   const updateCity = useMutation(
-    async (data: City) => {
-      return await updateCityApi(id, data);
+    async (data: CityViewModel) => {
+      return await updateCityApi(data);
     },
     {
       onSuccess: () => {

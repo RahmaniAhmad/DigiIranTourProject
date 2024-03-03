@@ -1,7 +1,16 @@
 import axios from "axios";
-import { City } from "../../models/city/city";
+import { CityViewModel } from "@/models/city/cityViewModel";
 
-export const createCityApi = async (data: City) => {
-  const response = await axios.post("http://localhost:3001/api/city", data);
+const mapToModel = (viewModel: CityViewModel) => {
+  return {
+    id: viewModel.id,
+    name: viewModel.name,
+    provinceId: Number(viewModel.provinceId),
+  };
+};
+
+export const createCityApi = async (viewModel: CityViewModel) => {
+  const model = mapToModel(viewModel);
+  const response = await axios.post("http://localhost:3001/api/city", model);
   return response.data;
 };

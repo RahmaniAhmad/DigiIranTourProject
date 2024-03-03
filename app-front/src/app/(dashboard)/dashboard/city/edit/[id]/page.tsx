@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
-import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useCity } from "../../../../../../hooks/city/useCity";
 import { useUpdateCity } from "../../../../../../hooks/city/useUpdateCity";
@@ -16,19 +15,14 @@ interface IPageProps {
 
 const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const { city, isLoading } = useCity(id);
-  const { updateCity } = useUpdateCity({ id, onSuccess });
+  const { updateCity } = useUpdateCity({ onSuccess });
   const { provinces } = useProvinces();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setValue,
-  } = useForm({ defaultValues: city });
-
-  useEffect(() => {
-    setValue("name", city?.name || "");
-  }, [city, setValue]);
+  } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as City;
@@ -46,10 +40,13 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           استان
         </label>
-        <Select {...register("provinceId")}>
+        <Select
+          {...register("provinceId")}
+          defaultSelectedKeys={city?.provinceId.toString()}
+        >
           {provinces &&
             provinces.data.map((province: Province) => (
-              <SelectItem key={province.id} value={province.id}>
+              <SelectItem key={province.id} value={province.name}>
                 {province.name}
               </SelectItem>
             ))}
@@ -59,7 +56,10 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         <label className="text-default-600" htmlFor="name">
           نام شهر
         </label>
-        <Input {...register("name", { required: true })} />
+        <Input
+          defaultValue={city?.name}
+          {...register("name", { required: true })}
+        />
         {errors.name && (
           <p className="text-danger-600">نام شهر اجباری می باشد</p>
         )}

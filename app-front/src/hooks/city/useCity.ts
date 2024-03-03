@@ -1,12 +1,12 @@
 import { useQuery } from "react-query";
-import { getCity } from "../../apis/city/getCity";
+import { getCityApi } from "../../apis/city/getCity";
 
 export function useCity(id: number) {
   const {
     error,
     isLoading,
     data: city,
-  } = useQuery(["city", id], () => getCity(id));
+  } = useQuery(["city", id], () => getCityApi(id));
 
   return {
     city,

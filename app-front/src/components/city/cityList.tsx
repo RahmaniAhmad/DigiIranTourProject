@@ -7,29 +7,14 @@ import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/city/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/city/edit/[id]/page";
 import { useCities } from "../../hooks/city/useCities";
-import { CityViewModel } from "@/models/city/cityViewModel";
 import { useDeleteCity } from "@/hooks/city/useDeleteCity";
 
-interface CityListProps {
-  getAll?: (
-    page?: number,
-    filter?: string
-  ) => Promise<{
-    data: CityViewModel[];
-    rowsCount: number;
-  }>;
-  getById?: (id: number) => Promise<CityViewModel | null>;
-
-  onDelete?: (id: number) => void;
-}
-
-export default function CityList({ getById, getAll, onDelete }: CityListProps) {
+export default function CityList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [provinceName, setCityName] = useState("");
+  const [cityName, setCityName] = useState("");
   const [selectedId, setSelectedId] = useState<number | undefined>();
-  // const [province, setCity] = useState<ICity>();
 
   const {
     cities,
@@ -46,15 +31,13 @@ export default function CityList({ getById, getAll, onDelete }: CityListProps) {
   });
 
   const openDeleteConfirm = async (id: number) => {
-    const province = getById && (await getById(id));
-    setCityName(province?.name ?? "");
+    const city = cities.find((f) => f.id == id);
+    setCityName(city?.name ?? "");
     setSelectedId(id);
     setShowDeleteConfirm(true);
   };
 
   const openEditModal = async (id: number) => {
-    // const province = getById && (await getById(id));
-    // province && setCity(province);
     setSelectedId(id);
     setShowEditModal(true);
   };
@@ -97,8 +80,8 @@ export default function CityList({ getById, getAll, onDelete }: CityListProps) {
         />
       </CustomModal>
       <ConfirmModal
-        title="حذف استان"
-        name={provinceName}
+        title={`حذف شهر ${cityName}`}
+        name={cityName}
         openModal={showDeleteConfirm}
         onCloseModal={() => setShowDeleteConfirm(false)}
         onConfirm={handleDeleteConfirmed}
@@ -122,7 +105,7 @@ export default function CityList({ getById, getAll, onDelete }: CityListProps) {
           actions={{
             showEdit: true,
             showDelete: true,
-            baseActionURL: "/dashboard/province",
+            baseActionURL: "/dashboard/city",
           }}
           onDelete={openDeleteConfirm}
           onEdit={openEditModal}
