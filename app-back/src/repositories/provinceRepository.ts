@@ -1,15 +1,15 @@
 import { IProvinceRepository } from "./contracts/IProvinceRepository";
 import prisma from "../config/dbPrisma";
-import { Province } from "../models/provinceModel";
 import { LIMIT } from "../config/const";
+import { ProvinceModel } from "../models/provinceModel";
 
 export class ProvinceRepository implements IProvinceRepository {
   async getAll(
     filter?: string,
     page = 1,
     limit = LIMIT
-  ): Promise<{ data: Province[]; rowsCount: number }> {
-    let data: Province[];
+  ): Promise<{ data: ProvinceModel[]; rowsCount: number }> {
+    let data: ProvinceModel[];
     let dataCount = 0;
 
     if (filter !== undefined) {
@@ -41,7 +41,7 @@ export class ProvinceRepository implements IProvinceRepository {
     };
   }
 
-  async getById(id: number): Promise<Province | null> {
+  async getById(id: number): Promise<ProvinceModel | null> {
     return prisma.province.findUnique({
       where: { id: id },
       select: { id: true, name: true },
@@ -50,7 +50,7 @@ export class ProvinceRepository implements IProvinceRepository {
 
   async create(data: {
     name: string;
-  }): Promise<{ message: string; data: Province }> {
+  }): Promise<{ message: string; data: ProvinceModel }> {
     const result = await prisma.province.create({
       data: data,
     });
@@ -61,7 +61,7 @@ export class ProvinceRepository implements IProvinceRepository {
   async update(
     id: number,
     data: { name: string }
-  ): Promise<{ message: string; data: Province }> {
+  ): Promise<{ message: string; data: ProvinceModel }> {
     const result = await prisma.province.update({
       where: { id: id },
       data: data,
@@ -70,7 +70,7 @@ export class ProvinceRepository implements IProvinceRepository {
     return { message: "Data updated successfully", data: result };
   }
 
-  async delete(id: number): Promise<{ message: string; data: Province }> {
+  async delete(id: number): Promise<{ message: string; data: ProvinceModel }> {
     const result = await prisma.province.delete({
       where: { id: id },
     });

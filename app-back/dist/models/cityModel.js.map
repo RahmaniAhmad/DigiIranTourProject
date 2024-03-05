@@ -1,1 +1,1 @@
-{"version":3,"file":"cityModel.js","sourceRoot":"","sources":["../../src/models/cityModel.ts"],"names":[],"mappings":""}
+{"version":3,"file":"cityModel.js","sourceRoot":"","sources":["../../src/models/cityModel.ts"],"names":[],"mappings":";;;AAEA,MAAa,SAAS;IAMpB,YAAY,EAAU,EAAE,IAAY,EAAE,UAAkB;QACtD,IAAI,CAAC,EAAE,GAAG,MAAM,CAAC,EAAE,CAAC,CAAC;QACrB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,UAAU,GAAG,UAAU,CAAC;IAC/B,CAAC;CACF;AAXD,8BAWC"}

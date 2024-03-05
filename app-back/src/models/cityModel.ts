@@ -1,8 +1,14 @@
-import { Province } from "./provinceModel";
+import { ProvinceModel } from "./provinceModel";
 
-export interface City {
+export class CityModel {
   id: number;
   name: string;
-  province?: Province;
-  pvovinceId?: number;
+  provinceId: number;
+  province?: ProvinceModel;
+
+  constructor(id: number, name: string, provinceId: number) {
+    this.id = Number(id);
+    this.name = name;
+    this.provinceId = provinceId;
+  }
 }

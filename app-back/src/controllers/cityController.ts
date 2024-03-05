@@ -2,6 +2,7 @@ import { LIMIT } from "../config/const";
 import { ICityRepository } from "../repositories/contracts/ICityRepository";
 import { CityService } from "../services/cityService";
 import { Request, Response } from "express";
+import cityMapper from "../mappers/cityMapper";
 
 export class CityController {
   private cityService: CityService;
@@ -17,7 +18,10 @@ export class CityController {
       const page = req.query.page ? parseInt(req.query.page as string) : 1;
 
       const result = await this.cityService.getAll(filter, page, limit);
-      res.json(result);
+      res.json({
+        data: result.data.map(cityMapper.mapToTableViewModel),
+        rowsCount: result.rowsCount,
+      });
     } catch (err) {
       console.error(err);
       res.status(500).send("Internal Server Error");
@@ -27,7 +31,7 @@ export class CityController {
   public getById = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
     const result = await this.cityService.getById(id);
-    res.json(result);
+    res.json(cityMapper.mapToViewModel(result));
   };
 
   public create = async (req: Request, res: Response) => {

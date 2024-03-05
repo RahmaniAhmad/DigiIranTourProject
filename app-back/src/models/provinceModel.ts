@@ -1,6 +1,4 @@
-import { Prisma } from "@prisma/client";
-
-export interface Province {
+export interface ProvinceModel {
   id: number;
   name: string;
 }

@@ -59,7 +59,7 @@ export default function CityList() {
   return (
     <>
       <CustomModal
-        title="ایجاد استان جدید"
+        title="ایجاد شهر جدید"
         openModal={showCreateModal}
         onCloseModal={() => setShowCreateModal(false)}
       >
@@ -69,7 +69,7 @@ export default function CityList() {
         />
       </CustomModal>
       <CustomModal
-        title="ویرایش استان"
+        title="ویرایش شهر"
         openModal={showEditModal}
         onCloseModal={() => setShowEditModal(false)}
       >
@@ -87,7 +87,7 @@ export default function CityList() {
         onConfirm={handleDeleteConfirmed}
       />
       <Button onClick={() => setShowCreateModal(true)} color="primary">
-        ایجاد استان جدید
+        ایجاد شهر جدید
       </Button>
       <Input
         isClearable
@@ -100,7 +100,7 @@ export default function CityList() {
       {cities && (
         <Table
           loading={isLoading}
-          heads={["نام استان", "نام شهر"]}
+          heads={["نام شهر", "نام شهر"]}
           data={cities}
           actions={{
             showEdit: true,

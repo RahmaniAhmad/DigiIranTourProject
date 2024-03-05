@@ -4,8 +4,8 @@ import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useCity } from "../../../../../../hooks/city/useCity";
 import { useUpdateCity } from "../../../../../../hooks/city/useUpdateCity";
-import { City } from "../../../../../../models/city/city";
 import { useProvinces } from "../../../province/hooks/useProvinces";
+import { ProvinceModel } from "@/models/province/province";
 
 interface IPageProps {
   id: number;
@@ -25,9 +25,9 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
-    const data = filedValues as City;
+    const data = filedValues;
     data.id = id;
-    updateCity.mutate(data);
+    updateCity.mutate({ id, data });
     onClose && onClose();
   };
   if (isLoading) {
@@ -45,7 +45,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           defaultSelectedKeys={city?.provinceId.toString()}
         >
           {provinces &&
-            provinces.data.map((province: Province) => (
+            provinces.data.map((province: ProvinceModel) => (
               <SelectItem key={province.id} value={province.name}>
                 {province.name}
               </SelectItem>

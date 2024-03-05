@@ -26,7 +26,7 @@ class CityRepository {
                     where: { name: { contains: filter } },
                     skip: (page - 1) * limit,
                     take: limit,
-                    select: { id: true, name: true, province: true },
+                    select: { id: true, name: true, provinceId: true, province: true },
                 });
                 dataCount = Math.ceil((yield dbPrisma_1.default.city.count({
                     where: { name: { contains: filter } },
@@ -37,7 +37,7 @@ class CityRepository {
                     orderBy: { id: "asc" },
                     skip: (page - 1) * limit,
                     take: limit,
-                    select: { id: true, name: true, province: true },
+                    select: { id: true, name: true, provinceId: true, province: true },
                 });
                 dataCount = Math.ceil((yield dbPrisma_1.default.city.count()) / limit);
             }
@@ -51,7 +51,7 @@ class CityRepository {
         return __awaiter(this, void 0, void 0, function* () {
             return dbPrisma_1.default.city.findUnique({
                 where: { id: id },
-                select: { id: true, name: true, province: true },
+                select: { id: true, name: true, provinceId: true, province: true },
             });
         });
     }
