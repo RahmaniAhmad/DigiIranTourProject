@@ -1,15 +1,15 @@
 import { ICityRepository } from "./contracts/ICityRepository";
 import prisma from "../config/dbPrisma";
-import { City } from "../models/cityModel";
 import { LIMIT } from "../config/const";
+import { ICity } from "../interfaces/ICity";
 
 export class CityRepository implements ICityRepository {
   async getAll(
     filter?: string,
     page = 1,
     limit = LIMIT
-  ): Promise<{ data: City[]; rowsCount: number }> {
-    let data: City[];
+  ): Promise<{ data: ICity[]; rowsCount: number }> {
+    let data: ICity[];
     let dataCount = 0;
 
     if (filter !== undefined) {
@@ -18,7 +18,7 @@ export class CityRepository implements ICityRepository {
         where: { name: { contains: filter } },
         skip: (page - 1) * limit,
         take: limit,
-        select: { id: true, name: true, province: true },
+        select: { id: true, name: true, provinceId: true, province: true },
       });
       dataCount = Math.ceil(
         (await prisma.city.count({
@@ -30,7 +30,7 @@ export class CityRepository implements ICityRepository {
         orderBy: { id: "asc" },
         skip: (page - 1) * limit,
         take: limit,
-        select: { id: true, name: true, province: true },
+        select: { id: true, name: true, provinceId: true, province: true },
       });
       dataCount = Math.ceil((await prisma.city.count()) / limit);
     }
@@ -41,17 +41,17 @@ export class CityRepository implements ICityRepository {
     };
   }
 
-  async getById(id: number): Promise<City | null> {
+  async getById(id: number): Promise<ICity | null> {
     return prisma.city.findUnique({
       where: { id: id },
-      select: { id: true, name: true, province: true },
+      select: { id: true, name: true, provinceId: true, province: true },
     });
   }
 
   async create(data: {
     name: string;
     provinceId: number;
-  }): Promise<{ message: string; data: City }> {
+  }): Promise<{ message: string; data: ICity }> {
     const result = await prisma.city.create({
       data: data,
     });
@@ -62,7 +62,7 @@ export class CityRepository implements ICityRepository {
   async update(
     id: number,
     data: { name: string; provinceId: number }
-  ): Promise<{ message: string; data: City }> {
+  ): Promise<{ message: string; data: ICity }> {
     const city = prisma.city.findUnique({
       where: { id: id },
       select: { id: true, name: true, provinceId: true },
@@ -75,7 +75,7 @@ export class CityRepository implements ICityRepository {
     return { message: "Data updated successfully", data: result };
   }
 
-  async delete(id: number): Promise<{ message: string; data: City }> {
+  async delete(id: number): Promise<{ message: string; data: ICity }> {
     const result = await prisma.city.delete({
       where: { id: id },
     });

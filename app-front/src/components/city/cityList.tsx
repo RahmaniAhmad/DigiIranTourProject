@@ -8,6 +8,7 @@ import CreatePage from "@/app/(dashboard)/dashboard/city/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/city/edit/[id]/page";
 import { useCities } from "../../hooks/city/useCities";
 import { useDeleteCity } from "@/hooks/city/useDeleteCity";
+import { toast } from "react-toastify";
 
 export default function CityList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -43,7 +44,15 @@ export default function CityList() {
   };
 
   const handleDeleteConfirmed = () => {
-    selectedId && deleteCity.mutate(selectedId);
+    selectedId &&
+      deleteCity.mutate(selectedId, {
+        onSuccess: () => {
+          toast.success("success");
+        },
+        onError: (error: any) => {
+          toast.error(error.response.data.message);
+        },
+      });
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setCityName("");
@@ -59,7 +68,7 @@ export default function CityList() {
   return (
     <>
       <CustomModal
-        title="ایجاد استان جدید"
+        title="ایجاد شهر جدید"
         openModal={showCreateModal}
         onCloseModal={() => setShowCreateModal(false)}
       >
@@ -69,7 +78,7 @@ export default function CityList() {
         />
       </CustomModal>
       <CustomModal
-        title="ویرایش استان"
+        title="ویرایش شهر"
         openModal={showEditModal}
         onCloseModal={() => setShowEditModal(false)}
       >
@@ -87,7 +96,7 @@ export default function CityList() {
         onConfirm={handleDeleteConfirmed}
       />
       <Button onClick={() => setShowCreateModal(true)} color="primary">
-        ایجاد استان جدید
+        ایجاد شهر جدید
       </Button>
       <Input
         isClearable
@@ -100,7 +109,7 @@ export default function CityList() {
       {cities && (
         <Table
           loading={isLoading}
-          heads={["نام استان", "نام شهر"]}
+          heads={["نام شهر", "نام شهر"]}
           data={cities}
           actions={{
             showEdit: true,

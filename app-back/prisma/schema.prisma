@@ -18,6 +18,7 @@ model City {
   name       String   @db.VarChar(30)
   provinceId Int
   province   Province @relation(fields: [provinceId], references: [id])
+  Accommodation Accommodation[]
 }
 
 model AccommodationType {
@@ -30,6 +31,7 @@ model Accommodation {
   id                  Int               @id @default(autoincrement())
   title               String            @db.VarChar(30)
   accommodationTypeId Int
-  provinceId Int
   accommodationType   AccommodationType @relation(fields: [accommodationTypeId], references: [id])
+  cityId          Int 
+  city            City @relation(fields: [cityId], references: [id])
 }

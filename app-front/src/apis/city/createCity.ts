@@ -1,7 +1,6 @@
 import axios from "axios";
-import { CityViewModel } from "@/models/city/cityViewModel";
 
-const mapToModel = (viewModel: CityViewModel) => {
+const mapToModel = (viewModel: CityViewModel): CityModel => {
   return {
     id: viewModel.id,
     name: viewModel.name,

@@ -1,4 +1,4 @@
-import { Province } from "../../models/provinceModel";
+import { IProvince } from "../../interfaces/IProvince";
 import { IBaseRepository } from "./IBaseRepository";
 
-export interface IProvinceRepository extends IBaseRepository<Province> {}
+export interface IProvinceRepository extends IBaseRepository<IProvince> {}

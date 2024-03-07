@@ -1,17 +1,16 @@
-import { City } from "@/models/city/city";
-import { CityViewModel } from "@/models/city/cityViewModel";
+import { CityViewModel } from "@/viewModels/city/cityViewModel";
 import axios from "axios";
-
-const mapToViewModel = (city: City): CityViewModel => {
-  return new CityViewModel(city.id, city.province, city.name);
-};
 
 export const getCityApi = async (id: number) => {
   const api = `http://localhost:3001/api/city/${id}`;
-  const data = await axios.get(api).then((response) => {
-    return response.data;
-  });
-  const cityViewModel: CityViewModel = mapToViewModel(data);
 
-  return cityViewModel;
+  const response = await axios.get(api);
+  const data = response.data;
+  const viewModel = new CityViewModel(
+    data.id,
+    data.name,
+    data.province.id,
+    data.province.name
+  );
+  return viewModel;
 };

@@ -1,5 +1,5 @@
 import { LIMIT } from "../config/const";
-import { Province } from "../models/provinceModel";
+import { IProvince } from "../interfaces/IProvince";
 import { IProvinceRepository } from "../repositories/contracts/IProvinceRepository";
 import { IProvinceService } from "./contracts/IProvinceService";
 
@@ -14,28 +14,28 @@ export class ProvinceService implements IProvinceService {
     filter?: string,
     page = 1,
     limit = LIMIT
-  ): Promise<{ data: Province[]; rowsCount: number }> {
+  ): Promise<{ data: IProvince[]; rowsCount: number }> {
     return this.provinceRepository.getAll(filter, page, limit);
   }
 
-  async getById(id: number): Promise<Province | null> {
+  async getById(id: number): Promise<IProvince | null> {
     return this.provinceRepository.getById(id);
   }
 
   async create(data: {
     name: string;
-  }): Promise<{ message: string; data: Province }> {
+  }): Promise<{ message: string; data: IProvince }> {
     return this.provinceRepository.create(data);
   }
 
   async update(
     id: number,
     data: { name: string }
-  ): Promise<{ message: string; data: Province }> {
+  ): Promise<{ message: string; data: IProvince }> {
     return this.provinceRepository.update(id, data);
   }
 
-  async delete(id: number): Promise<{ message: string; data: Province }> {
+  async delete(id: number): Promise<{ message: string; data: IProvince }> {
     return this.provinceRepository.delete(id);
   }
 }
