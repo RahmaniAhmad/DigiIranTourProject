@@ -1,6 +1,6 @@
 "use client";
 
-import { IUpdateAccommodationType } from "@/type/accommodationType";
+import { IUpdateAccommodationType } from "@/type/IAccommodationType";
 import { Button, Input } from "@nextui-org/react";
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";

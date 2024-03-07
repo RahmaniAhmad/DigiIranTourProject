@@ -1,0 +1,1 @@
+{"version":3,"file":"accommodationViewModel.js","sourceRoot":"","sources":["../../../src/viewModels/accommodation/accommodationViewModel.ts"],"names":[],"mappings":";;;AAGA,MAAa,sBAAsB;IAKjC,YACE,EAAU,EACV,KAAa,EACb,iBAAqC;QAErC,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;QACb,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC;QACnB,IAAI,CAAC,iBAAiB,GAAG,iBAAiB,CAAC;IAC7C,CAAC;CACF;AAdD,wDAcC"}

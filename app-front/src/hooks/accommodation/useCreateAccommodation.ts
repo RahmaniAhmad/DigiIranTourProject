@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
 import { createAccommodationApi } from "../../apis/accommodation/createAccommodation";
-import { Accommodation } from "@/models/accommodation/accommodation";
-import { AccommodationViewModel } from "@/models/accommodation/accommodationViewModel";
+import { AccommodationViewModel } from "@/viewModels/accommodation/accommodationViewModel";
+import { ICreateAccommodation } from "@/type/IAccommodation";
 
 interface UseCreateAccommodationProps {
   onSuccess?: () => void;
@@ -10,7 +10,7 @@ export function useCreateAccommodation({
   onSuccess,
 }: UseCreateAccommodationProps) {
   const createAccommodation = useMutation(
-    async (data: AccommodationViewModel) => {
+    async (data: ICreateAccommodation) => {
       return await createAccommodationApi(data);
     },
     {

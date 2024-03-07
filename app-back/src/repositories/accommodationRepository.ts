@@ -1,6 +1,6 @@
 import { LIMIT } from "../config/const";
 import prisma from "../config/dbPrisma";
-import { Accommodation } from "../models/accommodationModel";
+import { IAccommodation } from "../interfaces/IAccommodation";
 import { IAccommodationRepository } from "./contracts/IAccommodationRepository";
 
 export class AccommodationRepository implements IAccommodationRepository {
@@ -8,8 +8,8 @@ export class AccommodationRepository implements IAccommodationRepository {
     filter?: string,
     page = 1,
     limit = LIMIT
-  ): Promise<{ data: Accommodation[]; rowsCount: number }> {
-    let data: Accommodation[];
+  ): Promise<{ data: IAccommodation[]; rowsCount: number }> {
+    let data: IAccommodation[];
     let dataCount = 0;
 
     if (filter !== undefined) {
@@ -51,7 +51,7 @@ export class AccommodationRepository implements IAccommodationRepository {
     };
   }
 
-  async getById(id: number): Promise<Accommodation | null> {
+  async getById(id: number): Promise<IAccommodation | null> {
     return prisma.accommodation.findUnique({
       where: { id: id },
       select: {
@@ -66,7 +66,7 @@ export class AccommodationRepository implements IAccommodationRepository {
   async create(data: {
     title: string;
     accommodationTypeId: number;
-  }): Promise<{ message: string; data: Accommodation }> {
+  }): Promise<{ message: string; data: IAccommodation }> {
     const result = await prisma.accommodation.create({
       data: data,
     });
@@ -77,7 +77,7 @@ export class AccommodationRepository implements IAccommodationRepository {
   async update(
     id: number,
     data: { title: string; accommodationTypeId: number }
-  ): Promise<{ message: string; data: Accommodation }> {
+  ): Promise<{ message: string; data: IAccommodation }> {
     const result = await prisma.accommodation.update({
       where: { id: id },
       data: data,
@@ -86,7 +86,7 @@ export class AccommodationRepository implements IAccommodationRepository {
     return { message: "Data updated successfully", data: result };
   }
 
-  async delete(id: number): Promise<{ message: string; data: Accommodation }> {
+  async delete(id: number): Promise<{ message: string; data: IAccommodation }> {
     const result = await prisma.accommodation.delete({
       where: { id: id },
     });

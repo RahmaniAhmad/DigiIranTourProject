@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.City1 = void 0;
-class City1 {
+exports.City = void 0;
+class City {
     constructor(id, name, provinceId, province) {
         this.id = id;
         this.name = name;
@@ -9,5 +9,5 @@ class City1 {
         this.province = province;
     }
 }
-exports.City1 = City1;
+exports.City = City;
 //# sourceMappingURL=city.js.map

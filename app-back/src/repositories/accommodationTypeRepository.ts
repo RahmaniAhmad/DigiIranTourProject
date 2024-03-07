@@ -1,6 +1,6 @@
 import { LIMIT } from "../config/const";
 import prisma from "../config/dbPrisma";
-import { AccommodationType } from "../models/accommodationTypeModel";
+import { IAccommodationType } from "../interfaces/IAccommodationType";
 import { IAccommodationTypeRepository } from "./contracts/IAccommodationTypeRepository";
 
 export class AccommodationTypeRepository
@@ -10,8 +10,8 @@ export class AccommodationTypeRepository
     filter?: string,
     page = 1,
     limit = LIMIT
-  ): Promise<{ data: AccommodationType[]; rowsCount: number }> {
-    let data: AccommodationType[];
+  ): Promise<{ data: IAccommodationType[]; rowsCount: number }> {
+    let data: IAccommodationType[];
     let dataCount = 0;
 
     if (filter !== undefined) {
@@ -43,7 +43,7 @@ export class AccommodationTypeRepository
     };
   }
 
-  async getById(id: number): Promise<AccommodationType | null> {
+  async getById(id: number): Promise<IAccommodationType | null> {
     return prisma.accommodationType.findUnique({
       where: { id: id },
       select: { id: true, title: true },
@@ -52,7 +52,7 @@ export class AccommodationTypeRepository
 
   async create(data: {
     title: string;
-  }): Promise<{ message: string; data: AccommodationType }> {
+  }): Promise<{ message: string; data: IAccommodationType }> {
     const result = await prisma.accommodationType.create({
       data: data,
     });
@@ -63,7 +63,7 @@ export class AccommodationTypeRepository
   async update(
     id: number,
     data: { title: string }
-  ): Promise<{ message: string; data: AccommodationType }> {
+  ): Promise<{ message: string; data: IAccommodationType }> {
     const result = await prisma.accommodationType.update({
       where: { id: id },
       data: data,
@@ -74,7 +74,7 @@ export class AccommodationTypeRepository
 
   async delete(
     id: number
-  ): Promise<{ message: string; data: AccommodationType }> {
+  ): Promise<{ message: string; data: IAccommodationType }> {
     const result = await prisma.accommodationType.delete({
       where: { id: id },
     });

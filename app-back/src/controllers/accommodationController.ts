@@ -2,6 +2,7 @@ import { LIMIT } from "../config/const";
 import { Request, Response } from "express";
 import { AccommodationService } from "../services/accommodationService";
 import { IAccommodationRepository } from "../repositories/contracts/IAccommodationRepository";
+import accommodationMapper from "../mappers/accommodationMapper";
 
 export class AccommodationController {
   private accommodationService: AccommodationService;
@@ -20,7 +21,10 @@ export class AccommodationController {
         page,
         limit
       );
-      res.json(result);
+      res.json({
+        data: result.data.map(accommodationMapper.mapToTableViewModel),
+        rowsCount: result.rowsCount,
+      });
     } catch (err) {
       console.error(err);
       res.status(500).send("Internal Server Error");
@@ -30,7 +34,7 @@ export class AccommodationController {
   public getById = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
     const result = await this.accommodationService.getById(id);
-    res.json(result);
+    res.json(accommodationMapper.mapToViewModel(result));
   };
 
   public create = async (req: Request, res: Response) => {

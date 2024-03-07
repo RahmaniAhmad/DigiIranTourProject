@@ -8,10 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccommodationController = void 0;
 const const_1 = require("../config/const");
 const accommodationService_1 = require("../services/accommodationService");
+const accommodationMapper_1 = __importDefault(require("../mappers/accommodationMapper"));
 class AccommodationController {
     constructor(repository) {
         this.getAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -20,7 +24,10 @@ class AccommodationController {
                 const limit = req.query.limit ? Number(req.query.limit) : const_1.LIMIT;
                 const page = req.query.page ? parseInt(req.query.page) : 1;
                 const result = yield this.accommodationService.getAll(filter, page, limit);
-                res.json(result);
+                res.json({
+                    data: result.data.map(accommodationMapper_1.default.mapToTableViewModel),
+                    rowsCount: result.rowsCount,
+                });
             }
             catch (err) {
                 console.error(err);
@@ -30,7 +37,7 @@ class AccommodationController {
         this.getById = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);
             const result = yield this.accommodationService.getById(id);
-            res.json(result);
+            res.json(accommodationMapper_1.default.mapToViewModel(result));
         });
         this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const data = req.body;

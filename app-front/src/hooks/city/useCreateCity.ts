@@ -13,9 +13,7 @@ export function useCreateCity({ onSuccess }: UseCreateCityProps) {
       onSuccess: () => {
         onSuccess && onSuccess();
       },
-      onError: (error) => {
-        debugger;
-      },
+      onError: (error) => {},
     }
   );
 
