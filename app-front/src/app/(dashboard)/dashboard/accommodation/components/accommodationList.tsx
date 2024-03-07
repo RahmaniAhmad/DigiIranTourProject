@@ -6,44 +6,20 @@ import { ConfirmModal, CustomModal } from "@/components/UI";
 import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/accommodation/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/accommodation/edit/[id]/page";
-import axios from "axios";
-import { useAccommodations } from "../hooks/useAccommodations";
-import { IAccommodation } from "@/type/accommodation";
+import { useAccommodations } from "@/hooks/accommodation/useAccommodations";
+import { toast } from "react-toastify";
+import { useDeleteAccommodation } from "@/hooks/accommodation/useDeleteAccommodation";
 
-// async function deleteAccommodation(id: number) {
-//   const response = await axios.delete(
-//     `http://localhost:3001/api/accommodation/${id}`
-//   );
-//   return response.data;
-// }
-
-interface AccommodationListProps {
-  getAll?: (
-    page?: number,
-    filter?: string
-  ) => Promise<{
-    data: IAccommodation[];
-    rowsCount: number;
-  }>;
-  getById?: (id: number) => Promise<IAccommodation | null>;
-
-  onDelete?: (id: number) => void;
-}
-
-export default function AccommodationList({
-  getById,
-  getAll,
-  onDelete,
-}: AccommodationListProps) {
+export default function AccommodationList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [accommodationName, setAccommodationName] = useState("");
   const [selectedId, setSelectedId] = useState<number | undefined>();
-  // const [accommodation, setAccommodation] = useState<IAccommodation>();
 
   const {
     accommodations,
+    rowsCount,
     refetch,
     isLoading,
     currentPage,
@@ -51,23 +27,31 @@ export default function AccommodationList({
     filter,
     setFilter,
   } = useAccommodations();
-
+  const { deleteAccommodation } = useDeleteAccommodation({
+    onSuccess: refetch,
+  });
   const openDeleteConfirm = async (id: number) => {
-    const accommodation = getById && (await getById(id));
+    const accommodation = accommodations.find((f) => f.id == id);
     setAccommodationName(accommodation?.title ?? "");
     setSelectedId(id);
     setShowDeleteConfirm(true);
   };
 
   const openEditModal = async (id: number) => {
-    // const accommodation = getById && (await getById(id));
-    // accommodation && setAccommodation(accommodation);
     setSelectedId(id);
     setShowEditModal(true);
   };
 
   const handleDeleteConfirmed = () => {
-    // selectedId && deleteAccommodation.mutate(selectedId);
+    selectedId &&
+      deleteAccommodation.mutate(selectedId, {
+        onSuccess: () => {
+          toast.success("success");
+        },
+        onError: (error: any) => {
+          toast.error(error.response.data.message);
+        },
+      });
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setAccommodationName("");
@@ -124,8 +108,8 @@ export default function AccommodationList({
       {accommodations && (
         <Table
           loading={isLoading}
-          heads={["نام نوع اقامت"]}
-          data={accommodations.data}
+          heads={["نوع اقامت", "عنوان اقامتگاه"]}
+          data={accommodations}
           actions={{
             showEdit: true,
             showDelete: true,
@@ -135,11 +119,11 @@ export default function AccommodationList({
           onEdit={openEditModal}
         ></Table>
       )}
-      {accommodations && accommodations.rowsCount > 1 && (
+      {accommodations && rowsCount > 1 && (
         <Pagination
           className="w-full"
           page={currentPage}
-          total={accommodations.rowsCount}
+          total={rowsCount}
           siblings={5}
           initialPage={1}
           showControls

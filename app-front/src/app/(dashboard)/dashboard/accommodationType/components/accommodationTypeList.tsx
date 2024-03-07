@@ -8,7 +8,7 @@ import CreatePage from "@/app/(dashboard)/dashboard/accommodationType/create/pag
 import EditPage from "@/app/(dashboard)/dashboard/accommodationType/edit/[id]/page";
 import axios from "axios";
 import { useAccommodationTypes } from "../hooks/useAccommodationTypes";
-import { IAccommodationType } from "@/type/accommodationType";
+import { IAccommodationType } from "@/type/IAccommodationType";
 import { useDeleteAccommodationType } from "../hooks/useDeleteAccommodationType";
 
 // async function deleteAccommodationType(id: number) {

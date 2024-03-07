@@ -5,8 +5,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useCity } from "../../../../../../hooks/city/useCity";
 import { useUpdateCity } from "../../../../../../hooks/city/useUpdateCity";
 import { useProvinces } from "../../../province/hooks/useProvinces";
-import { ProvinceModel } from "@/models/province/province";
 import { toast } from "react-toastify";
+import { IProvince } from "@/type/province";
 
 interface IPageProps {
   id: number;
@@ -56,7 +56,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           defaultSelectedKeys={city?.provinceId.toString()}
         >
           {provinces &&
-            provinces.data.map((province: ProvinceModel) => (
+            provinces.data.map((province: IProvince) => (
               <SelectItem key={province.id} value={province.name}>
                 {province.name}
               </SelectItem>

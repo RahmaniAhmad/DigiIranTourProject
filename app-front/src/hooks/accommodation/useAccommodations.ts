@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDebounce } from "use-debounce";
-import { getCitiesApi } from "../../apis/accommodation/getAccommodations";
+import { getAccommodationsApi } from "../../apis/accommodation/getAccommodations";
 
-export function useCities() {
+export function useAccommodations() {
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState("");
   const [debounceFilter] = useDebounce(filter, 500);
   const { data, error, isLoading, refetch } = useQuery(
-    ["cities", currentPage, filter, debounceFilter],
-    () => getCitiesApi(currentPage, debounceFilter)
+    ["accomodations", currentPage, filter, debounceFilter],
+    () => getAccommodationsApi(currentPage, debounceFilter)
   );
-  const cities = data ? data.cities : [];
+  const accommodations = data ? data.accommodations : [];
   const rowsCount = data ? data.rowsCount : 0;
 
   return {
-    cities,
+    accommodations,
     rowsCount,
     refetch,
     currentPage,

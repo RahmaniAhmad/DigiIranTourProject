@@ -1,4 +1,3 @@
-import { CityViewModel } from "@/viewModels/city/cityViewModel";
 import axios from "axios";
 
 const mapToModel = (viewModel: any) => {

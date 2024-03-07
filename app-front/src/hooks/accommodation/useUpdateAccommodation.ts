@@ -1,17 +1,20 @@
 import { useMutation } from "react-query";
 import { updateAccommodationApi } from "../../apis/accommodation/updateAccommodation";
-import { Accommodation } from "@/models/accommodation/accommodation";
-import { AccommodationViewModel } from "@/models/accommodation/accommodationViewModel";
+import { AccommodationViewModel } from "@/viewModels/accommodation/accommodationViewModel";
 
 interface UseUpdateAccommodationProps {
   onSuccess?: () => void;
+}
+interface IUpdateAccommodation {
+  id: number;
+  data: any;
 }
 export function useUpdateAccommodation({
   onSuccess,
 }: UseUpdateAccommodationProps) {
   const updateAccommodation = useMutation(
-    async (data: AccommodationViewModel) => {
-      return await updateAccommodationApi(data);
+    async ({ id, data }: IUpdateAccommodation) => {
+      return await updateAccommodationApi(id, data);
     },
     {
       onSuccess: () => {

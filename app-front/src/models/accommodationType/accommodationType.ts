@@ -1,4 +1,4 @@
-class AccommodationType {
+class AccommodationType111 {
   public id: number;
   public title: string;
 

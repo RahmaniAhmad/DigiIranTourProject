@@ -1,4 +1,4 @@
-export class ProvinceModel {
+export class ProvinceModel111 {
   public id: number;
   public name: string;
 

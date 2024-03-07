@@ -1,4 +1,4 @@
-import { ICreateAccommodationType } from "@/type/accommodationType";
+import { ICreateAccommodationType } from "@/type/IAccommodationType";
 import axios from "axios";
 
 export const updateAccommodationTypeApi = async (

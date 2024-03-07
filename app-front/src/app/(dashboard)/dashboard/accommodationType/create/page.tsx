@@ -3,7 +3,7 @@ import { Input, Button } from "@nextui-org/react";
 
 import { useForm, FieldValues } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { ICreateAccommodationType } from "@/type/accommodationType";
+import { ICreateAccommodationType } from "@/type/IAccommodationType";
 import axios from "axios";
 import { useCreateAccommodationType } from "../hooks/useCreateAccommodationType";
 
