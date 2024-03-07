@@ -4,6 +4,7 @@ import { useForm, FieldValues } from "react-hook-form";
 import { useCreateCity } from "../../../../../hooks/city/useCreateCity";
 import { useProvinces } from "../../province/hooks/useProvinces";
 import { IProvince } from "@/type/province";
+import { toast } from "react-toastify";
 
 interface IPageProps {
   onClose?: () => void;
@@ -22,10 +23,20 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as { name: string; provinceId: string };
     try {
-      createCity.mutate({
-        name: data.name,
-        provinceId: Number(data.provinceId),
-      });
+      createCity.mutate(
+        {
+          name: data.name,
+          provinceId: Number(data.provinceId),
+        },
+        {
+          onSuccess: () => {
+            toast.success("success");
+          },
+          onError: (error: any) => {
+            toast.error(error.response.data.message);
+          },
+        }
+      );
       onSuccess && onSuccess();
     } catch (error) {
       console.error(error);

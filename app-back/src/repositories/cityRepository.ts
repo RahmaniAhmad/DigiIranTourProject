@@ -1,15 +1,15 @@
 import { ICityRepository } from "./contracts/ICityRepository";
 import prisma from "../config/dbPrisma";
 import { LIMIT } from "../config/const";
-import { CityModel } from "../models/cityModel";
+import { ICity } from "../interfaces/ICity";
 
 export class CityRepository implements ICityRepository {
   async getAll(
     filter?: string,
     page = 1,
     limit = LIMIT
-  ): Promise<{ data: CityModel[]; rowsCount: number }> {
-    let data: CityModel[];
+  ): Promise<{ data: ICity[]; rowsCount: number }> {
+    let data: ICity[];
     let dataCount = 0;
 
     if (filter !== undefined) {
@@ -41,7 +41,7 @@ export class CityRepository implements ICityRepository {
     };
   }
 
-  async getById(id: number): Promise<CityModel | null> {
+  async getById(id: number): Promise<ICity | null> {
     return prisma.city.findUnique({
       where: { id: id },
       select: { id: true, name: true, provinceId: true, province: true },
@@ -51,7 +51,7 @@ export class CityRepository implements ICityRepository {
   async create(data: {
     name: string;
     provinceId: number;
-  }): Promise<{ message: string; data: CityModel }> {
+  }): Promise<{ message: string; data: ICity }> {
     const result = await prisma.city.create({
       data: data,
     });
@@ -62,7 +62,7 @@ export class CityRepository implements ICityRepository {
   async update(
     id: number,
     data: { name: string; provinceId: number }
-  ): Promise<{ message: string; data: CityModel }> {
+  ): Promise<{ message: string; data: ICity }> {
     const city = prisma.city.findUnique({
       where: { id: id },
       select: { id: true, name: true, provinceId: true },
@@ -75,7 +75,7 @@ export class CityRepository implements ICityRepository {
     return { message: "Data updated successfully", data: result };
   }
 
-  async delete(id: number): Promise<{ message: string; data: CityModel }> {
+  async delete(id: number): Promise<{ message: string; data: ICity }> {
     const result = await prisma.city.delete({
       where: { id: id },
     });

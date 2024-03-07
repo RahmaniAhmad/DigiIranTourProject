@@ -1,4 +1,4 @@
-import { CityModel } from "../../models/cityModel";
+import { ICity } from "../../interfaces/ICity";
 import { IBaseRepository } from "./IBaseRepository";
 
-export interface ICityRepository extends IBaseRepository<CityModel> {}
+export interface ICityRepository extends IBaseRepository<ICity> {}

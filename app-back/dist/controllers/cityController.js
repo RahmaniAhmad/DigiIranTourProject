@@ -45,10 +45,18 @@ class CityController {
             res.json(result);
         });
         this.update = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id, 10);
-            const data = req.body;
-            const result = yield this.cityService.update(id, data);
-            res.json(result);
+            try {
+                const id = parseInt(req.params.id, 10);
+                const data = req.body;
+                const result = yield this.cityService.update(id, data);
+                if (result == null) {
+                    res.status(404).send({ message: "Not Found!" });
+                }
+                res.json(result);
+            }
+            catch (error) {
+                res.status(500).send({ message: "Server Error!" });
+            }
         });
         this.delete = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);

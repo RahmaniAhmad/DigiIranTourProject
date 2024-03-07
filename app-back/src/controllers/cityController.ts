@@ -41,10 +41,17 @@ export class CityController {
   };
 
   public update = async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id, 10);
-    const data = req.body;
-    const result = await this.cityService.update(id, data);
-    res.json(result);
+    try {
+      const id = parseInt(req.params.id, 10);
+      const data = req.body;
+      const result = await this.cityService.update(id, data);
+      if (result == null) {
+        res.status(404).send({ message: "Not Found!" });
+      }
+      res.json(result);
+    } catch (error) {
+      res.status(500).send({ message: "Server Error!" });
+    }
   };
 
   public delete = async (req: Request, res: Response) => {

@@ -6,6 +6,7 @@ import { useCity } from "../../../../../../hooks/city/useCity";
 import { useUpdateCity } from "../../../../../../hooks/city/useUpdateCity";
 import { useProvinces } from "../../../province/hooks/useProvinces";
 import { ProvinceModel } from "@/models/province/province";
+import { toast } from "react-toastify";
 
 interface IPageProps {
   id: number;
@@ -27,7 +28,17 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues;
     data.id = id;
-    updateCity.mutate({ id, data });
+    updateCity.mutate(
+      { id, data },
+      {
+        onSuccess: () => {
+          toast.success("success");
+        },
+        onError: (error: any) => {
+          toast.error(error.response.data.message);
+        },
+      }
+    );
     onClose && onClose();
   };
   if (isLoading) {

@@ -8,6 +8,7 @@ import CreatePage from "@/app/(dashboard)/dashboard/city/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/city/edit/[id]/page";
 import { useCities } from "../../hooks/city/useCities";
 import { useDeleteCity } from "@/hooks/city/useDeleteCity";
+import { toast } from "react-toastify";
 
 export default function CityList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -43,7 +44,15 @@ export default function CityList() {
   };
 
   const handleDeleteConfirmed = () => {
-    selectedId && deleteCity.mutate(selectedId);
+    selectedId &&
+      deleteCity.mutate(selectedId, {
+        onSuccess: () => {
+          toast.success("success");
+        },
+        onError: (error: any) => {
+          toast.error(error.response.data.message);
+        },
+      });
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setCityName("");
