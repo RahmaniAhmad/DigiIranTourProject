@@ -1,5 +1,5 @@
-import { AccommodationType } from "../../models/accommodationTypeModel";
+import { IAccommodationType } from "../../interfaces/IAccommodationType";
 import { IBaseService } from "./IBaseService";
 
 export interface IAccommodationTypeService
-  extends IBaseService<AccommodationType> {}
+  extends IBaseService<IAccommodationType> {}
