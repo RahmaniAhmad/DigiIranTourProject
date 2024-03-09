@@ -34,4 +34,5 @@ model Accommodation {
   accommodationType   AccommodationType @relation(fields: [accommodationTypeId], references: [id])
   cityId          Int 
   city            City @relation(fields: [cityId], references: [id])
+  address String
 }

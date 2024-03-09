@@ -31,6 +31,9 @@ class AccommodationRepository {
                         title: true,
                         accommodationTypeId: true,
                         accommodationType: true,
+                        cityId: true,
+                        city: true,
+                        address: true,
                     },
                 });
                 dataCount = Math.ceil((yield dbPrisma_1.default.accommodation.count({
@@ -47,6 +50,9 @@ class AccommodationRepository {
                         title: true,
                         accommodationTypeId: true,
                         accommodationType: true,
+                        cityId: true,
+                        city: true,
+                        address: true,
                     },
                 });
                 dataCount = Math.ceil((yield dbPrisma_1.default.accommodation.count()) / limit);
@@ -66,6 +72,9 @@ class AccommodationRepository {
                     title: true,
                     accommodationTypeId: true,
                     accommodationType: true,
+                    cityId: true,
+                    city: true,
+                    address: true,
                 },
             });
         });

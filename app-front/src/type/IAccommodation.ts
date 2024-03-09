@@ -7,6 +7,8 @@
 export interface ICreateAccommodation {
   title: string;
   accommodationTypeId: number;
+  cityId: number;
+  address: string;
 }
 
 export interface IUpdateAccommodation extends ICreateAccommodation {

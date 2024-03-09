@@ -1,1 +1,1 @@
-{"version":3,"file":"accommodation.js","sourceRoot":"","sources":["../../src/models/accommodation.ts"],"names":[],"mappings":";;;AAEA,MAAa,aAAa;IACxB,YACE,EAAU,EACV,KAAa,EACb,mBAA2B,EAC3B,iBAAsC,IACrC,CAAC;CACL;AAPD,sCAOC"}
+{"version":3,"file":"accommodation.js","sourceRoot":"","sources":["../../src/models/accommodation.ts"],"names":[],"mappings":";;;AAGA,MAAa,aAAa;IACxB,YACE,EAAU,EACV,KAAa,EACb,mBAA2B,EAC3B,MAAc,EACd,OAAe,EACf,iBAAsC,EACtC,IAAY,IACX,CAAC;CACL;AAVD,sCAUC"}

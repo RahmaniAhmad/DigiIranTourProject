@@ -8,14 +8,18 @@ class AccommodationMapper {
     return new AccommodationViewModel(
       model.id,
       model.title,
-      model.accommodationType
+      model.accommodationType,
+      model.city,
+      model.address
     );
   }
   mapToTableViewModel(model: IAccommodation): AccommodationTableViewModel {
     return new AccommodationTableViewModel(
       model.id,
       model.title,
-      model.accommodationType.title
+      model.accommodationType.title,
+      model.city.name,
+      model.address
     );
   }
 }

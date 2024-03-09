@@ -23,6 +23,9 @@ export class AccommodationRepository implements IAccommodationRepository {
           title: true,
           accommodationTypeId: true,
           accommodationType: true,
+          cityId: true,
+          city: true,
+          address: true,
         },
       });
       dataCount = Math.ceil(
@@ -40,6 +43,9 @@ export class AccommodationRepository implements IAccommodationRepository {
           title: true,
           accommodationTypeId: true,
           accommodationType: true,
+          cityId: true,
+          city: true,
+          address: true,
         },
       });
       dataCount = Math.ceil((await prisma.accommodation.count()) / limit);
@@ -59,6 +65,9 @@ export class AccommodationRepository implements IAccommodationRepository {
         title: true,
         accommodationTypeId: true,
         accommodationType: true,
+        cityId: true,
+        city: true,
+        address: true,
       },
     });
   }
@@ -66,6 +75,8 @@ export class AccommodationRepository implements IAccommodationRepository {
   async create(data: {
     title: string;
     accommodationTypeId: number;
+    cityId: number;
+    address: string;
   }): Promise<{ message: string; data: IAccommodation }> {
     const result = await prisma.accommodation.create({
       data: data,
@@ -76,7 +87,12 @@ export class AccommodationRepository implements IAccommodationRepository {
 
   async update(
     id: number,
-    data: { title: string; accommodationTypeId: number }
+    data: {
+      title: string;
+      accommodationTypeId: number;
+      cityId: number;
+      address: string;
+    }
   ): Promise<{ message: string; data: IAccommodation }> {
     const result = await prisma.accommodation.update({
       where: { id: id },

@@ -3,16 +3,22 @@ export class AccommodationViewModel {
   public title: string;
   public accommodationTypeId: number;
   public accommodationTypeTitle: string;
+  public cityId: number;
+  public cityName: string;
 
   constructor(
     id: number,
     title: string,
     accommodationTypeId: number,
-    accommodationTypeTitle: string
+    accommodationTypeTitle: string,
+    cityId: number,
+    cityName: string
   ) {
     this.id = id;
     this.title = title;
     this.accommodationTypeId = accommodationTypeId;
     this.accommodationTypeTitle = accommodationTypeTitle;
+    this.cityId = cityId;
+    this.cityName = cityName;
   }
 }

@@ -8,6 +8,7 @@ import { useCreateAccommodation } from "@/hooks/accommodation/useCreateAccommoda
 import { ICreateAccommodation } from "@/type/IAccommodation";
 import { toast } from "react-toastify";
 import { IAccommodationType } from "@/type/IAccommodationType";
+import { ICity } from "@/type/ICity";
 
 interface IPageProps {
   onClose?: () => void;
@@ -16,6 +17,7 @@ interface IPageProps {
 const Page = ({ onSuccess, onClose }: IPageProps) => {
   const { createAccommodation } = useCreateAccommodation({ onSuccess });
   const { accommodationTypes } = useAccommodationTypes();
+  const { cities } = useCities();
   const {
     register,
     handleSubmit,
@@ -23,12 +25,15 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
+    debugger;
     const data = filedValues as ICreateAccommodation;
 
     createAccommodation.mutate(
       {
         title: data.title,
         accommodationTypeId: Number(data.accommodationTypeId),
+        cityId: Number(data.cityId),
+        address: data.address,
       },
       {
         onSuccess: () => {
@@ -63,12 +68,32 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
       </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">
+          شهر
+        </label>
+        <Select {...register("cityId")}>
+          {cities &&
+            cities.map((city: ICity) => (
+              <SelectItem key={city.id} value={city.id}>
+                {city.name}
+              </SelectItem>
+            ))}
+        </Select>
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
           عنوان
         </label>
         <Input {...register("title", { required: true })} />
         {errors.title && (
           <p className="text-danger-600">نوع اقامت اجباری می باشد</p>
         )}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          آدرس
+        </label>
+        <Input {...register("address", { required: true })} />
+        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">
         <Button
