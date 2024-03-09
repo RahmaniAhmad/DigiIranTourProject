@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useAccommodationTypes } from "../../../accommodationType/hooks/useAccommodationTypes";
 import { toast } from "react-toastify";
+import { useCities } from "@/hooks/city/useCities";
+import { ICity } from "@/type/ICity";
 
 interface IPageProps {
   id: number;
@@ -22,17 +24,17 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
     onSuccess,
   });
   const { accommodationTypes } = useAccommodationTypes();
-
+  const { cities } = useCities();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     setValue,
-  } = useForm({ defaultValues: accommodation });
+  } = useForm();
 
-  useEffect(() => {
-    setValue("title", accommodation?.title || "");
-  }, [accommodation, setValue]);
+  // useEffect(() => {
+  //   setValue("title", accommodation?.title || "");
+  // }, [accommodation, setValue]);
 
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as IUpdateAccommodation;
@@ -69,12 +71,28 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
               (accommodationType: IAccommodationType) => (
                 <SelectItem
                   key={accommodationType.id}
-                  value={accommodationType.title}
+                  value={accommodationType.id}
                 >
                   {accommodationType.title}
                 </SelectItem>
               )
             )}
+        </Select>
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          شهر
+        </label>
+        <Select
+          {...register("cityId")}
+          defaultSelectedKeys={accommodation?.cityId.toString()}
+        >
+          {cities &&
+            cities.map((city: ICity) => (
+              <SelectItem key={city.id} value={city.id}>
+                {city.name}
+              </SelectItem>
+            ))}
         </Select>
       </div>
       <div className="mb-4">
@@ -88,6 +106,16 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         {errors.title && (
           <p className="text-danger-600">نوع اقامت اجباری می باشد</p>
         )}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          آدرس
+        </label>
+        <Input
+          {...register("address", { required: true })}
+          defaultValue={accommodation?.address}
+        />
+        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">
         <Button

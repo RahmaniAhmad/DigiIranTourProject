@@ -5,6 +5,7 @@ export class AccommodationViewModel {
   public accommodationTypeTitle: string;
   public cityId: number;
   public cityName: string;
+  public address: string;
 
   constructor(
     id: number,
@@ -12,7 +13,8 @@ export class AccommodationViewModel {
     accommodationTypeId: number,
     accommodationTypeTitle: string,
     cityId: number,
-    cityName: string
+    cityName: string,
+    address: string
   ) {
     this.id = id;
     this.title = title;
@@ -20,5 +22,6 @@ export class AccommodationViewModel {
     this.accommodationTypeTitle = accommodationTypeTitle;
     this.cityId = cityId;
     this.cityName = cityName;
+    this.address = address;
   }
 }

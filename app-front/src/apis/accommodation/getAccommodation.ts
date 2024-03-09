@@ -9,8 +9,10 @@ export const getAccommodationApi = async (id: number) => {
     data.id,
     data.title,
     data.accommodationType.id,
-    data.accommodationType.name
+    data.accommodationType.title,
+    data.city.id,
+    data.city.name,
+    data.address
   );
-
   return viewModel;
 };

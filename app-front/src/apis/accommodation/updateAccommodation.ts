@@ -7,6 +7,8 @@ const mapToModel = (viewModel: any) => {
     id: viewModel.id,
     title: viewModel.title,
     accommodationTypeId: Number(viewModel.accommodationTypeId),
+    cityId: Number(viewModel.cityId),
+    address: viewModel.address,
   };
 };
 export const updateAccommodationApi = async (

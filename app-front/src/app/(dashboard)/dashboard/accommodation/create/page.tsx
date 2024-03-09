@@ -25,7 +25,6 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
-    debugger;
     const data = filedValues as ICreateAccommodation;
 
     createAccommodation.mutate(
