@@ -6,7 +6,7 @@ export function useCity(id: number) {
     error,
     isLoading,
     data: city,
-  } = useQuery(["city", id], () => getCityApi(id));
+  } = useQuery(["city", id], async () => await getCityApi(id));
 
   return {
     city,

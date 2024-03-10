@@ -5,12 +5,13 @@ import { useUpdateAccommodation } from "@/hooks/accommodation/useUpdateAccommoda
 import { IUpdateAccommodation } from "@/type/IAccommodation";
 import { IAccommodationType } from "@/type/IAccommodationType";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useAccommodationTypes } from "../../../accommodationType/hooks/useAccommodationTypes";
 import { toast } from "react-toastify";
 import { useCities } from "@/hooks/city/useCities";
 import { ICity } from "@/type/ICity";
+import { AccommodationViewModel } from "@/viewModels/accommodation/accommodationViewModel";
 
 interface IPageProps {
   id: number;
@@ -25,16 +26,13 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   });
   const { accommodationTypes } = useAccommodationTypes();
   const { cities } = useCities();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     setValue,
   } = useForm();
-
-  // useEffect(() => {
-  //   setValue("title", accommodation?.title || "");
-  // }, [accommodation, setValue]);
 
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as IUpdateAccommodation;

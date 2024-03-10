@@ -6,7 +6,10 @@ export function useAccommodation(id: number) {
     error,
     isLoading,
     data: accommodation,
-  } = useQuery(["accommodation", id], () => getAccommodationApi(id));
+  } = useQuery(
+    ["accommodation", id],
+    async () => await getAccommodationApi(id)
+  );
 
   return {
     accommodation,
