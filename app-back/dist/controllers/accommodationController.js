@@ -34,6 +34,23 @@ class AccommodationController {
                 res.status(500).send("Internal Server Error");
             }
         });
+        this.getByType = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const type = req.params.type;
+                console.log(type);
+                const limit = req.query.limit ? Number(req.query.limit) : const_1.LIMIT;
+                const page = req.query.page ? parseInt(req.query.page) : 1;
+                const result = yield this.accommodationService.getByType(type, page, limit);
+                res.json({
+                    data: result.data.map(accommodationMapper_1.default.mapToTableViewModel),
+                    rowsCount: result.rowsCount,
+                });
+            }
+            catch (err) {
+                console.error(err);
+                res.status(500).send("Internal Server Error");
+            }
+        });
         this.getById = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);
             const result = yield this.accommodationService.getById(id);

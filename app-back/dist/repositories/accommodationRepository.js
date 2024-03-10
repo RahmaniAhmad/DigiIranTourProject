@@ -63,6 +63,42 @@ class AccommodationRepository {
             };
         });
     }
+    getByType(type, page = 1, limit = const_1.LIMIT) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let data;
+            let dataCount = 0;
+            data = yield dbPrisma_1.default.accommodation.findMany({
+                orderBy: { id: "asc" },
+                where: {
+                    accommodationType: {
+                        title: { equals: type },
+                    },
+                },
+                skip: (page - 1) * limit,
+                take: limit,
+                select: {
+                    id: true,
+                    title: true,
+                    accommodationTypeId: true,
+                    accommodationType: true,
+                    cityId: true,
+                    city: true,
+                    address: true,
+                },
+            });
+            dataCount = Math.ceil((yield dbPrisma_1.default.accommodation.count({
+                where: {
+                    accommodationType: {
+                        title: { equals: type },
+                    },
+                },
+            })) / limit);
+            return {
+                data: data,
+                rowsCount: dataCount,
+            };
+        });
+    }
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return dbPrisma_1.default.accommodation.findUnique({

@@ -20,6 +20,11 @@ class AccommodationService {
             return this.repository.getAll(filter, page, limit);
         });
     }
+    getByType(type, page = 1, limit = const_1.LIMIT) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.repository.getByType(type, page, limit);
+        });
+    }
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.repository.getById(id);

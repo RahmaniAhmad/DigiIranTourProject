@@ -18,6 +18,14 @@ export class AccommodationService implements IAccommodationService {
     return this.repository.getAll(filter, page, limit);
   }
 
+  async getByType(
+    type?: string,
+    page = 1,
+    limit = LIMIT
+  ): Promise<{ data: IAccommodation[]; rowsCount: number }> {
+    return this.repository.getByType(type, page, limit);
+  }
+
   async getById(id: number): Promise<IAccommodation | null> {
     return this.repository.getById(id);
   }

@@ -56,7 +56,48 @@ export class AccommodationRepository implements IAccommodationRepository {
       rowsCount: dataCount,
     };
   }
+  async getByType(
+    type: string,
+    page = 1,
+    limit = LIMIT
+  ): Promise<{ data: IAccommodation[]; rowsCount: number }> {
+    let data: IAccommodation[];
+    let dataCount = 0;
 
+    data = await prisma.accommodation.findMany({
+      orderBy: { id: "asc" },
+      where: {
+        accommodationType: {
+          title: { equals: type },
+        },
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+      select: {
+        id: true,
+        title: true,
+        accommodationTypeId: true,
+        accommodationType: true,
+        cityId: true,
+        city: true,
+        address: true,
+      },
+    });
+    dataCount = Math.ceil(
+      (await prisma.accommodation.count({
+        where: {
+          accommodationType: {
+            title: { equals: type },
+          },
+        },
+      })) / limit
+    );
+
+    return {
+      data: data,
+      rowsCount: dataCount,
+    };
+  }
   async getById(id: number): Promise<IAccommodation | null> {
     return prisma.accommodation.findUnique({
       where: { id: id },

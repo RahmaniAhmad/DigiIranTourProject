@@ -31,6 +31,28 @@ export class AccommodationController {
     }
   };
 
+  public getByType = async (req: Request, res: Response) => {
+    try {
+      const type = req.params.type as string;
+
+      const limit = req.query.limit ? Number(req.query.limit) : LIMIT;
+      const page = req.query.page ? parseInt(req.query.page as string) : 1;
+
+      const result = await this.accommodationService.getByType(
+        type,
+        page,
+        limit
+      );
+      res.json({
+        data: result.data.map(accommodationMapper.mapToTableViewModel),
+        rowsCount: result.rowsCount,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+    }
+  };
+
   public getById = async (req: Request, res: Response) => {
     const id = parseInt(req.params.id, 10);
     const result = await this.accommodationService.getById(id);

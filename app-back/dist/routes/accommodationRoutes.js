@@ -10,6 +10,7 @@ const router = express_1.default.Router();
 const repository = new accommodationRepository_1.AccommodationRepository();
 const controller = new accommodationController_1.AccommodationController(repository);
 router.get("/", controller.getAll);
+router.get("/:type", controller.getByType);
 router.get("/:id", controller.getById);
 router.post("/", controller.create);
 router.put("/:id", controller.update);
