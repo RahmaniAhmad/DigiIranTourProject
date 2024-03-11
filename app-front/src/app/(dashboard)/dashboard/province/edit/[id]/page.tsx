@@ -39,7 +39,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
     return <p>Loading...</p>;
   }
   return (
-    <form onSubmit={handleSubmit(formSubmit)} className="text-neutral-100">
+    <form onSubmit={handleSubmit(formSubmit)}>
       <label className="text-default-600" htmlFor="Name">
         نام استان
       </label>

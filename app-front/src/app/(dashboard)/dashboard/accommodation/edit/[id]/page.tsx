@@ -55,7 +55,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
     return <p>Loading...</p>;
   }
   return (
-    <form onSubmit={handleSubmit(formSubmit)} className="text-neutral-100">
+    <form onSubmit={handleSubmit(formSubmit)}>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           نوع اقامت
@@ -113,6 +113,27 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           {...register("address", { required: true })}
           defaultValue={accommodation?.address}
         />
+        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          تعداد اتاق
+        </label>
+        <Input {...register("bedroomsCount", { required: true })} />
+        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          تعداد تخت
+        </label>
+        <Input {...register("bedsCount", { required: true })} />
+        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          ظرفیت
+        </label>
+        <Input {...register("capacity", { required: true })} />
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">

@@ -2,7 +2,7 @@ import { AccommodationViewModel } from "@/viewModels/accommodation/accommodation
 import axios from "axios";
 
 export const getAccommodationApi = async (id: number) => {
-  const api = `http://localhost:3001/api/accommodation/${id}`;
+  const api = `http://localhost:3001/api/accommodation/id/${id}`;
   const response = await axios.get(api);
   const data = response.data;
   const viewModel = new AccommodationViewModel(

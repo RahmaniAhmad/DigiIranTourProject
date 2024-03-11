@@ -10,7 +10,10 @@ class AccommodationMapper {
       model.title,
       model.accommodationType,
       model.city,
-      model.address
+      model.address,
+      model.bedroomsCount,
+      model.bedsCount,
+      model.capacity
     );
   }
   mapToTableViewModel(model: IAccommodation): AccommodationTableViewModel {
@@ -18,8 +21,12 @@ class AccommodationMapper {
       model.id,
       model.title,
       model.accommodationType.title,
+      model.city.province.name,
       model.city.name,
-      model.address
+      model.address,
+      model.bedroomsCount,
+      model.bedsCount,
+      model.capacity
     );
   }
 }

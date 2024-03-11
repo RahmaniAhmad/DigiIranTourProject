@@ -71,7 +71,7 @@ const CustomNavbar = () => {
               description=""
               //   startContent={icons.scale}
             >
-              <Link href="/accommodations/هتل" aria-current="page">
+              <Link href="/accommodations/hotel" aria-current="page">
                 <p>هتل</p>
               </Link>
             </DropdownItem>

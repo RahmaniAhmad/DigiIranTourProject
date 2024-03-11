@@ -37,7 +37,6 @@ class AccommodationController {
         this.getByType = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const type = req.params.type;
-                console.log(type);
                 const limit = req.query.limit ? Number(req.query.limit) : const_1.LIMIT;
                 const page = req.query.page ? parseInt(req.query.page) : 1;
                 const result = yield this.accommodationService.getByType(type, page, limit);

@@ -24,8 +24,18 @@ export class AccommodationRepository implements IAccommodationRepository {
           accommodationTypeId: true,
           accommodationType: true,
           cityId: true,
-          city: true,
+          city: {
+            select: {
+              id: true,
+              name: true,
+              provinceId: true,
+              province: true,
+            },
+          },
           address: true,
+          bedroomsCount: true,
+          bedsCount: true,
+          capacity: true,
         },
       });
       dataCount = Math.ceil(
@@ -44,8 +54,18 @@ export class AccommodationRepository implements IAccommodationRepository {
           accommodationTypeId: true,
           accommodationType: true,
           cityId: true,
-          city: true,
+          city: {
+            select: {
+              id: true,
+              name: true,
+              provinceId: true,
+              province: true,
+            },
+          },
           address: true,
+          bedroomsCount: true,
+          bedsCount: true,
+          capacity: true,
         },
       });
       dataCount = Math.ceil((await prisma.accommodation.count()) / limit);
@@ -79,8 +99,18 @@ export class AccommodationRepository implements IAccommodationRepository {
         accommodationTypeId: true,
         accommodationType: true,
         cityId: true,
-        city: true,
+        city: {
+          select: {
+            id: true,
+            name: true,
+            provinceId: true,
+            province: true,
+          },
+        },
         address: true,
+        bedroomsCount: true,
+        bedsCount: true,
+        capacity: true,
       },
     });
     dataCount = Math.ceil(
@@ -109,6 +139,9 @@ export class AccommodationRepository implements IAccommodationRepository {
         cityId: true,
         city: true,
         address: true,
+        bedroomsCount: true,
+        bedsCount: true,
+        capacity: true,
       },
     });
   }
@@ -118,6 +151,9 @@ export class AccommodationRepository implements IAccommodationRepository {
     accommodationTypeId: number;
     cityId: number;
     address: string;
+    bedroomsCount: string;
+    bedsCount: string;
+    capacity: string;
   }): Promise<{ message: string; data: IAccommodation }> {
     const result = await prisma.accommodation.create({
       data: data,
@@ -133,6 +169,9 @@ export class AccommodationRepository implements IAccommodationRepository {
       accommodationTypeId: number;
       cityId: number;
       address: string;
+      bedroomsCount: string;
+      bedsCount: string;
+      capacity: string;
     }
   ): Promise<{ message: string; data: IAccommodation }> {
     const result = await prisma.accommodation.update({

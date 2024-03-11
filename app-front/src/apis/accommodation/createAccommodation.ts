@@ -7,7 +7,12 @@ export const createAccommodationApi = async (
 ) => {
   const response = await axios.post(
     "http://localhost:3001/api/accommodation",
-    viewModel
+    viewModel,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
   );
   return response.data;
 };

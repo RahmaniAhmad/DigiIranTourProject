@@ -43,6 +43,7 @@ export class AccommodationController {
         page,
         limit
       );
+
       res.json({
         data: result.data.map(accommodationMapper.mapToTableViewModel),
         rowsCount: result.rowsCount,

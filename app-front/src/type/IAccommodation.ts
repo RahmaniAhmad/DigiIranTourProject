@@ -9,6 +9,10 @@ export interface ICreateAccommodation {
   accommodationTypeId: number;
   cityId: number;
   address: string;
+  bedroomsCount: string;
+  bedsCount: string;
+  capacity: string;
+  accommodationImage: File;
 }
 
 export interface IUpdateAccommodation extends ICreateAccommodation {

@@ -7,6 +7,9 @@ export interface IAccommodation {
   accommodationTypeId: number;
   cityId: number;
   address: string;
+  bedroomsCount: string;
+  bedsCount: string;
+  capacity: string;
   accommodationType?: IAccommodationType;
   city?: ICity;
 }

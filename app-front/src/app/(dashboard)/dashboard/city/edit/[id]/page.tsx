@@ -46,7 +46,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
     return <p>Loading...</p>;
   }
   return (
-    <form onSubmit={handleSubmit(formSubmit)} className="text-neutral-100">
+    <form onSubmit={handleSubmit(formSubmit)}>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           استان

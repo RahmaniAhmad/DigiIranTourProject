@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between py-8">
       <div className="flex items-center">
         <Image src="/images/logo.png" alt="logo" width={48} height={48} />
         <h4>دیجی‌ایران‌تور</h4>

@@ -4,10 +4,10 @@ const accommodationTableViewModel_1 = require("../viewModels/accommodation/accom
 const accommodationViewModel_1 = require("../viewModels/accommodation/accommodationViewModel");
 class AccommodationMapper {
     mapToViewModel(model) {
-        return new accommodationViewModel_1.AccommodationViewModel(model.id, model.title, model.accommodationType, model.city, model.address);
+        return new accommodationViewModel_1.AccommodationViewModel(model.id, model.title, model.accommodationType, model.city, model.address, model.bedroomsCount, model.bedsCount, model.capacity);
     }
     mapToTableViewModel(model) {
-        return new accommodationTableViewModel_1.AccommodationTableViewModel(model.id, model.title, model.accommodationType.title, model.city.name, model.address);
+        return new accommodationTableViewModel_1.AccommodationTableViewModel(model.id, model.title, model.accommodationType.title, model.city.province.name, model.city.name, model.address, model.bedroomsCount, model.bedsCount, model.capacity);
     }
 }
 const accommodationMapper = new AccommodationMapper();

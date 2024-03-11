@@ -13,11 +13,9 @@ export function Providers({ children }: ProvidersProps) {
 
   return (
     <NextUIProvider>
-      <ThemeProvider attribute="class">
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
-      </ThemeProvider>
+      {/* <ThemeProvider attribute="class"> */}
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      {/* </ThemeProvider> */}
     </NextUIProvider>
   );
 }

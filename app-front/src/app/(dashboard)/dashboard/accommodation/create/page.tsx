@@ -25,6 +25,9 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
+    const formData = new FormData();
+    formData.append("accommodationImage", filedValues.accommodationImage[0]); // Extract the file from fieldValues
+
     const data = filedValues as ICreateAccommodation;
 
     createAccommodation.mutate(
@@ -33,6 +36,10 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         accommodationTypeId: Number(data.accommodationTypeId),
         cityId: Number(data.cityId),
         address: data.address,
+        bedroomsCount: data.bedroomsCount,
+        bedsCount: data.bedsCount,
+        capacity: data.capacity,
+        accommodationImage: data.accommodationImage,
       },
       {
         onSuccess: () => {
@@ -46,8 +53,10 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
     onClose && onClose();
   };
   return (
-    <form onSubmit={handleSubmit(formSubmit)} className="text-neutral-100">
+    <form onSubmit={handleSubmit(formSubmit)} encType="multipart/form-data">
       <div className="mb-4">
+        <input type="file" {...register("accommodationImage")} />
+
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           نوع اقامت
         </label>
@@ -92,6 +101,27 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
           آدرس
         </label>
         <Input {...register("address", { required: true })} />
+        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          تعداد اتاق
+        </label>
+        <Input {...register("bedroomsCount", { required: true })} />
+        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          تعداد تخت
+        </label>
+        <Input {...register("bedsCount", { required: true })} />
+        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          ظرفیت
+        </label>
+        <Input {...register("capacity", { required: true })} />
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">

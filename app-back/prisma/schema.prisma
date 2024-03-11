@@ -35,4 +35,7 @@ model Accommodation {
   cityId          Int 
   city            City @relation(fields: [cityId], references: [id])
   address String
+  bedroomsCount String
+  bedsCount String
+  capacity String
 }
