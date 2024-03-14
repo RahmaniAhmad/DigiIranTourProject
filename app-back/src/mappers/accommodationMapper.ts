@@ -13,7 +13,8 @@ class AccommodationMapper {
       model.address,
       model.bedroomsCount,
       model.bedsCount,
-      model.capacity
+      model.capacity,
+      model.imageName
     );
   }
   mapToTableViewModel(model: IAccommodation): AccommodationTableViewModel {
@@ -26,7 +27,8 @@ class AccommodationMapper {
       model.address,
       model.bedroomsCount,
       model.bedsCount,
-      model.capacity
+      model.capacity,
+      model.imageName
     );
   }
 }

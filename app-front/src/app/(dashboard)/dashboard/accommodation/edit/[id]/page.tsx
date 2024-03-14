@@ -110,6 +110,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           آدرس
         </label>
         <Input
+          size="lg"
           {...register("address", { required: true })}
           defaultValue={accommodation?.address}
         />

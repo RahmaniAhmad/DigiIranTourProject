@@ -36,6 +36,7 @@ export class AccommodationRepository implements IAccommodationRepository {
           bedroomsCount: true,
           bedsCount: true,
           capacity: true,
+          imageName: true,
         },
       });
       dataCount = Math.ceil(
@@ -66,6 +67,7 @@ export class AccommodationRepository implements IAccommodationRepository {
           bedroomsCount: true,
           bedsCount: true,
           capacity: true,
+          imageName: true,
         },
       });
       dataCount = Math.ceil((await prisma.accommodation.count()) / limit);
@@ -111,6 +113,7 @@ export class AccommodationRepository implements IAccommodationRepository {
         bedroomsCount: true,
         bedsCount: true,
         capacity: true,
+        imageName: true,
       },
     });
     dataCount = Math.ceil(
@@ -142,6 +145,7 @@ export class AccommodationRepository implements IAccommodationRepository {
         bedroomsCount: true,
         bedsCount: true,
         capacity: true,
+        imageName: true,
       },
     });
   }
@@ -154,12 +158,18 @@ export class AccommodationRepository implements IAccommodationRepository {
     bedroomsCount: string;
     bedsCount: string;
     capacity: string;
+    imageName: string;
   }): Promise<{ message: string; data: IAccommodation }> {
-    const result = await prisma.accommodation.create({
-      data: data,
-    });
+    try {
+      const result = await prisma.accommodation.create({
+        data: data,
+      });
 
-    return { message: "Data inserted successfully", data: result };
+      return { message: "Data inserted successfully", data: result };
+    } catch (error) {
+      console.log(error);
+      return { message: "Data inserted failed", data: null };
+    }
   }
 
   async update(
@@ -172,6 +182,7 @@ export class AccommodationRepository implements IAccommodationRepository {
       bedroomsCount: string;
       bedsCount: string;
       capacity: string;
+      imageName: string;
     }
   ): Promise<{ message: string; data: IAccommodation }> {
     const result = await prisma.accommodation.update({

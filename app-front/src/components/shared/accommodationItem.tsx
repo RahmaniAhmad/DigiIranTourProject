@@ -26,7 +26,7 @@ const AccommodationItem = ({
     <li className="flex py-6">
       <div className="h-128 w-128 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
         <Image
-          src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
+          src={imageSrc ?? ""}
           alt={title ?? "image"}
           width={128}
           height={128}

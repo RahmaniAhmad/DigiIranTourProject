@@ -11,6 +11,7 @@ export class Accommodation {
     bedroomsCount: string,
     bedsCount: string,
     capacity: string,
+    imageName: string,
     accommodationType?: IAccommodationType,
     city?: ICity
   ) {}

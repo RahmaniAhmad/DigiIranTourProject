@@ -11,6 +11,7 @@ export class AccommodationViewModel {
   public bedroomsCount: string;
   public bedsCount: string;
   public capacity: string;
+  public imageNmae: string;
 
   constructor(
     id: number,
@@ -20,7 +21,8 @@ export class AccommodationViewModel {
     address: string,
     bedroomsCount: string,
     bedsCount: string,
-    capacity: string
+    capacity: string,
+    imageName: string
   ) {
     this.id = id;
     this.title = title;
@@ -30,5 +32,6 @@ export class AccommodationViewModel {
     this.bedroomsCount = bedroomsCount;
     this.bedsCount = bedsCount;
     this.capacity = capacity;
+    this.imageNmae = imageName;
   }
 }

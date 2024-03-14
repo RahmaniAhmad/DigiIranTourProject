@@ -5,9 +5,10 @@ export class AccommodationTableViewModel {
   public provinceName: string;
   public cityName: string;
   public address: string;
-  bedroomsCount: String;
-  bedsCount: String;
-  capacity: String;
+  public bedroomsCount: String;
+  public bedsCount: String;
+  public capacity: String;
+  public imageName: string;
 
   constructor(
     id: number,
@@ -18,7 +19,8 @@ export class AccommodationTableViewModel {
     address: string,
     bedroomsCount: String,
     bedsCount: String,
-    capacity: String
+    capacity: String,
+    imageName: string
   ) {
     this.id = id;
     this.title = title;
@@ -29,5 +31,6 @@ export class AccommodationTableViewModel {
     this.bedroomsCount = bedroomsCount;
     this.bedsCount = bedsCount;
     this.capacity = capacity;
+    this.imageName = imageName;
   }
 }

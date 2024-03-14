@@ -44,6 +44,7 @@ class AccommodationRepository {
                         bedroomsCount: true,
                         bedsCount: true,
                         capacity: true,
+                        imageName: true,
                     },
                 });
                 dataCount = Math.ceil((yield dbPrisma_1.default.accommodation.count({
@@ -73,6 +74,7 @@ class AccommodationRepository {
                         bedroomsCount: true,
                         bedsCount: true,
                         capacity: true,
+                        imageName: true,
                     },
                 });
                 dataCount = Math.ceil((yield dbPrisma_1.default.accommodation.count()) / limit);
@@ -114,6 +116,7 @@ class AccommodationRepository {
                     bedroomsCount: true,
                     bedsCount: true,
                     capacity: true,
+                    imageName: true,
                 },
             });
             dataCount = Math.ceil((yield dbPrisma_1.default.accommodation.count({
@@ -144,16 +147,23 @@ class AccommodationRepository {
                     bedroomsCount: true,
                     bedsCount: true,
                     capacity: true,
+                    imageName: true,
                 },
             });
         });
     }
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield dbPrisma_1.default.accommodation.create({
-                data: data,
-            });
-            return { message: "Data inserted successfully", data: result };
+            try {
+                const result = yield dbPrisma_1.default.accommodation.create({
+                    data: data,
+                });
+                return { message: "Data inserted successfully", data: result };
+            }
+            catch (error) {
+                console.log(error);
+                return { message: "Data inserted failed", data: null };
+            }
         });
     }
     update(id, data) {

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccommodationTableViewModel = void 0;
 class AccommodationTableViewModel {
-    constructor(id, title, accommodationTypeTitle, provinceNmae, cityName, address, bedroomsCount, bedsCount, capacity) {
+    constructor(id, title, accommodationTypeTitle, provinceNmae, cityName, address, bedroomsCount, bedsCount, capacity, imageName) {
         this.id = id;
         this.title = title;
         this.accommodationTypeTitle = accommodationTypeTitle;
@@ -12,6 +12,7 @@ class AccommodationTableViewModel {
         this.bedroomsCount = bedroomsCount;
         this.bedsCount = bedsCount;
         this.capacity = capacity;
+        this.imageName = imageName;
     }
 }
 exports.AccommodationTableViewModel = AccommodationTableViewModel;

@@ -30,9 +30,7 @@ export class AccommodationService implements IAccommodationService {
     return this.repository.getById(id);
   }
 
-  async create(data: {
-    name: string;
-  }): Promise<{ message: string; data: IAccommodation }> {
+  async create(data: any): Promise<{ message: string; data: IAccommodation }> {
     return this.repository.create(data);
   }
 

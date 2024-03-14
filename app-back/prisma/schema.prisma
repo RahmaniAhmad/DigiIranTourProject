@@ -38,4 +38,5 @@ model Accommodation {
   bedroomsCount String
   bedsCount String
   capacity String
+  imageName String
 }

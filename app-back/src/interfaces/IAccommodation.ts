@@ -10,6 +10,7 @@ export interface IAccommodation {
   bedroomsCount: string;
   bedsCount: string;
   capacity: string;
+  imageName: string;
   accommodationType?: IAccommodationType;
   city?: ICity;
 }

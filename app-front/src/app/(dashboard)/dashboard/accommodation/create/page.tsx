@@ -25,9 +25,6 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
-    const formData = new FormData();
-    formData.append("accommodationImage", filedValues.accommodationImage[0]); // Extract the file from fieldValues
-
     const data = filedValues as ICreateAccommodation;
 
     createAccommodation.mutate(
@@ -39,7 +36,8 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         bedroomsCount: data.bedroomsCount,
         bedsCount: data.bedsCount,
         capacity: data.capacity,
-        accommodationImage: data.accommodationImage,
+        imageName: filedValues.accommodationImage[0].name,
+        accommodationImage: filedValues.accommodationImage[0],
       },
       {
         onSuccess: () => {
@@ -50,7 +48,7 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         },
       }
     );
-    onClose && onClose();
+    // onClose && onClose();
   };
   return (
     <form onSubmit={handleSubmit(formSubmit)} encType="multipart/form-data">

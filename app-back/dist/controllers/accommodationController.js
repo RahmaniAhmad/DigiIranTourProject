@@ -16,8 +16,33 @@ exports.AccommodationController = void 0;
 const const_1 = require("../config/const");
 const accommodationService_1 = require("../services/accommodationService");
 const accommodationMapper_1 = __importDefault(require("../mappers/accommodationMapper"));
+const multer_1 = __importDefault(require("multer"));
+const formidable_1 = __importDefault(require("formidable"));
+const storage = multer_1.default.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/");
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    },
+});
+const upload = (0, multer_1.default)({ storage: storage });
 class AccommodationController {
     constructor(repository) {
+        this.mapToModel = (viewModel) => {
+            return {
+                id: viewModel.id,
+                title: viewModel.title,
+                accommodationTypeId: Number(viewModel.accommodationTypeId),
+                cityId: Number(viewModel.cityId),
+                address: viewModel.address,
+                bedroomsCount: viewModel.bedroomsCount,
+                bedsCount: viewModel.bedsCount,
+                capacity: viewModel.capacity,
+                accommodationImage: viewModel.accommodationImage,
+                imageName: viewModel.imageName,
+            };
+        };
         this.getAll = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const filter = req.query.filter;
@@ -56,9 +81,32 @@ class AccommodationController {
             res.json(accommodationMapper_1.default.mapToViewModel(result));
         });
         this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const data = req.body;
-            const result = yield this.accommodationService.create(data);
-            res.json(result);
+            upload.single("accommodationImage")(req, res, (err) => __awaiter(this, void 0, void 0, function* () {
+                if (err) {
+                    return res.status(400).json({ error: err.message });
+                }
+            }));
+            const form = (0, formidable_1.default)({ multiples: false });
+            form.parse(req, (err, fields, files) => {
+                const data = {};
+                Object.keys(fields).forEach((key) => {
+                    data[key] = fields[key][0];
+                });
+                const model = this.mapToModel(data);
+                console.log(fields);
+                console.log(data);
+                console.log(model);
+                const result = this.accommodationService.create(model);
+                res.json(result);
+            });
+            // const data = req.body;
+            // const result = this.accommodationService.create(data);
+            // upload.single("accommodationImage")(req, res, (err: any) => {
+            //   if (err) {
+            //     return res.status(400).json({ error: err.message });
+            //   }
+            //   res.json(result);
+            // });
         });
         this.update = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);
