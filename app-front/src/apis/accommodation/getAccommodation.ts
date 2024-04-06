@@ -12,7 +12,10 @@ export const getAccommodationApi = async (id: number) => {
     data.accommodationType.title,
     data.city.id,
     data.city.name,
-    data.address
+    data.address,
+    data.bedroomsCount,
+    data.bedsCount,
+    data.capacity
   );
   return viewModel;
 };

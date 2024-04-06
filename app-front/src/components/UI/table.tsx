@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@nextui-org/react";
+import Image from "next/image";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 export interface IAction {
@@ -70,7 +71,18 @@ const Table = ({
                     if (!showId && rowIndex === 0) return;
                     return (
                       <td key={rowIndex} className="px-6 py-4">
-                        {col}
+                        {(col + "").includes(".jpg") ||
+                        (col + "").includes(".png") ? (
+                          <Image
+                            src={`http://localhost:3001/uploads/images/${col}`}
+                            alt={col + "" ?? "image"}
+                            width={128}
+                            height={128}
+                            className="h-full w-full object-cover object-center"
+                          />
+                        ) : (
+                          col
+                        )}
                       </td>
                     );
                   })}

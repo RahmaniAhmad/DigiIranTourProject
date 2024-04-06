@@ -108,7 +108,17 @@ export default function AccommodationList() {
       {accommodations && (
         <Table
           loading={isLoading}
-          heads={["نوع اقامت", "عنوان اقامتگاه", "شهر"]}
+          heads={[
+            "استان",
+            "شهر",
+            "نوع اقامت",
+            "عنوان اقامتگاه",
+            "آدرس",
+            "تعداد اتاق",
+            "تعداد تخت",
+            "ظرفیت",
+            "تصویر",
+          ]}
           data={accommodations}
           actions={{
             showEdit: true,

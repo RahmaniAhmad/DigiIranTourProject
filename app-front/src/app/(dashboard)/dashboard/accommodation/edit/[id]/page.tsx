@@ -145,14 +145,20 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           تعداد تخت
         </label>
-        <Input {...register("bedsCount", { required: true })} />
+        <Input
+          {...register("bedsCount", { required: true })}
+          defaultValue={accommodation?.bedsCount}
+        />
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           ظرفیت
         </label>
-        <Input {...register("capacity", { required: true })} />
+        <Input
+          {...register("capacity", { required: true })}
+          defaultValue={accommodation?.capacity}
+        />
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">
