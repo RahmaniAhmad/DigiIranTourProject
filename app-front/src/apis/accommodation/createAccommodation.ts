@@ -19,7 +19,12 @@ export const createAccommodationApi = async (
   formData.append("imageName", viewModel.imageName);
   const response = await axios.post(
     "http://localhost:3001/api/accommodation",
-    formData
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
   );
   return response.data;
 };

@@ -38,7 +38,20 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
     const data = filedValues as IUpdateAccommodation;
     data.id = id;
     updateAccommodation.mutate(
-      { id, data },
+      {
+        id,
+        data: {
+          title: data.title,
+          accommodationTypeId: Number(data.accommodationTypeId),
+          cityId: Number(data.cityId),
+          address: data.address,
+          bedroomsCount: data.bedroomsCount,
+          bedsCount: data.bedsCount,
+          capacity: data.capacity,
+          imageName: filedValues.accommodationImage[0].name,
+          accommodationImage: filedValues.accommodationImage[0],
+        },
+      },
       {
         onSuccess: () => {
           toast.success("success");
@@ -94,6 +107,8 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         </Select>
       </div>
       <div className="mb-4">
+        <input type="file" {...register("accommodationImage")} />
+
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           عنوان
         </label>
@@ -120,7 +135,10 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           تعداد اتاق
         </label>
-        <Input {...register("bedroomsCount", { required: true })} />
+        <Input
+          {...register("bedroomsCount", { required: true })}
+          defaultValue={accommodation?.bedroomsCount}
+        />
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className="mb-4">

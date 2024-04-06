@@ -20,7 +20,7 @@ const multer_1 = __importDefault(require("multer"));
 const formidable_1 = __importDefault(require("formidable"));
 const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads/");
+        cb(null, "uploads/images");
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname);
@@ -93,26 +93,31 @@ class AccommodationController {
                     data[key] = fields[key][0];
                 });
                 const model = this.mapToModel(data);
-                console.log(fields);
-                console.log(data);
-                console.log(model);
                 const result = this.accommodationService.create(model);
                 res.json(result);
             });
-            // const data = req.body;
-            // const result = this.accommodationService.create(data);
-            // upload.single("accommodationImage")(req, res, (err: any) => {
-            //   if (err) {
-            //     return res.status(400).json({ error: err.message });
-            //   }
-            //   res.json(result);
-            // });
         });
         this.update = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const id = parseInt(req.params.id, 10);
-            const data = req.body;
-            const result = yield this.accommodationService.update(id, data);
-            res.json(result);
+            upload.single("accommodationImage")(req, res, (err) => __awaiter(this, void 0, void 0, function* () {
+                if (err) {
+                    return res.status(400).json({ error: err.message });
+                }
+            }));
+            const form = (0, formidable_1.default)({ multiples: false });
+            form.parse(req, (err, fields, files) => {
+                const data = {};
+                Object.keys(fields).forEach((key) => {
+                    data[key] = fields[key][0];
+                });
+                const id = parseInt(req.params.id, 10);
+                const model = this.mapToModel(data);
+                const result = this.accommodationService.update(id, model);
+                res.json(result);
+            });
+            // const id = parseInt(req.params.id, 10);
+            // const data = req.body;
+            // const result = await this.accommodationService.update(id, data);
+            // res.json(result);
         });
         this.delete = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);

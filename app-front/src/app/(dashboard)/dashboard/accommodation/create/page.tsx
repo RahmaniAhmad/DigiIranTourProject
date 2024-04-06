@@ -48,7 +48,7 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         },
       }
     );
-    // onClose && onClose();
+    onClose && onClose();
   };
   return (
     <form onSubmit={handleSubmit(formSubmit)} encType="multipart/form-data">

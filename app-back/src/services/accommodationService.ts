@@ -36,7 +36,7 @@ export class AccommodationService implements IAccommodationService {
 
   async update(
     id: number,
-    data: { name: string }
+    data: any
   ): Promise<{ message: string; data: IAccommodation }> {
     return this.repository.update(id, data);
   }

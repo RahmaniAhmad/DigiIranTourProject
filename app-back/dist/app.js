@@ -10,25 +10,12 @@ const cityRoutes_1 = __importDefault(require("./routes/cityRoutes"));
 const provinceRoutes_1 = __importDefault(require("./routes/provinceRoutes"));
 const accommodationTypeRoutes_1 = __importDefault(require("./routes/accommodationTypeRoutes"));
 const accommodationRoutes_1 = __importDefault(require("./routes/accommodationRoutes"));
+const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 const port = 3001;
-const multer = require("multer");
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "images/");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.originalname);
-//   },
-// });
-// const upload = multer({ storage: storage });
-// app.use(express.static("public"));
-// app.use("/images", express.static("images"));
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
-// app.post("/image", upload.single("file"), function (req, res) {
-//   res.json({});
-// });
+app.use("/uploads/images", express_1.default.static(path_1.default.join("uploads", "images")));
 app.use("/api/province", provinceRoutes_1.default);
 app.use("/api/city", cityRoutes_1.default);
 app.use("/api/accommodationtype", accommodationTypeRoutes_1.default);
