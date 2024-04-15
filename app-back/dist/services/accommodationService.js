@@ -37,6 +37,11 @@ class AccommodationService {
     }
     update(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
+            const existData = yield this.getById(id);
+            if (!existData.imageName) {
+                data.imageName = existData.imageName;
+            }
+            console.log("1111111111111111: ", data);
             return this.repository.update(id, data);
         });
     }

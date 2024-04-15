@@ -132,7 +132,7 @@ export class AccommodationRepository implements IAccommodationRepository {
     };
   }
   async getById(id: number): Promise<IAccommodation | null> {
-    return prisma.accommodation.findUnique({
+    return await prisma.accommodation.findUnique({
       where: { id: id },
       select: {
         id: true,
@@ -167,7 +167,6 @@ export class AccommodationRepository implements IAccommodationRepository {
 
       return { message: "Data inserted successfully", data: result };
     } catch (error) {
-      console.log(error);
       return { message: "Data inserted failed", data: null };
     }
   }
@@ -185,6 +184,7 @@ export class AccommodationRepository implements IAccommodationRepository {
       imageName: string;
     }
   ): Promise<{ message: string; data: IAccommodation }> {
+    console.log("222222222222: ", data);
     const result = await prisma.accommodation.update({
       where: { id: id },
       data: data,

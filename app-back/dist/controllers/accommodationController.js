@@ -98,11 +98,13 @@ class AccommodationController {
             });
         });
         this.update = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            upload.single("accommodationImage")(req, res, (err) => __awaiter(this, void 0, void 0, function* () {
-                if (err) {
-                    return res.status(400).json({ error: err.message });
-                }
-            }));
+            if (req.file) {
+                upload.single("accommodationImage")(req, res, (err) => __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        return res.status(400).json({ error: err.message });
+                    }
+                }));
+            }
             const form = (0, formidable_1.default)({ multiples: false });
             form.parse(req, (err, fields, files) => {
                 const data = {};
@@ -114,10 +116,6 @@ class AccommodationController {
                 const result = this.accommodationService.update(id, model);
                 res.json(result);
             });
-            // const id = parseInt(req.params.id, 10);
-            // const data = req.body;
-            // const result = await this.accommodationService.update(id, data);
-            // res.json(result);
         });
         this.delete = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id, 10);

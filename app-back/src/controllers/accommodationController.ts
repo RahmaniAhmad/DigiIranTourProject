@@ -107,11 +107,13 @@ export class AccommodationController {
   };
 
   public update = async (req: Request, res: Response) => {
-    upload.single("accommodationImage")(req, res, async (err: any) => {
-      if (err) {
-        return res.status(400).json({ error: err.message });
-      }
-    });
+    if (req.file) {
+      upload.single("accommodationImage")(req, res, async (err: any) => {
+        if (err) {
+          return res.status(400).json({ error: err.message });
+        }
+      });
+    }
     const form = formidable({ multiples: false });
     form.parse(req, (err, fields, files) => {
       const data: any = {};
@@ -123,11 +125,6 @@ export class AccommodationController {
       const result = this.accommodationService.update(id, model);
       res.json(result);
     });
-
-    // const id = parseInt(req.params.id, 10);
-    // const data = req.body;
-    // const result = await this.accommodationService.update(id, data);
-    // res.json(result);
   };
 
   public delete = async (req: Request, res: Response) => {

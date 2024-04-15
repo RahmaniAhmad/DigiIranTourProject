@@ -36,7 +36,13 @@ export const CustomModal = ({
     onClose();
   };
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} placement="bottom-center">
+    <Modal
+      size="full"
+      isOpen={isOpen}
+      onClose={handleClose}
+      placement="bottom-center"
+      className="max-h-[700px] w-[800px] overflow-auto"
+    >
       <ModalContent>
         {(onClose) => (
           <>

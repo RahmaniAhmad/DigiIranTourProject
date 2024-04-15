@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|c:\\work\\personal\\digiirantourproject\\app-api\\model\\accommodationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|solutionrelative:model\\accommodationtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|c:\\work\\personal\\digiirantourproject\\app-api\\model\\city.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|solutionrelative:model\\city.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|c:\\work\\personal\\digiirantourproject\\app-api\\model\\province.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|solutionrelative:model\\province.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|c:\\work\\personal\\digiirantourproject\\app-api\\model\\accommodation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|solutionrelative:model\\accommodation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|c:\\work\\personal\\digiirantourproject\\app-api\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|solutionrelative:appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|c:\\work\\personal\\digiirantourproject\\app-api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B705381A-DF90-40A8-A54A-384EADFAF647}|app-api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "City.cs",
+              "DocumentMoniker": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Model\\City.cs",
+              "RelativeDocumentMoniker": "Model\\City.cs",
+              "ToolTip": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Model\\City.cs",
+              "RelativeToolTip": "Model\\City.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T21:28:04.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccommodationType.cs",
+              "DocumentMoniker": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Model\\AccommodationType.cs",
+              "RelativeDocumentMoniker": "Model\\AccommodationType.cs",
+              "ToolTip": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Model\\AccommodationType.cs",
+              "RelativeToolTip": "Model\\AccommodationType.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T21:27:59.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Accommodation.cs",
+              "DocumentMoniker": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Model\\Accommodation.cs",
+              "RelativeDocumentMoniker": "Model\\Accommodation.cs",
+              "ToolTip": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Model\\Accommodation.cs",
+              "RelativeToolTip": "Model\\Accommodation.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T21:27:52.094Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Province.cs",
+              "DocumentMoniker": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Model\\Province.cs",
+              "RelativeDocumentMoniker": "Model\\Province.cs",
+              "ToolTip": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Model\\Province.cs",
+              "RelativeToolTip": "Model\\Province.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T21:27:24.164Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "AppDbContext.cs",
+              "ToolTip": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\AppDbContext.cs",
+              "RelativeToolTip": "AppDbContext.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAwAYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T21:22:42.749Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Work\\personal\\DigiIranTourProject\\app-api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-15T21:18:57.463Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

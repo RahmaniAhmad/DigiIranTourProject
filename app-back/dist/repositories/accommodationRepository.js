@@ -134,7 +134,7 @@ class AccommodationRepository {
     }
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return dbPrisma_1.default.accommodation.findUnique({
+            return yield dbPrisma_1.default.accommodation.findUnique({
                 where: { id: id },
                 select: {
                     id: true,
@@ -161,13 +161,13 @@ class AccommodationRepository {
                 return { message: "Data inserted successfully", data: result };
             }
             catch (error) {
-                console.log(error);
                 return { message: "Data inserted failed", data: null };
             }
         });
     }
     update(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("222222222222: ", data);
             const result = yield dbPrisma_1.default.accommodation.update({
                 where: { id: id },
                 data: data,

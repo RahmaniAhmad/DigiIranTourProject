@@ -38,6 +38,12 @@ export class AccommodationService implements IAccommodationService {
     id: number,
     data: any
   ): Promise<{ message: string; data: IAccommodation }> {
+    const existData = await this.getById(id);
+    if (!existData.imageName) {
+      data.imageName = existData.imageName;
+    }
+    console.log("1111111111111111: ", data);
+
     return this.repository.update(id, data);
   }
 

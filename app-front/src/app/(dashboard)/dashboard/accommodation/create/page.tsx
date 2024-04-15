@@ -53,8 +53,6 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   return (
     <form onSubmit={handleSubmit(formSubmit)} encType="multipart/form-data">
       <div className="mb-4">
-        <input type="file" {...register("accommodationImage")} />
-
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           نوع اقامت
         </label>
@@ -84,6 +82,12 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
               </SelectItem>
             ))}
         </Select>
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          تصویر
+        </label>
+        <input type="file" {...register("accommodationImage")} />
       </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">

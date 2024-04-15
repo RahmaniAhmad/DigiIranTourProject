@@ -48,8 +48,14 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           bedroomsCount: data.bedroomsCount,
           bedsCount: data.bedsCount,
           capacity: data.capacity,
-          imageName: filedValues.accommodationImage[0].name,
-          accommodationImage: filedValues.accommodationImage[0],
+          imageName:
+            filedValues.accommodationImage.length > 0
+              ? filedValues.accommodationImage[0].name
+              : null,
+          accommodationImage:
+            filedValues.accommodationImage.length > 0
+              ? filedValues.accommodationImage[0]
+              : null,
         },
       },
       {
@@ -107,12 +113,17 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         </Select>
       </div>
       <div className="mb-4">
-        <input type="file" {...register("accommodationImage")} />
-
+        <div className="mb-4">
+          <label className="block text-sm font-bold mb-2" htmlFor="title">
+            تصویر
+          </label>
+          <input type="file" {...register("accommodationImage")} />
+        </div>
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           عنوان
         </label>
         <Input
+          size="lg"
           {...register("title", { required: true })}
           defaultValue={accommodation?.title}
         />
@@ -136,6 +147,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           تعداد اتاق
         </label>
         <Input
+          size="lg"
           {...register("bedroomsCount", { required: true })}
           defaultValue={accommodation?.bedroomsCount}
         />
@@ -146,6 +158,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           تعداد تخت
         </label>
         <Input
+          size="lg"
           {...register("bedsCount", { required: true })}
           defaultValue={accommodation?.bedsCount}
         />
@@ -156,6 +169,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           ظرفیت
         </label>
         <Input
+          size="lg"
           {...register("capacity", { required: true })}
           defaultValue={accommodation?.capacity}
         />
