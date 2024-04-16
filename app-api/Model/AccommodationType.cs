@@ -1,12 +1,12 @@
-﻿namespace app_api.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace app_api.Model
 {
     public class AccommodationType
     {
-        public AccommodationType() { }
-        
-        public AccommodationType(string name) {
-        this.Name = name;
-        }  
-        public string Name { get; set; }
+        [Key]
+        public int Id { get; set; }  
+        public required string Name { get; set; }
+        public ICollection<Accommodation> Accommodations { get; set; }
     }
 }

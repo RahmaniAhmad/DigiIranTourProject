@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace app_api.Model
 {
@@ -8,5 +9,10 @@ namespace app_api.Model
         public int Id { get; set; } 
             
         public required string Name { get; set; }
+
+        [ForeignKey("Province")]
+        public int ProvinceId { get; set; }
+        public Province Province { get; set; }
+
     }
 }
