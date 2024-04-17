@@ -1,7 +1,7 @@
 "use client";
 import { Input, Button, Select, SelectItem } from "@nextui-org/react";
 import { useForm, FieldValues } from "react-hook-form";
-import { useProvinces } from "../../province/hooks/useProvinces";
+import { useProvinces } from "../../../../../hooks/province/useProvinces";
 import { useAccommodationTypes } from "../../accommodationType/hooks/useAccommodationTypes";
 import { useCities } from "../../../../../hooks/city/useCities";
 import { useCreateAccommodation } from "@/hooks/accommodation/useCreateAccommodation";

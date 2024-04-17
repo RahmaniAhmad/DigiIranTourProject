@@ -8,7 +8,7 @@ import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/province/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/province/edit/[id]/page";
 import axios from "axios";
-import { useProvinces } from "../hooks/useProvinces";
+import { useProvinces } from "../../../../../hooks/province/useProvinces";
 
 // async function deleteProvince(id: number) {
 //   const response = await axios.delete(
@@ -44,6 +44,7 @@ export default function ProvinceList({
 
   const {
     provinces,
+    count,
     refetch,
     isLoading,
     currentPage,
@@ -125,7 +126,7 @@ export default function ProvinceList({
         <Table
           loading={isLoading}
           heads={["نام استان"]}
-          data={provinces.data}
+          data={provinces}
           actions={{
             showEdit: true,
             showDelete: true,
@@ -135,11 +136,11 @@ export default function ProvinceList({
           onEdit={openEditModal}
         ></Table>
       )}
-      {provinces && provinces.rowsCount > 1 && (
+      {provinces && count > 1 && (
         <Pagination
           className="w-full"
           page={currentPage}
-          total={provinces.rowsCount}
+          total={Math.ceil(count / 10)}
           siblings={5}
           initialPage={1}
           showControls

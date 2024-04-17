@@ -10,7 +10,7 @@ namespace app_api.Data.Config
         {
             builder.HasKey(o => o.Id);
             builder.Property(t => t.Name).IsRequired().HasMaxLength(30);
-            builder.HasMany(t => t.Cities).WithOne().OnDelete(DeleteBehavior.Restrict); ;
+            builder.HasMany(t => t.Cities).WithOne(t => t.Province).HasForeignKey(t => t.ProvinceId).IsRequired().OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

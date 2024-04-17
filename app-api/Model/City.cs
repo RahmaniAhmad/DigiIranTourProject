@@ -12,7 +12,9 @@ namespace app_api.Model
 
         [ForeignKey("Province")]
         public int ProvinceId { get; set; }
-        public Province Province { get; set; }
+        public required Province Province { get; set; }
+        public ICollection<Accommodation>? Accommodations { get; }
+
 
     }
 }

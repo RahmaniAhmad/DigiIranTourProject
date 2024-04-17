@@ -4,7 +4,7 @@ import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useCity } from "../../../../../../hooks/city/useCity";
 import { useUpdateCity } from "../../../../../../hooks/city/useUpdateCity";
-import { useProvinces } from "../../../province/hooks/useProvinces";
+import { useProvinces } from "../../../../../../hooks/province/useProvinces";
 import { toast } from "react-toastify";
 import { IProvince } from "@/type/province";
 
