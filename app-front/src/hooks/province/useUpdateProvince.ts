@@ -1,7 +1,6 @@
 import { useMutation } from "react-query";
 import { IUpdateProvince } from "@/type/province";
-import { createProvinceApi } from "../api/createProvince";
-import { updateProvinceApi } from "../api/updateProvince";
+import { updateProvinceApi } from "@/apis/province/updateProvince";
 
 interface UseUpdateProvinceProps {
   id: number;

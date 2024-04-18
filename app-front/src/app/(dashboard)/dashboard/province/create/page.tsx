@@ -1,16 +1,8 @@
 "use client";
 import { Input, Button } from "@nextui-org/react";
-
 import { useForm, FieldValues } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { ICreateProvince } from "@/type/province";
-import axios from "axios";
-import { useCreateProvince } from "../hooks/useCreateProvince";
-
-// async function createProvince(data: ICreateProvince) {
-//   const response = await axios.post("http://localhost:3001/api/province", data);
-//   return response.data;
-//}
+import { useCreateProvince } from "@/hooks/province/useCreateProvince";
 
 interface IPageProps {
   onClose?: () => void;

@@ -48,6 +48,7 @@ namespace app_api.Controllers
         public virtual IActionResult Create([FromBody] Province Province)
         {
             var result = _dbContext.Provinces.Add(Province);
+            _dbContext.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { Province.Id }, Province);
         }
 
@@ -75,6 +76,7 @@ namespace app_api.Controllers
                 return NotFound();
 
             _dbContext.Provinces.Remove(item);
+            _dbContext.SaveChanges();
             return Ok();
             
         }

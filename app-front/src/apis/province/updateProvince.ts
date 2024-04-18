@@ -1,16 +1,9 @@
 import axios from "axios";
 
-const mapToModel = (viewModel: any) => {
-  return {
-    id: viewModel.id,
-    name: viewModel.name,
-    provinceId: Number(viewModel.provinceId),
-  };
-};
-export const updateCityApi = async (id: number, viewModel: any) => {
+export const updateProvinceApi = async (id: number, viewModel: any) => {
   const response = await axios.put(
-    `http://localhost:3001/api/city/${id}`,
-    mapToModel(viewModel)
+    `${process.env.NEXT_PUBLIC_BASE_API}/province/${id}`,
+    viewModel
   );
   return response.data;
 };

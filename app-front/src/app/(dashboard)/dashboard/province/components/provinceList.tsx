@@ -7,15 +7,8 @@ import { ConfirmModal, CustomModal } from "@/components/UI";
 import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/province/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/province/edit/[id]/page";
-import axios from "axios";
-import { useProvinces } from "../../../../../hooks/province/useProvinces";
-
-// async function deleteProvince(id: number) {
-//   const response = await axios.delete(
-//     `http://localhost:3001/api/province/${id}`
-//   );
-//   return response.data;
-// }
+import { useProvinces } from "@/hooks/province/useProvinces";
+import { useDeleteProvince } from "@/hooks/province/useDeleteProvince";
 
 interface ProvinceListProps {
   getAll?: (
@@ -40,8 +33,6 @@ export default function ProvinceList({
   const [showEditModal, setShowEditModal] = useState(false);
   const [provinceName, setProvinceName] = useState("");
   const [selectedId, setSelectedId] = useState<number | undefined>();
-  // const [province, setProvince] = useState<IProvince>();
-
   const {
     provinces,
     count,
@@ -53,6 +44,8 @@ export default function ProvinceList({
     setFilter,
   } = useProvinces();
 
+  const { deleteProvince } = useDeleteProvince({ onSuccess: refetch });
+
   const openDeleteConfirm = async (id: number) => {
     const province = getById && (await getById(id));
     setProvinceName(province?.name ?? "");
@@ -61,14 +54,12 @@ export default function ProvinceList({
   };
 
   const openEditModal = async (id: number) => {
-    // const province = getById && (await getById(id));
-    // province && setProvince(province);
     setSelectedId(id);
     setShowEditModal(true);
   };
 
   const handleDeleteConfirmed = () => {
-    // selectedId && deleteProvince.mutate(selectedId);
+    selectedId && deleteProvince.mutate(selectedId);
     setShowDeleteConfirm(false);
     setSelectedId(undefined);
     setProvinceName("");

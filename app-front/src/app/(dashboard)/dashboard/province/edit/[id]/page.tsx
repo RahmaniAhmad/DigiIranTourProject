@@ -4,8 +4,8 @@ import { IUpdateProvince } from "@/type/province";
 import { Button, Input } from "@nextui-org/react";
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useProvince } from "../../hooks/useProvince";
-import { useUpdateProvince } from "../../hooks/useUpdateProvince";
+import { useProvince } from "../../../../../../hooks/province/useProvince";
+import { useUpdateProvince } from "@/hooks/province/useUpdateProvince";
 
 interface IPageProps {
   id: number;
@@ -44,6 +44,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         نام استان
       </label>
       <Input
+        size="lg"
         defaultValue={province?.name}
         {...register("name", { required: true })}
       />
