@@ -9,10 +9,10 @@ namespace app_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProvinceController : Controller
+    public class CityController : Controller
     {
         private readonly AppDbContext _dbContext;
-        public ProvinceController(AppDbContext dbContext) {
+        public CityController(AppDbContext dbContext) {
             _dbContext = dbContext;
         }
 
@@ -24,21 +24,21 @@ namespace app_api.Controllers
                 page = 1;
             }
             var data = string.IsNullOrWhiteSpace(filter) ?
-                _dbContext.Provinces.Skip((page - 1) * 10).Take(10)
-                .Select(s=>new ProvinceDto() { Id=s.Id,Name=s.Name}).ToList() :
-                _dbContext.Provinces.Where(w => w.Name.Contains(filter))
+                _dbContext.Cities.Skip((page - 1) * 10).Take(10)
+                .Select(s=>new CityDto() { Id=s.Id,Name=s.Name, ProvinceName=s.Province.Name}).ToList() :
+                _dbContext.Cities.Where(w => w.Name.Contains(filter))
                 .Skip((page - 1) * 10).Take(10)
-                .Select(s => new ProvinceDto() { Id = s.Id, Name = s.Name }).ToList();
+                .Select(s => new CityDto() { Id = s.Id, Name = s.Name, ProvinceName = s.Province.Name }).ToList();
 
-            var count = string.IsNullOrWhiteSpace(filter) ? _dbContext.Provinces.Count():
-                _dbContext.Provinces.Where(w => w.Name.Contains(filter)).Count();
+            var count = string.IsNullOrWhiteSpace(filter) ? _dbContext.Cities.Count():
+                _dbContext.Cities.Where(w => w.Name.Contains(filter)).Count();
             return Ok(new { data, count });
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var data = _dbContext.Provinces.Find(id);
+            var data = _dbContext.Cities.Find(id);
             if (data == null)
             {
                 return NotFound();
@@ -46,17 +46,17 @@ namespace app_api.Controllers
             return Ok(data);
         }
         [HttpPost]
-        public virtual IActionResult Create([FromBody] Province Province)
+        public virtual IActionResult Create([FromBody] City City)
         {
-            var result = _dbContext.Provinces.Add(Province);
+            var result = _dbContext.Cities.Add(City);
             _dbContext.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new { Province.Id }, Province);
+            return CreatedAtAction(nameof(GetById), new { City.Id }, City);
         }
 
         [HttpPut("{id}")]
-        public virtual ActionResult Update(int id, [FromBody] Province data)
+        public virtual ActionResult Update(int id, [FromBody] City data)
         {
-            var item = _dbContext.Provinces.Find(id);
+            var item = _dbContext.Cities.Find(id);
             if (item == null)
             {
                 return NotFound();
@@ -71,12 +71,12 @@ namespace app_api.Controllers
         [HttpDelete("{id}")]
         public virtual ActionResult Delete(int id)
         {
-            var item = _dbContext.Provinces.Find(id);
+            var item = _dbContext.Cities.Find(id);
 
             if (item == null)
                 return NotFound();
 
-            _dbContext.Provinces.Remove(item);
+            _dbContext.Cities.Remove(item);
             _dbContext.SaveChanges();
             return Ok();
             

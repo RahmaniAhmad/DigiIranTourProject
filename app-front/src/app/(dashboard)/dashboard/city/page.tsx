@@ -1,4 +1,4 @@
-import CityList from "../../../../components/city/cityList";
+import CityList from "./components/cityList";
 
 export default async function Page() {
   return (

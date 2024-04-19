@@ -11,12 +11,12 @@ export function useCities() {
     ["cities", currentPage, filter, debounceFilter],
     () => getCitiesApi(currentPage, debounceFilter)
   );
-  const cities = data ? data.cities : [];
-  const rowsCount = data ? data.rowsCount : 0;
+  const cities = data ? data.data : [];
+  const count = data ? data.count : 0;
 
   return {
     cities,
-    rowsCount,
+    count,
     refetch,
     currentPage,
     setCurrentPage,

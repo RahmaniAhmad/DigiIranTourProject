@@ -6,7 +6,7 @@ import { ConfirmModal, CustomModal } from "@/components/UI";
 import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/city/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/city/edit/[id]/page";
-import { useCities } from "../../hooks/city/useCities";
+import { useCities } from "../../../../../hooks/city/useCities";
 import { useDeleteCity } from "@/hooks/city/useDeleteCity";
 import { toast } from "react-toastify";
 
@@ -19,7 +19,7 @@ export default function CityList() {
 
   const {
     cities,
-    rowsCount,
+    count,
     refetch,
     isLoading,
     currentPage,
@@ -30,9 +30,8 @@ export default function CityList() {
   const { deleteCity } = useDeleteCity({
     onSuccess: refetch,
   });
-
   const openDeleteConfirm = async (id: number) => {
-    const city = cities.find((f) => f.id == id);
+    const city = cities.find((f: any) => f.id == id);
     setCityName(city?.name ?? "");
     setSelectedId(id);
     setShowDeleteConfirm(true);
@@ -109,7 +108,7 @@ export default function CityList() {
       {cities && (
         <Table
           loading={isLoading}
-          heads={["نام شهر", "نام شهر"]}
+          heads={["استان", "شهر"]}
           data={cities}
           actions={{
             showEdit: true,
@@ -120,11 +119,11 @@ export default function CityList() {
           onEdit={openEditModal}
         ></Table>
       )}
-      {cities && rowsCount > 1 && (
+      {cities && count > 1 && (
         <Pagination
           className="w-full"
           page={currentPage}
-          total={rowsCount}
+          total={Math.ceil(count / 10)}
           siblings={5}
           initialPage={1}
           showControls

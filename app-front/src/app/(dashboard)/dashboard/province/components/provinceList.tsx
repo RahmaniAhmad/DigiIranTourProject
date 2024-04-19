@@ -2,7 +2,6 @@
 
 import { ChangeEvent, useState } from "react";
 import { Button, Input, Pagination } from "@nextui-org/react";
-import { IProvince } from "@/type/province";
 import { ConfirmModal, CustomModal } from "@/components/UI";
 import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/province/create/page";
@@ -10,24 +9,7 @@ import EditPage from "@/app/(dashboard)/dashboard/province/edit/[id]/page";
 import { useProvinces } from "@/hooks/province/useProvinces";
 import { useDeleteProvince } from "@/hooks/province/useDeleteProvince";
 
-interface ProvinceListProps {
-  getAll?: (
-    page?: number,
-    filter?: string
-  ) => Promise<{
-    data: IProvince[];
-    rowsCount: number;
-  }>;
-  getById?: (id: number) => Promise<IProvince | null>;
-
-  onDelete?: (id: number) => void;
-}
-
-export default function ProvinceList({
-  getById,
-  getAll,
-  onDelete,
-}: ProvinceListProps) {
+export default function ProvinceList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -47,7 +29,7 @@ export default function ProvinceList({
   const { deleteProvince } = useDeleteProvince({ onSuccess: refetch });
 
   const openDeleteConfirm = async (id: number) => {
-    const province = getById && (await getById(id));
+    const province = provinces.find((f: any) => f.id == id);
     setProvinceName(province?.name ?? "");
     setSelectedId(id);
     setShowDeleteConfirm(true);
@@ -106,6 +88,7 @@ export default function ProvinceList({
         ایجاد استان جدید
       </Button>
       <Input
+        size="lg"
         isClearable
         placeholder="Search..."
         name="filter"
@@ -116,7 +99,7 @@ export default function ProvinceList({
       {provinces && (
         <Table
           loading={isLoading}
-          heads={["نام استان"]}
+          heads={["استان"]}
           data={provinces}
           actions={{
             showEdit: true,
@@ -129,6 +112,7 @@ export default function ProvinceList({
       )}
       {provinces && count > 1 && (
         <Pagination
+          dir="ltr"
           className="w-full"
           page={currentPage}
           total={Math.ceil(count / 10)}

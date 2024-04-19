@@ -43,7 +43,7 @@ export const ConfirmModal = ({
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col text-center gap-1">
-              {title}
+              {title} {name}
             </ModalHeader>
             <ModalBody>
               <p>آیا از حذف مورد انتخاب شده اطمینان دارید؟</p>
