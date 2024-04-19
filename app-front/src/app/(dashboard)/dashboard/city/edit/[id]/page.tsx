@@ -17,8 +17,7 @@ interface IPageProps {
 const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const { city, isLoading } = useCity(id);
   const { updateCity } = useUpdateCity({ onSuccess });
-  const { provinces } = useProvinces();
-
+  const { provinces } = useProvinces(false);
   const {
     register,
     handleSubmit,
@@ -52,11 +51,12 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           استان
         </label>
         <Select
+          size="lg"
           {...register("provinceId")}
           defaultSelectedKeys={city?.provinceId.toString()}
         >
           {provinces &&
-            provinces.data.map((province: IProvince) => (
+            provinces.map((province: IProvince) => (
               <SelectItem key={province.id} value={province.name}>
                 {province.name}
               </SelectItem>
@@ -68,6 +68,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           نام شهر
         </label>
         <Input
+          size="lg"
           defaultValue={city?.name}
           {...register("name", { required: true })}
         />

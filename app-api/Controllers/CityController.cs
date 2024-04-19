@@ -1,5 +1,6 @@
 ﻿using app_api.Data;
 using app_api.Dtos;
+using app_api.Dtos.City;
 using app_api.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -25,10 +26,10 @@ namespace app_api.Controllers
             }
             var data = string.IsNullOrWhiteSpace(filter) ?
                 _dbContext.Cities.Skip((page - 1) * 10).Take(10)
-                .Select(s=>new CityDto() { Id=s.Id,Name=s.Name, ProvinceName=s.Province.Name}).ToList() :
+                .Select(s=>new CityGetDto() { Id=s.Id,Name=s.Name, ProvinceName=s.Province.Name}).ToList() :
                 _dbContext.Cities.Where(w => w.Name.Contains(filter))
                 .Skip((page - 1) * 10).Take(10)
-                .Select(s => new CityDto() { Id = s.Id, Name = s.Name, ProvinceName = s.Province.Name }).ToList();
+                .Select(s => new CityGetDto() { Id = s.Id, Name = s.Name, ProvinceName = s.Province.Name }).ToList();
 
             var count = string.IsNullOrWhiteSpace(filter) ? _dbContext.Cities.Count():
                 _dbContext.Cities.Where(w => w.Name.Contains(filter)).Count();
@@ -39,6 +40,7 @@ namespace app_api.Controllers
         public IActionResult GetById(int id)
         {
             var data = _dbContext.Cities.Find(id);
+            
             if (data == null)
             {
                 return NotFound();
@@ -46,15 +48,18 @@ namespace app_api.Controllers
             return Ok(data);
         }
         [HttpPost]
-        public virtual IActionResult Create([FromBody] City City)
+        public virtual IActionResult Create([FromBody] CityCreatetDto dto)
         {
-            var result = _dbContext.Cities.Add(City);
+            var city = new City(dto.Name, dto.ProvinceId);
+
+
+            var result = _dbContext.Cities.Add(city);
             _dbContext.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new { City.Id }, City);
+            return base.CreatedAtAction(nameof(GetById), new { city.Id }, city);
         }
 
         [HttpPut("{id}")]
-        public virtual ActionResult Update(int id, [FromBody] City data)
+        public virtual ActionResult Update(int id, [FromBody] CityUpdateDto dto)
         {
             var item = _dbContext.Cities.Find(id);
             if (item == null)
@@ -62,10 +67,12 @@ namespace app_api.Controllers
                 return NotFound();
             }
 
-            item.Name = data.Name;
+            item.Name = dto.Name;
+            item.ProvinceId = dto.ProvinceId;
 
             _dbContext.SaveChanges();
-            return Ok(data);
+
+            return Ok(dto);
         }
 
         [HttpDelete("{id}")]

@@ -1,10 +1,9 @@
-import { AccommodationViewModel } from "@/viewModels/accommodation/accommodationViewModel";
 import { CityViewModel } from "@/viewModels/city/cityViewModel";
 import axios from "axios";
 
-export const createCityApi = async (viewModel: CityViewModel) => {
+export const createCityApi = async (viewModel: any) => {
   const response = await axios.post(
-    "http://localhost:3001/api/city",
+    `${process.env.NEXT_PUBLIC_BASE_API}/city`,
     viewModel
   );
   return response.data;

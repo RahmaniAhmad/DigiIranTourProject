@@ -12,7 +12,7 @@ interface IPageProps {
 }
 const Page = ({ onSuccess, onClose }: IPageProps) => {
   const { createCity } = useCreateCity({ onSuccess });
-  const { provinces } = useProvinces();
+  const { provinces } = useProvinces(false);
 
   const {
     register,
@@ -50,9 +50,9 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           استان
         </label>
-        <Select {...register("provinceId")}>
+        <Select size="lg" {...register("provinceId")}>
           {provinces &&
-            provinces.data.map((province: IProvince) => (
+            provinces.map((province: IProvince) => (
               <SelectItem key={province.id} value={province.id}>
                 {province.name}
               </SelectItem>
@@ -63,7 +63,7 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         <label className="text-default-600" htmlFor="name">
           نام شهر
         </label>
-        <Input {...register("name", { required: true })} />
+        <Input size="lg" {...register("name", { required: true })} />
         {errors.name && (
           <p className="text-danger-600">نام شهر اجباری می باشد</p>
         )}

@@ -78,7 +78,7 @@ export default function ProvinceList() {
         />
       </CustomModal>
       <ConfirmModal
-        title="حذف استان"
+        title={`حذف استان ${provinceName}`}
         name={provinceName}
         openModal={showDeleteConfirm}
         onCloseModal={() => setShowDeleteConfirm(false)}

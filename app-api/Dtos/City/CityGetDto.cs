@@ -1,6 +1,6 @@
-﻿namespace app_api.Dtos
+﻿namespace app_api.Dtos.City
 {
-    public class CityDto
+    public class CityGetDto
     {
         public int Id { get; set; }
         public required string ProvinceName { get; set; }

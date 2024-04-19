@@ -9,7 +9,7 @@ const mapToModel = (viewModel: any) => {
 };
 export const updateCityApi = async (id: number, viewModel: any) => {
   const response = await axios.put(
-    `http://localhost:3001/api/city/${id}`,
+    `${process.env.NEXT_PUBLIC_BASE_API}/city/${id}`,
     mapToModel(viewModel)
   );
   return response.data;

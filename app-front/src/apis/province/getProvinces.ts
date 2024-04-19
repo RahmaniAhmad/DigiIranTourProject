@@ -1,10 +1,18 @@
 import axios from "axios";
 
-export const getProvinces = async (page: number = 1, filter?: string) => {
-  const api = filter
-    ? `${process.env.NEXT_PUBLIC_BASE_API}/province?page=${page}&filter=${filter}`
-    : `${process.env.NEXT_PUBLIC_BASE_API}/province?page=${page}`;
-
+export const getProvinces = async (
+  isPagination = true,
+  page: number = 1,
+  filter?: string
+) => {
+  let api = "";
+  if (isPagination) {
+    api = filter
+      ? `${process.env.NEXT_PUBLIC_BASE_API}/province/getallpaged?page=${page}&filter=${filter}`
+      : `${process.env.NEXT_PUBLIC_BASE_API}/province/getallpaged?page=${page}`;
+  } else {
+    api = `${process.env.NEXT_PUBLIC_BASE_API}/province/getall`;
+  }
   const data = await axios.get(api).then((response) => {
     return response.data;
   });
