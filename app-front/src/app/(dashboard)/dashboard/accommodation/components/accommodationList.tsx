@@ -9,6 +9,7 @@ import EditPage from "@/app/(dashboard)/dashboard/accommodation/edit/[id]/page";
 import { useAccommodations } from "@/hooks/accommodation/useAccommodations";
 import { toast } from "react-toastify";
 import { useDeleteAccommodation } from "@/hooks/accommodation/useDeleteAccommodation";
+import CustomPagination from "@/components/shared/customPagination";
 
 export default function AccommodationList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -130,15 +131,14 @@ export default function AccommodationList() {
         ></Table>
       )}
       {accommodations && rowsCount > 1 && (
-        <Pagination
-          className="w-full"
+        <CustomPagination
           page={currentPage}
           total={rowsCount}
           siblings={5}
           initialPage={1}
           showControls
           onChange={setCurrentPage}
-        ></Pagination>
+        ></CustomPagination>
       )}
     </>
   );

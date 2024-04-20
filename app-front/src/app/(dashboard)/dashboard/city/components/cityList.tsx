@@ -9,6 +9,7 @@ import EditPage from "@/app/(dashboard)/dashboard/city/edit/[id]/page";
 import { useCities } from "../../../../../hooks/city/useCities";
 import { useDeleteCity } from "@/hooks/city/useDeleteCity";
 import { toast } from "react-toastify";
+import CustomPagination from "@/components/shared/customPagination";
 
 export default function CityList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -120,16 +121,15 @@ export default function CityList() {
           onEdit={openEditModal}
         ></Table>
       )}
-      {cities && count > 1 && (
-        <Pagination
-          className="w-full"
+      {cities && count > 10 && (
+        <CustomPagination
           page={currentPage}
           total={Math.ceil(count / 10)}
           siblings={5}
           initialPage={1}
           showControls
           onChange={setCurrentPage}
-        ></Pagination>
+        ></CustomPagination>
       )}
     </>
   );

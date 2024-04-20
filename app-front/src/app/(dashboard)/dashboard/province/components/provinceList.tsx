@@ -8,6 +8,7 @@ import CreatePage from "@/app/(dashboard)/dashboard/province/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/province/edit/[id]/page";
 import { useProvinces } from "@/hooks/province/useProvinces";
 import { useDeleteProvince } from "@/hooks/province/useDeleteProvince";
+import CustomPagination from "@/components/shared/customPagination";
 
 export default function ProvinceList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -110,17 +111,15 @@ export default function ProvinceList() {
           onEdit={openEditModal}
         ></Table>
       )}
-      {provinces && count > 1 && (
-        <Pagination
-          dir="ltr"
-          className="w-full"
+      {provinces && count > 10 && (
+        <CustomPagination
           page={currentPage}
           total={Math.ceil(count / 10)}
           siblings={5}
           initialPage={1}
           showControls
           onChange={setCurrentPage}
-        ></Pagination>
+        />
       )}
     </>
   );
