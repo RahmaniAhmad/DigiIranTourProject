@@ -6,7 +6,7 @@ export const updateAccommodationTypeApi = async (
   data: ICreateAccommodationType
 ) => {
   const response = await axios.put(
-    `http://localhost:3001/api/accommodationType/${id}`,
+    `${process.env.NEXT_PUBLIC_BASE_API}/accommodationType/${id}`,
     data
   );
   return response.data;

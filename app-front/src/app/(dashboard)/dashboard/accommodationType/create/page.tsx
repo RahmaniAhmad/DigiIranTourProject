@@ -2,15 +2,8 @@
 import { Input, Button } from "@nextui-org/react";
 
 import { useForm, FieldValues } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { ICreateAccommodationType } from "@/type/IAccommodationType";
-import axios from "axios";
 import { useCreateAccommodationType } from "../../../../../hooks/accommodationType/useCreateAccommodationType";
-
-// async function createAccommodationType(data: ICreateAccommodationType) {
-//   const response = await axios.post("http://localhost:3001/api/accommodationType", data);
-//   return response.data;
-//}
 
 interface IPageProps {
   onClose?: () => void;
@@ -37,11 +30,11 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   };
   return (
     <form onSubmit={handleSubmit(formSubmit)}>
-      <label className="text-default-600" htmlFor="title">
+      <label className="text-default-600" htmlFor="name">
         نوع اقامت
       </label>
-      <Input {...register("title", { required: true })} />
-      {errors.title && (
+      <Input size="lg" {...register("name", { required: true })} />
+      {errors.name && (
         <p className="text-danger-600">نوع اقامت اجباری می باشد</p>
       )}
 

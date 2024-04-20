@@ -52,7 +52,6 @@ namespace app_api.Controllers
         {
             var city = new City(dto.Name, dto.ProvinceId);
 
-
             var result = _dbContext.Cities.Add(city);
             _dbContext.SaveChanges();
             return base.CreatedAtAction(nameof(GetById), new { city.Id }, city);
@@ -72,7 +71,7 @@ namespace app_api.Controllers
 
             _dbContext.SaveChanges();
 
-            return Ok(dto);
+            return Ok(item);
         }
 
         [HttpDelete("{id}")]

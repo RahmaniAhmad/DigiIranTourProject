@@ -10,34 +10,18 @@ import axios from "axios";
 import { useAccommodationTypes } from "../../../../../hooks/accommodationType/useAccommodationTypes";
 import { IAccommodationType } from "@/type/IAccommodationType";
 import { useDeleteAccommodationType } from "../../../../../hooks/accommodationType/useDeleteAccommodationType";
+import CustomPagination from "@/components/shared/customPagination";
 
-interface AccommodationTypeListProps {
-  getAll?: (
-    page?: number,
-    filter?: string
-  ) => Promise<{
-    data: IAccommodationType[];
-    rowsCount: number;
-  }>;
-  getById?: (id: number) => Promise<IAccommodationType | null>;
-
-  onDelete?: (id: number) => void;
-}
-
-export default function AccommodationTypeList({
-  getById,
-  getAll,
-  onDelete,
-}: AccommodationTypeListProps) {
+export default function AccommodationTypeList() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [accommodationTypeName, setAccommodationTypeName] = useState("");
   const [selectedId, setSelectedId] = useState<number | undefined>();
-  // const [accommodationType, setAccommodationType] = useState<IAccommodationType>();
 
   const {
     accommodationTypes,
+    count,
     refetch,
     isLoading,
     currentPage,
@@ -45,20 +29,19 @@ export default function AccommodationTypeList({
     filter,
     setFilter,
   } = useAccommodationTypes();
+
   const { deleteAccommodationType } = useDeleteAccommodationType({
     onSuccess: refetch,
   });
 
   const openDeleteConfirm = async (id: number) => {
-    const accommodationType = getById && (await getById(id));
+    const accommodationType = accommodationTypes.find((f: any) => f.id == id);
     setAccommodationTypeName(accommodationType?.title ?? "");
     setSelectedId(id);
     setShowDeleteConfirm(true);
   };
 
   const openEditModal = async (id: number) => {
-    // const accommodationType = getById && (await getById(id));
-    // accommodationType && setAccommodationType(accommodationType);
     setSelectedId(id);
     setShowEditModal(true);
   };
@@ -122,7 +105,7 @@ export default function AccommodationTypeList({
         <Table
           loading={isLoading}
           heads={["نام نوع اقامت"]}
-          data={accommodationTypes.data}
+          data={accommodationTypes}
           actions={{
             showEdit: true,
             showDelete: true,
@@ -132,16 +115,16 @@ export default function AccommodationTypeList({
           onEdit={openEditModal}
         ></Table>
       )}
-      {accommodationTypes && accommodationTypes.rowsCount > 1 && (
-        <Pagination
-          className="w-full"
+
+      {accommodationTypes && count > 10 && (
+        <CustomPagination
           page={currentPage}
-          total={accommodationTypes.rowsCount}
+          total={Math.ceil(count / 10)}
           siblings={5}
           initialPage={1}
           showControls
           onChange={setCurrentPage}
-        ></Pagination>
+        ></CustomPagination>
       )}
     </>
   );

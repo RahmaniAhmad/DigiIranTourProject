@@ -28,7 +28,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   } = useForm({ defaultValues: accommodationType });
 
   useEffect(() => {
-    setValue("title", accommodationType?.title || "");
+    setValue("name", accommodationType?.name || "");
   }, [accommodationType, setValue]);
 
   const formSubmit = async (filedValues: FieldValues) => {
@@ -47,10 +47,11 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         نوع محل اقامت
       </label>
       <Input
-        defaultValue={accommodationType?.title}
-        {...register("title", { required: true })}
+        size="lg"
+        defaultValue={accommodationType?.name}
+        {...register("name", { required: true })}
       />
-      {errors.title && (
+      {errors.name && (
         <p className="text-danger-600">نوع محل اقامت اجباری می باشد</p>
       )}
       <br />

@@ -28,7 +28,7 @@ namespace app_api.Controllers
                 _dbContext.AccommodationTypes.Where(w => w.Name.Contains(filter));
 
             var data = query.Skip((page - 1) * 10).Take(10)
-                .Select(s => new AccommodationTypeDto { Id = s.Id, Name = s.Name })
+                .Select(s => new AccommodationTypeGetDto { Id = s.Id, Name = s.Name })
                 .ToList();
 
             var count = query.Count();
@@ -40,7 +40,7 @@ namespace app_api.Controllers
         public IActionResult GetAll()
         {
             var data = _dbContext.AccommodationTypes
-                            .Select(s => new AccommodationTypeDto { Id = s.Id, Name = s.Name })
+                            .Select(s => new AccommodationTypeGetDto { Id = s.Id, Name = s.Name })
                             .ToList();
 
             var count = data.Count;
@@ -60,15 +60,18 @@ namespace app_api.Controllers
             return Ok(data);
         }
         [HttpPost]
-        public virtual IActionResult Create([FromBody] AccommodationType data)
+        public virtual IActionResult Create([FromBody] AccommodationTypeCreateDto dto)
         {
-            var result = _dbContext.AccommodationTypes.Add(data);
+            var accommodationType = new AccommodationType(dto.Name);
+
+
+            var result = _dbContext.AccommodationTypes.Add(accommodationType);
             _dbContext.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new { data.Id }, data);
+            return CreatedAtAction(nameof(GetById), new { accommodationType.Id }, accommodationType);
         }
 
         [HttpPut("{id}")]
-        public virtual ActionResult Update(int id, [FromBody] AccommodationType data)
+        public virtual ActionResult Update(int id, [FromBody] AccommodationTypeUpdateDto dto)
         {
             var item = _dbContext.AccommodationTypes.Find(id);
             if (item == null)
@@ -76,10 +79,10 @@ namespace app_api.Controllers
                 return NotFound();
             }
 
-            item.Name = data.Name;
+            item.Name = dto.Name;
 
             _dbContext.SaveChanges();
-            return Ok(data);
+            return Ok(item);
         }
 
         [HttpDelete("{id}")]
