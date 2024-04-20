@@ -4,8 +4,8 @@ import { IUpdateAccommodationType } from "@/type/IAccommodationType";
 import { Button, Input } from "@nextui-org/react";
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useAccommodationType } from "../../hooks/useAccommodationType";
-import { useUpdateAccommodationType } from "../../hooks/useUpdateAccommodationType";
+import { useAccommodationType } from "../../../../../../hooks/accommodationType/useAccommodationType";
+import { useUpdateAccommodationType } from "../../../../../../hooks/accommodationType/useUpdateAccommodationType";
 
 interface IPageProps {
   id: number;

@@ -7,7 +7,7 @@ import { IAccommodationType } from "@/type/IAccommodationType";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useAccommodationTypes } from "../../../accommodationType/hooks/useAccommodationTypes";
+import { useAccommodationTypes } from "../../../../../../hooks/accommodationType/useAccommodationTypes";
 import { toast } from "react-toastify";
 import { useCities } from "@/hooks/city/useCities";
 import { ICity } from "@/type/ICity";

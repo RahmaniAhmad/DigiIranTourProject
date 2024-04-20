@@ -5,7 +5,7 @@ export const createAccommodationTypeApi = async (
   data: ICreateAccommodationType
 ) => {
   const response = await axios.post(
-    "http://localhost:3001/api/accommodationType",
+    `${process.env.NEXT_PUBLIC_BASE_API}/accommodationType`,
     data
   );
   return response.data;

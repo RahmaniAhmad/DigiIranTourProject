@@ -5,7 +5,7 @@ import { useForm, FieldValues } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { ICreateAccommodationType } from "@/type/IAccommodationType";
 import axios from "axios";
-import { useCreateAccommodationType } from "../hooks/useCreateAccommodationType";
+import { useCreateAccommodationType } from "../../../../../hooks/accommodationType/useCreateAccommodationType";
 
 // async function createAccommodationType(data: ICreateAccommodationType) {
 //   const response = await axios.post("http://localhost:3001/api/accommodationType", data);

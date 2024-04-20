@@ -1,6 +1,6 @@
 import { useMutation } from "react-query";
 import { IUpdateAccommodationType } from "@/type/IAccommodationType";
-import { updateAccommodationTypeApi } from "../api/updateAccommodationType";
+import { updateAccommodationTypeApi } from "../../apis/api/updateAccommodationType";
 
 interface UseUpdateAccommodationTypeProps {
   id: number;

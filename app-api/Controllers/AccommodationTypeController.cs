@@ -1,5 +1,6 @@
 ﻿using app_api.Data;
-using app_api.Dtos.Province;
+using app_api.Dtos;
+using app_api.Dtos.AccommodationType;
 using app_api.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,10 @@ namespace app_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProvinceController : Controller
+    public class AccommodationTypeController : Controller
     {
         private readonly AppDbContext _dbContext;
-        public ProvinceController(AppDbContext dbContext) {
+        public AccommodationTypeController(AppDbContext dbContext) {
             _dbContext = dbContext;
         }
 
@@ -23,11 +24,11 @@ namespace app_api.Controllers
             }
 
             var query = string.IsNullOrWhiteSpace(filter) ?
-                _dbContext.Provinces :
-                _dbContext.Provinces.Where(w => w.Name.Contains(filter));
+                _dbContext.AccommodationTypes :
+                _dbContext.AccommodationTypes.Where(w => w.Name.Contains(filter));
 
             var data = query.Skip((page - 1) * 10).Take(10)
-                .Select(s => new ProvinceDto { Id = s.Id, Name = s.Name })
+                .Select(s => new AccommodationTypeDto { Id = s.Id, Name = s.Name })
                 .ToList();
 
             var count = query.Count();
@@ -38,8 +39,8 @@ namespace app_api.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            var data = _dbContext.Provinces
-                            .Select(s => new ProvinceDto { Id = s.Id, Name = s.Name })
+            var data = _dbContext.AccommodationTypes
+                            .Select(s => new AccommodationTypeDto { Id = s.Id, Name = s.Name })
                             .ToList();
 
             var count = data.Count;
@@ -51,7 +52,7 @@ namespace app_api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var data = _dbContext.Provinces.Find(id);
+            var data = _dbContext.AccommodationTypes.Find(id);
             if (data == null)
             {
                 return NotFound();
@@ -59,17 +60,17 @@ namespace app_api.Controllers
             return Ok(data);
         }
         [HttpPost]
-        public virtual IActionResult Create([FromBody] Province Province)
+        public virtual IActionResult Create([FromBody] AccommodationType data)
         {
-            var result = _dbContext.Provinces.Add(Province);
+            var result = _dbContext.AccommodationTypes.Add(data);
             _dbContext.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new { Province.Id }, Province);
+            return CreatedAtAction(nameof(GetById), new { data.Id }, data);
         }
 
         [HttpPut("{id}")]
-        public virtual ActionResult Update(int id, [FromBody] Province data)
+        public virtual ActionResult Update(int id, [FromBody] AccommodationType data)
         {
-            var item = _dbContext.Provinces.Find(id);
+            var item = _dbContext.AccommodationTypes.Find(id);
             if (item == null)
             {
                 return NotFound();
@@ -84,12 +85,12 @@ namespace app_api.Controllers
         [HttpDelete("{id}")]
         public virtual ActionResult Delete(int id)
         {
-            var item = _dbContext.Provinces.Find(id);
+            var item = _dbContext.AccommodationTypes.Find(id);
 
             if (item == null)
                 return NotFound();
 
-            _dbContext.Provinces.Remove(item);
+            _dbContext.AccommodationTypes.Remove(item);
             _dbContext.SaveChanges();
             return Ok();
             

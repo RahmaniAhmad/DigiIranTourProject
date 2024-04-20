@@ -7,16 +7,9 @@ import Table from "@/components/UI/table";
 import CreatePage from "@/app/(dashboard)/dashboard/accommodationType/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/accommodationType/edit/[id]/page";
 import axios from "axios";
-import { useAccommodationTypes } from "../hooks/useAccommodationTypes";
+import { useAccommodationTypes } from "../../../../../hooks/accommodationType/useAccommodationTypes";
 import { IAccommodationType } from "@/type/IAccommodationType";
-import { useDeleteAccommodationType } from "../hooks/useDeleteAccommodationType";
-
-// async function deleteAccommodationType(id: number) {
-//   const response = await axios.delete(
-//     `http://localhost:3001/api/accommodationType/${id}`
-//   );
-//   return response.data;
-// }
+import { useDeleteAccommodationType } from "../../../../../hooks/accommodationType/useDeleteAccommodationType";
 
 interface AccommodationTypeListProps {
   getAll?: (

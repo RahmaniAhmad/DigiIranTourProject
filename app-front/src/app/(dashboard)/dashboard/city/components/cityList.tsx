@@ -98,6 +98,7 @@ export default function CityList() {
         ایجاد شهر جدید
       </Button>
       <Input
+        size="lg"
         isClearable
         placeholder="Search..."
         name="filter"
