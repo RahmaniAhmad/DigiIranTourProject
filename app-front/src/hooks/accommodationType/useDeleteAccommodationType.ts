@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { deleteAccommodationTypeApi } from "../../apis/api/deleteAccommodationType";
+import { deleteAccommodationTypeApi } from "../../apis/accommodationType/deleteAccommodationType";
 
 interface useDeleteAccommodationTypeProps {
   onSuccess?: () => void;
