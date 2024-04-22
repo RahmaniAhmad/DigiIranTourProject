@@ -20,7 +20,7 @@ export default function AccommodationList() {
 
   const {
     accommodations,
-    rowsCount,
+    count,
     refetch,
     isLoading,
     currentPage,
@@ -32,7 +32,7 @@ export default function AccommodationList() {
     onSuccess: refetch,
   });
   const openDeleteConfirm = async (id: number) => {
-    const accommodation = accommodations.find((f) => f.id == id);
+    const accommodation = accommodations.find((f: any) => f.id == id);
     setAccommodationName(accommodation?.title ?? "");
     setSelectedId(id);
     setShowDeleteConfirm(true);
@@ -130,10 +130,10 @@ export default function AccommodationList() {
           onEdit={openEditModal}
         ></Table>
       )}
-      {accommodations && rowsCount > 1 && (
+      {accommodations && count > 10 && (
         <CustomPagination
           page={currentPage}
-          total={rowsCount}
+          total={Math.ceil(count / 10)}
           siblings={5}
           initialPage={1}
           showControls

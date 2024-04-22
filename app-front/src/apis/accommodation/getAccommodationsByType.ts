@@ -5,7 +5,7 @@ export const getAccommodationsByTypeApi = async (
   page: number = 1,
   type?: string
 ) => {
-  const api = `http://localhost:3001/api/accommodation/type/${type}`;
+  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/type/${type}`;
 
   const response = await axios.get(api);
   const data: AccommodationTableViewModel[] = response.data.data || [];

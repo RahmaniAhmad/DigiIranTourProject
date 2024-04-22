@@ -58,16 +58,14 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         </label>
         <Select {...register("accommodationTypeId")}>
           {accommodationTypes &&
-            accommodationTypes.data.map(
-              (accommodationType: IAccommodationType) => (
-                <SelectItem
-                  key={accommodationType.id}
-                  value={accommodationType.id}
-                >
-                  {accommodationType.title}
-                </SelectItem>
-              )
-            )}
+            accommodationTypes.map((accommodationType: IAccommodationType) => (
+              <SelectItem
+                key={accommodationType.id}
+                value={accommodationType.id}
+              >
+                {accommodationType.name}
+              </SelectItem>
+            ))}
         </Select>
       </div>
       <div className="mb-4">

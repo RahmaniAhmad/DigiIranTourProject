@@ -3,15 +3,12 @@
 import { useAccommodation } from "@/hooks/accommodation/useAccommodation";
 import { useUpdateAccommodation } from "@/hooks/accommodation/useUpdateAccommodation";
 import { IUpdateAccommodation } from "@/type/IAccommodation";
-import { IAccommodationType } from "@/type/IAccommodationType";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
-import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useAccommodationTypes } from "../../../../../../hooks/accommodationType/useAccommodationTypes";
 import { toast } from "react-toastify";
 import { useCities } from "@/hooks/city/useCities";
 import { ICity } from "@/type/ICity";
-import { AccommodationViewModel } from "@/viewModels/accommodation/accommodationViewModel";
 
 interface IPageProps {
   id: number;
@@ -24,7 +21,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const { updateAccommodation } = useUpdateAccommodation({
     onSuccess,
   });
-  const { accommodationTypes } = useAccommodationTypes();
+  const { accommodationTypes } = useAccommodationTypes(false);
   const { cities } = useCities();
 
   const {
@@ -84,16 +81,14 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           defaultSelectedKeys={accommodation?.accommodationTypeId.toString()}
         >
           {accommodationTypes &&
-            accommodationTypes.data.map(
-              (accommodationType: IAccommodationType) => (
-                <SelectItem
-                  key={accommodationType.id}
-                  value={accommodationType.id}
-                >
-                  {accommodationType.title}
-                </SelectItem>
-              )
-            )}
+            accommodationTypes.map((accommodationType: any) => (
+              <SelectItem
+                key={accommodationType.id}
+                value={accommodationType.id}
+              >
+                {accommodationType.name}
+              </SelectItem>
+            ))}
         </Select>
       </div>
       <div className="mb-4">

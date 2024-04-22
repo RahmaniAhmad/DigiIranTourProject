@@ -12,8 +12,8 @@ export interface ICreateAccommodation {
   bedroomsCount: string;
   bedsCount: string;
   capacity: string;
-  accommodationImage: File;
-  imageName: string;
+  accommodationImage?: File;
+  imageName?: string;
 }
 
 export interface IUpdateAccommodation extends ICreateAccommodation {

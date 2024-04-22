@@ -8,5 +8,6 @@ export const createAccommodationTypeApi = async (
     `${process.env.NEXT_PUBLIC_BASE_API}/accommodationType`,
     data
   );
+
   return response.data;
 };

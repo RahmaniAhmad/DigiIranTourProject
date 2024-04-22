@@ -16,30 +16,19 @@ const mapToModel = (viewModel: any) => {
 };
 export const updateAccommodationApi = async (
   id: number,
-  viewModel: IUpdateAccommodation
+  data: IUpdateAccommodation
 ) => {
-  // const model = mapToModel(viewModel);
-  const formData = new FormData();
-  formData.append(
-    "accommodationTypeId",
-    viewModel.accommodationTypeId.toString()
-  );
-  formData.append("address", viewModel.address);
-  formData.append("bedroomsCount", viewModel.bedroomsCount);
-  formData.append("bedsCount", viewModel.bedsCount);
-  formData.append("capacity", viewModel.capacity);
-  formData.append("cityId", viewModel.cityId.toString());
-  formData.append("title", viewModel.title);
-  formData.append("accommodationImage", viewModel.accommodationImage);
-  formData.append("imageName", viewModel.imageName);
-  const response = await axios.put(
-    `http://localhost:3001/api/accommodation/${id}`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return response.data;
+  const response = await axios
+    .put(`${process.env.NEXT_PUBLIC_BASE_API}/accommodation/${id}`, {
+      ...data,
+      id,
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      debugger;
+    });
+  debugger;
+  return response;
 };

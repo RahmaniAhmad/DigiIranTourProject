@@ -79,15 +79,17 @@ namespace app_api.Controllers
             return Ok(data);
         }
         [HttpPost]
-        public virtual IActionResult Create([FromBody] Accommodation data)
+        public virtual IActionResult Create([FromBody] AccommodationCreateDto dto)
         {
-            var result = _dbContext.Accommodations.Add(data);
+            var accommodation = new Accommodation(dto.Title, dto.AccommodationTypeId, dto.CityId);
+
+            var result = _dbContext.Accommodations.Add(accommodation);
             _dbContext.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new { data.Id }, data);
+            return CreatedAtAction(nameof(GetById), new { accommodation.Id }, accommodation);
         }
 
         [HttpPut("{id}")]
-        public virtual ActionResult Update(int id, [FromBody] Accommodation data)
+        public virtual ActionResult Update(int id, [FromBody] AccommodationUpdateDto data)
         {
             var item = _dbContext.Accommodations.Find(id);
             if (item == null)

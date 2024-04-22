@@ -16,5 +16,6 @@ export const getAccommodationTypes = async (
   const data = await axios.get(api).then((response) => {
     return response.data;
   });
+
   return data;
 };

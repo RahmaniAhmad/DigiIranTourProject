@@ -9,5 +9,6 @@ export const updateAccommodationTypeApi = async (
     `${process.env.NEXT_PUBLIC_BASE_API}/accommodationType/${id}`,
     data
   );
+
   return response.data;
 };
