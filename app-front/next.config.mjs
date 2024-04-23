@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["tailwindui.com", "localhost:3001"], // Add the hostname(s) here
+    domains: ["tailwindui.com", "localhost:3001", "localhost:44390"], // Add the hostname(s) here
     remotePatterns: [
       {
-        protocol: "http",
+        protocol: "https",
         hostname: "localhost",
-        port: "3001",
-        pathname: "/uploads/images/**",
+        port: "44390",
+        pathname: "/uploads/**",
       },
     ],
   },

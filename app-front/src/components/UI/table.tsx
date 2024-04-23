@@ -73,13 +73,16 @@ const Table = ({
                       <td key={rowIndex} className="px-6 py-4">
                         {(col + "").includes(".jpg") ||
                         (col + "").includes(".png") ? (
-                          <Image
-                            src={`http://localhost:3001/uploads/images/${col}`}
-                            alt={col + "" ?? "image"}
-                            width={128}
-                            height={128}
-                            className="h-full w-full object-cover object-center"
-                          />
+                          <>
+                            <div>{`https://localhost:44390/uploads/${col}`}</div>
+                            <Image
+                              src={`https://localhost:44390/uploads/${col}`}
+                              alt={col + "" ?? "image"}
+                              width={128}
+                              height={128}
+                              className="h-full w-full object-cover object-center"
+                            />
+                          </>
                         ) : (
                           col
                         )}

@@ -37,7 +37,8 @@ namespace app_api.Controllers
                     Title = s.Title,
                     BedroomsCount=s.BedroomsCount,
                     BedsCount=s.BedsCount,
-                    Capacity=s.Capacity })
+                    Capacity=s.Capacity ,
+                    ImageName=s.ImageName})
                 .ToList();
 
             var count = query.Count();
@@ -58,7 +59,8 @@ namespace app_api.Controllers
                                 Title = s.Title,
                                 BedroomsCount = s.BedroomsCount,
                                 BedsCount = s.BedsCount,
-                                Capacity = s.Capacity
+                                Capacity = s.Capacity,
+                                ImageName = s.ImageName
                             })
                             .ToList();
 
@@ -89,7 +91,7 @@ namespace app_api.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual ActionResult Update(int id, [FromBody] AccommodationUpdateDto data)
+        public virtual async Task<ActionResult> Update(int id, [FromForm] AccommodationUpdateDto data)
         {
             var item = _dbContext.Accommodations.Find(id);
             if (item == null)
@@ -97,7 +99,29 @@ namespace app_api.Controllers
                 return NotFound();
             }
 
+            item.CityId = data.CityId;
+            item.AccommodationTypeId = data.AccommodationTypeId;
             item.Title = data.Title;
+            item.Address = data.Address;
+            item.BedroomsCount = data.BedroomsCount;
+            item.BedsCount = data.BedsCount;
+            item.Capacity = data.Capacity;
+
+            if (data.AccommodationImage != null && data.AccommodationImage.Length > 0)
+            {
+                var uniqueFileName = $"{Guid.NewGuid().ToString()}_{data.AccommodationImage.FileName}";
+                DateTime now = DateTime.Now;
+                var uploadsFolder = Path.Combine("uploads", now.Year.ToString(), now.Month.ToString("00"), now.Day.ToString("00"));
+                Directory.CreateDirectory(uploadsFolder);
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await data.AccommodationImage.CopyToAsync(stream);
+                }
+
+                item.ImageName = Path.Combine(now.Year.ToString(), now.Month.ToString("00"), now.Day.ToString("00"), uniqueFileName);
+            }
 
             _dbContext.SaveChanges();
             return Ok(data);

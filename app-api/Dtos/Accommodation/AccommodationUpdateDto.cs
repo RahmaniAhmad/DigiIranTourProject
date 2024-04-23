@@ -15,5 +15,7 @@ namespace app_api.Model
         public  string? ImageName { get; set; }
         public int CityId { get; set; }
         public int AccommodationTypeId { get; set; }
+        public IFormFile? AccommodationImage { get; set; }
+
     }
 }
