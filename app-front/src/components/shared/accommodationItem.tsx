@@ -23,18 +23,26 @@ const AccommodationItem = ({
   capacity,
 }: AccommodationItemProps) => {
   return (
-    <li className="flex py-6">
+    <div className="grid md:grid-cols-2 sm:grid-cols-1 mb-10 pb-2 border-b-1">
       <div className="h-128 w-128 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
         <Image
           src={imageSrc ?? ""}
           alt={title ?? "image"}
+          loader={({ src, width, quality }) => {
+            const url = new URL(imageSrc ?? "");
+            url.searchParams.append("src", src);
+            url.searchParams.append("w", width + "");
+            url.searchParams.append("q", quality + "");
+            return url.toString();
+          }}
           width={128}
           height={128}
           className="h-full w-full object-cover object-center"
+          // unoptimized
         />
       </div>
 
-      <div className="mr-4 flex flex-1 flex-col">
+      <div className="mr-4 flex flex-1 flex-col py-4">
         <div>
           <div className="flex justify-between mb-4 text-gray-900">
             <h3 className="font-medium">{title}</h3>
@@ -64,30 +72,7 @@ const AccommodationItem = ({
           </div>
         </div>
       </div>
-    </li>
-
-    // <a href={`/accommodations/hotel/${id}`} className="group">
-    // <div className="flex">
-    //   <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-    //     <Image
-    //       width={128}
-    //       height={128}
-    //       src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg"
-    //       alt={title ?? "product-image"}
-    //       className="h-full w-full object-cover object-center group-hover:opacity-75"
-    //     />
-    //   </div>
-    //   <div className="px-2">
-    //     <h3 className="mt-4 text-sm text-gray-700">{title}</h3>
-    //     <p className="mt-1 text-lg font-medium text-gray-900">
-    //       {provinceName},{cityName}
-    //     </p>
-    //   </div>
-    //   <div>
-    //     <Button color="primary">مشاهده و رزور</Button>
-    //   </div>
-    // </div>
-    // </a>
+    </div>
   );
 };
 

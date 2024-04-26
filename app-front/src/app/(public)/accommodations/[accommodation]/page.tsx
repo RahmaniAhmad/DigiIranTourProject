@@ -14,25 +14,21 @@ const Page = ({ params }: PageProps) => {
 
   return (
     <div className="my-8">
-      <div className="flow-root">
-        <ul role="list" className="-my-6 divide-y divide-gray-300">
-          {accommodations.map((accommodation) => {
-            return (
-              <AccommodationItem
-                key={accommodation.id}
-                id={accommodation.id}
-                title={accommodation.title}
-                provinceName={accommodation.provinceName}
-                cityName={accommodation.cityName}
-                bedroomsCount={accommodation.bedroomsCount}
-                bedsCount={accommodation.bedsCount}
-                capacity={accommodation.capacity}
-                imageSrc={`http://localhost:3001/uploads/images/${accommodation.imageName}`}
-              />
-            );
-          })}
-        </ul>
-      </div>
+      {accommodations.map((accommodation: any) => {
+        return (
+          <AccommodationItem
+            key={accommodation.id}
+            id={accommodation.id}
+            title={accommodation.title}
+            provinceName={accommodation.provinceName}
+            cityName={accommodation.cityName}
+            bedroomsCount={accommodation.bedroomsCount}
+            bedsCount={accommodation.bedsCount}
+            capacity={accommodation.capacity}
+            imageSrc={`https://localhost:44390/uploads/${accommodation.imageName}`}
+          />
+        );
+      })}
     </div>
   );
 };

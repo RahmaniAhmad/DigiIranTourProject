@@ -16,6 +16,29 @@ namespace app_api.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
+        {
+            var data = _dbContext.Accommodations
+                            .Select(s => new AccommodationGetDto
+                            {
+                                Id = s.Id,
+                                ProvinceName = s.City.Province.Name,
+                                CityName = s.City.Name,
+                                AccommodationTypeName = s.AccommodationType.Name,
+                                Title = s.Title,
+                                BedroomsCount = s.BedroomsCount,
+                                BedsCount = s.BedsCount,
+                                Capacity = s.Capacity,
+                                ImageName = s.ImageName
+                            })
+                            .ToList();
+
+            var count = data.Count;
+
+            return Ok(new { data, count });
+        }
+
         [HttpGet("GetAllPaged")]
         public IActionResult GetAllPaged(int page, string? filter)
         {
@@ -46,29 +69,37 @@ namespace app_api.Controllers
             return Ok(new { data, count });
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("GetByType")]
+        public IActionResult GetByType(int page, string type)
         {
-            var data = _dbContext.Accommodations
-                            .Select(s => new AccommodationGetDto
-                            {
-                                Id = s.Id,
-                                ProvinceName = s.City.Province.Name,
-                                CityName = s.City.Name,
-                                AccommodationTypeName = s.AccommodationType.Name,
-                                Title = s.Title,
-                                BedroomsCount = s.BedroomsCount,
-                                BedsCount = s.BedsCount,
-                                Capacity = s.Capacity,
-                                ImageName = s.ImageName
-                            })
-                            .ToList();
+            if (page == 0)
+            {
+                page = 1;
+            }
 
-            var count = data.Count;
+            var query = string.IsNullOrWhiteSpace(type) ?
+                _dbContext.Accommodations.Include(i => i.City) :
+                _dbContext.Accommodations.Where(w => w.AccommodationType.Name==type);
+
+            var data = query.Skip((page - 1) * 10).Take(10)
+                .Select(s => new AccommodationGetDto
+                {
+                    Id = s.Id,
+                    ProvinceName = s.City.Province.Name,
+                    CityName = s.City.Name,
+                    AccommodationTypeName = s.AccommodationType.Name,
+                    Title = s.Title,
+                    BedroomsCount = s.BedroomsCount,
+                    BedsCount = s.BedsCount,
+                    Capacity = s.Capacity,
+                    ImageName = s.ImageName
+                })
+                .ToList();
+
+            var count = query.Count();
 
             return Ok(new { data, count });
         }
-
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)

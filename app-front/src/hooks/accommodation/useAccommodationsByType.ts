@@ -10,12 +10,12 @@ export function useAccommodationsByType(type: string) {
     () => getAccommodationsByTypeApi(currentPage, type)
   );
 
-  const accommodations = data ? data.accommodations : [];
-  const rowsCount = data ? data.rowsCount : 0;
+  const accommodations = data ? data.data : [];
+  const count = data ? data.count : 0;
 
   return {
     accommodations,
-    rowsCount,
+    count,
     refetch,
     currentPage,
     setCurrentPage,
