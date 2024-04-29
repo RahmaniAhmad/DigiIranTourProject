@@ -18,15 +18,19 @@ namespace app_api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProvinceConfig());
-            modelBuilder.ApplyConfiguration(new ProvinceConfig());
-            modelBuilder.ApplyConfiguration(new ProvinceConfig());
-            modelBuilder.ApplyConfiguration(new ProvinceConfig());
+            modelBuilder.ApplyConfiguration(new CityConfig());
+            modelBuilder.ApplyConfiguration(new AccommodationTypeConfig());
+            modelBuilder.ApplyConfiguration(new AccommodationConfig());
+            modelBuilder.ApplyConfiguration(new UserConfig());
+            modelBuilder.ApplyConfiguration(new LoginCodeConfig());
         }
 
         public DbSet<Province> Provinces { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<AccommodationType> AccommodationTypes { get; set; }
         public DbSet<Accommodation> Accommodations { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<LoginCode> LoginCodes { get; set; }
 
     }
 }
