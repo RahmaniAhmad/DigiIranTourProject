@@ -21,6 +21,7 @@ namespace app_api.Model
         public  string? BedroomsCount { get; set; }
         public  string? BedsCount { get; set; }
         public  string? Capacity { get; set; }
+        public  string? Price { get; set; }
         public  string? ImageName { get; set; }
         [ForeignKey("City")]
         public int CityId { get; set; }

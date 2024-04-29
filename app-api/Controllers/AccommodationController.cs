@@ -30,6 +30,7 @@ namespace app_api.Controllers
                                 BedroomsCount = s.BedroomsCount,
                                 BedsCount = s.BedsCount,
                                 Capacity = s.Capacity,
+                                Price = s.Price,
                                 ImageName = s.ImageName
                             })
                             .ToList();
@@ -52,16 +53,19 @@ namespace app_api.Controllers
                 _dbContext.Accommodations.Where(w => w.Title.Contains(filter));
 
             var data = query.Skip((page - 1) * 10).Take(10)
-                .Select(s => new AccommodationGetDto { 
+                .Select(s => new AccommodationGetDto
+                {
                     Id = s.Id,
-                    ProvinceName=s.City.Province.Name,
-                    CityName=s.City.Name,
-                    AccommodationTypeName=s.AccommodationType.Name,
+                    ProvinceName = s.City.Province.Name,
+                    CityName = s.City.Name,
+                    AccommodationTypeName = s.AccommodationType.Name,
                     Title = s.Title,
-                    BedroomsCount=s.BedroomsCount,
-                    BedsCount=s.BedsCount,
-                    Capacity=s.Capacity ,
-                    ImageName=s.ImageName})
+                    BedroomsCount = s.BedroomsCount,
+                    BedsCount = s.BedsCount,
+                    Capacity = s.Capacity,
+                    Price = s.Price,
+                    ImageName = s.ImageName
+                })
                 .ToList();
 
             var count = query.Count();
@@ -92,6 +96,7 @@ namespace app_api.Controllers
                     BedroomsCount = s.BedroomsCount,
                     BedsCount = s.BedsCount,
                     Capacity = s.Capacity,
+                    Price = s.Price,
                     ImageName = s.ImageName
                 })
                 .ToList();
@@ -137,6 +142,7 @@ namespace app_api.Controllers
             item.BedroomsCount = data.BedroomsCount;
             item.BedsCount = data.BedsCount;
             item.Capacity = data.Capacity;
+            item.Price = data.Price;
 
             if (data.AccommodationImage != null && data.AccommodationImage.Length > 0)
             {

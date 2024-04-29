@@ -10,7 +10,7 @@ export function useCreateAccommodation({
   onSuccess,
 }: UseCreateAccommodationProps) {
   const createAccommodation = useMutation(
-    async (data: ICreateAccommodation) => {
+    async (data: any) => {
       return await createAccommodationApi(data);
     },
     {

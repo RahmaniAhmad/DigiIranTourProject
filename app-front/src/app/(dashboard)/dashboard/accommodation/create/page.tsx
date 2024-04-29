@@ -25,7 +25,7 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
   } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
-    const data = filedValues as ICreateAccommodation;
+    const data = filedValues as any;
 
     createAccommodation.mutate(
       {
@@ -36,6 +36,7 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         bedroomsCount: data.bedroomsCount,
         bedsCount: data.bedsCount,
         capacity: data.capacity,
+        price: data.price,
         imageName: filedValues.accommodationImage[0].name,
         accommodationImage: filedValues.accommodationImage[0],
       },
@@ -123,6 +124,13 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         </label>
         <Input {...register("capacity", { required: true })} />
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="price">
+          قیمت
+        </label>
+        <Input {...register("price", { required: true })} />
+        {errors.price && <p className="text-danger-600">قیمت اجباری می باشد</p>}
       </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">
         <Button

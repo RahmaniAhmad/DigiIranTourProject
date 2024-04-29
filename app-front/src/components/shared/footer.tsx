@@ -3,30 +3,44 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <div className="flex justify-between py-8">
+    <div className="grid md:grid-cols-3 sm:grid-cols-1 py-8 gap-8 p-8">
       <div className="flex items-center">
         <Image src="/images/logo.png" alt="logo" width={48} height={48} />
         <h4>دیجی‌ایران‌تور</h4>
       </div>
-      <div>
-        <h4>قوانین سایت</h4>
-        <ul>
-          <li>قوانین فروشگاه</li>
-          <li>قوانین خرید تور</li>
-          <li>سوالات متداول</li>
+      <div className="grid gap-4">
+        <h4 className="font-bold">قوانین سایت</h4>
+        <ul className="grid gap-2">
+          <li>
+            <Link className="nav-link" href="#">
+              قوانین فروشگاه
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" href="#">
+              قوانین خرید تور
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" href="#">
+              سوالات متداول
+            </Link>
+          </li>
         </ul>
       </div>
-      <div className="flex flex-col">
-        <h4>شبکه های اجتماعی</h4>
-        <Link className="nav-link" href="/about">
-          <span className="oi oi-home" aria-hidden="true"></span> Instagram
-        </Link>
-        <Link className="nav-link" href="/about">
-          <span className="oi oi-home" aria-hidden="true"></span> WhatsApp
-        </Link>
-        <Link className="nav-link" href="/about">
-          <span className="oi oi-home" aria-hidden="true"></span> Telegram
-        </Link>
+      <div className="grid gap-4">
+        <h4 className="font-bold">شبکه های اجتماعی</h4>
+        <div className="grid gap-2">
+          <Link className="nav-link" href="#">
+            اینستاگرام
+          </Link>
+          <Link className="nav-link" href="#">
+            واتساپ
+          </Link>
+          <Link className="nav-link" href="#">
+            تلگرام
+          </Link>
+        </div>
       </div>
     </div>
   );

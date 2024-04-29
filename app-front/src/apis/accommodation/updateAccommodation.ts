@@ -7,6 +7,7 @@ export const updateAccommodationApi = async (id: number, data: any) => {
   formData.append("BedroomsCount", data.bedroomsCount);
   formData.append("BedsCount", data.bedsCount);
   formData.append("Capacity", data.capacity);
+  formData.append("Price", data.price);
   formData.append("CityId", data.cityId.toString());
   formData.append("AccommodationTypeId", data.accommodationTypeId.toString());
   if (data.accommodationImage) {

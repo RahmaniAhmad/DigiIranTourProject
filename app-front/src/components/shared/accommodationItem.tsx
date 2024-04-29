@@ -11,6 +11,7 @@ interface AccommodationItemProps {
   bedroomsCount?: string;
   bedsCount?: string;
   capacity?: string;
+  price?: string;
 }
 const AccommodationItem = ({
   id,
@@ -21,10 +22,11 @@ const AccommodationItem = ({
   bedroomsCount,
   bedsCount,
   capacity,
+  price,
 }: AccommodationItemProps) => {
   return (
-    <div className="grid md:grid-cols-2 sm:grid-cols-1 mb-10 pb-2 border-b-1">
-      <div className="h-128 w-128 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+    <div className="grid md:grid-cols-3 sm:grid-cols-1 mb-12 pb-2 border-b-1">
+      <div className="md:col-span-1 h-128 w-128 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
         <Image
           src={imageSrc ?? ""}
           alt={title ?? "image"}
@@ -38,29 +40,25 @@ const AccommodationItem = ({
           width={128}
           height={128}
           className="h-full w-full object-cover object-center"
-          // unoptimized
         />
       </div>
 
-      <div className="mr-4 flex flex-1 flex-col py-4">
-        <div>
-          <div className="flex justify-between mb-4 text-gray-900">
+      <div className="md:col-span-2 mr-4 flex flex-1 flex-col py-4">
+        <div className="grid md:grid-cols-2 sm:grid-cols-1">
+          <div className="grid gap-2">
             <h3 className="font-medium">{title}</h3>
-            <p>قیمت برای یک شب</p>
-          </div>
-          <div className="flex justify-between text-base font-medium text-gray-900">
             <p className="mt-1 text-sm text-gray-500">
               تعداد اتاق: {bedroomsCount}
             </p>
-            <p className="mt-1 text-sm text-gray-500">1,000,000 ریال</p>
+            <p className="mt-1 text-sm text-gray-500">ظرفیت: {capacity}</p>
+            <p className="mt-1 text-sm text-gray-500">تعداد تخت: {bedsCount}</p>
+            <p className="text-gray-500">
+              {provinceName} , {cityName}
+            </p>
           </div>
-        </div>
-        <div className="flex flex-1 items-end justify-between text-sm">
-          <p className="text-gray-500">
-            {provinceName} , {cityName}
-          </p>
-
-          <div className="flex">
+          <div className="grid gap-2">
+            <p>قیمت برای یک شب</p>
+            <p className="mt-1 text-sm text-gray-500">{price}</p>
             <Button
               href={`/accommodations/hotel/${id}`}
               as={Link}

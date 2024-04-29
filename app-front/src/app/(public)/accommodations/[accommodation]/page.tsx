@@ -25,6 +25,7 @@ const Page = ({ params }: PageProps) => {
             bedroomsCount={accommodation.bedroomsCount}
             bedsCount={accommodation.bedsCount}
             capacity={accommodation.capacity}
+            price={accommodation.price}
             imageSrc={`https://localhost:44390/uploads/${accommodation.imageName}`}
           />
         );

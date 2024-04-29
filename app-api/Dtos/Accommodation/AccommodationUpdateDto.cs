@@ -12,7 +12,8 @@ namespace app_api.Model
         public  string? BedroomsCount { get; set; }
         public  string? BedsCount { get; set; }
         public  string? Capacity { get; set; }
-        public  string? ImageName { get; set; }
+        public string? Price { get; set; }
+        public string? ImageName { get; set; }
         public int CityId { get; set; }
         public int AccommodationTypeId { get; set; }
         public IFormFile? AccommodationImage { get; set; }

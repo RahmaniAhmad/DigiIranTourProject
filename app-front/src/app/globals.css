@@ -4,3 +4,12 @@
 body {
   direction: rtl;
 }
+a {
+  color: #1a0dab;
+  opacity: 0.8;
+}
+
+a:hover {
+  color: #1a0dab;
+  opacity: 1;
+}

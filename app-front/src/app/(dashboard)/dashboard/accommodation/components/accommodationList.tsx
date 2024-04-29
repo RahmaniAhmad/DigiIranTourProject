@@ -118,6 +118,7 @@ export default function AccommodationList() {
             "تعداد اتاق",
             "تعداد تخت",
             "ظرفیت",
+            "قیمت",
             "تصویر",
           ]}
           data={accommodations}

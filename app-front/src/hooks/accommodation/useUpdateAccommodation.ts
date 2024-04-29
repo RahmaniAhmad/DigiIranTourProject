@@ -13,7 +13,7 @@ export function useUpdateAccommodation({
   onSuccess,
 }: UseUpdateAccommodationProps) {
   const updateAccommodation = useMutation(
-    async ({ id, data }: IUpdateAccommodation) => {
+    async ({ id, data }: any) => {
       return await updateAccommodationApi(id, data);
     },
     {
