@@ -1,6 +1,7 @@
 ﻿using app_api.Data;
 using app_api.Dtos.AccommodationType;
 using app_api.Dtos.Province;
+using app_api.Helpers;
 using app_api.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +13,11 @@ namespace app_api.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
+        private readonly IConfiguration _config;
+
         private readonly AppDbContext _dbContext;
-        public UserController(AppDbContext dbContext) {
+        public UserController(IConfiguration config, AppDbContext dbContext) {
+            _config = config;
             _dbContext = dbContext;
         }
 
@@ -107,7 +111,7 @@ namespace app_api.Controllers
         [HttpPost("SignIn")]
         public virtual IActionResult SignIn([FromBody] UserSigninDto dto)
         {
-            var compareDateTime = DateTime.Now.AddMinutes(-20);
+            var compareDateTime = DateTime.Now.AddDays(-4);
             var loginCode = _dbContext.LoginCodes.Where(w => w.User.Mobile == dto.Mobile)
                 .Where(w => w.CreationDateTime > compareDateTime).OrderBy(o => o.Id).LastOrDefault();
 
@@ -118,16 +122,49 @@ namespace app_api.Controllers
 
             if (loginCode.Code != dto.Code)
             {
-                return Unauthorized(new { dto.Code });
+                return Unauthorized();
             }
-
             var user = _dbContext.Users.Where(w => w.Mobile == dto.Mobile).FirstOrDefault();
             if (user != null)
             {
                 user.IsActive = true;
             }
+
+            var accessToken = TokenUtils.GenerateAccessToken(user, _config["Jwt:Secret"]);
+            var refreshToken = TokenUtils.GenerateRefreshToken();
+
+           
             _dbContext.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new { user.Id }, user);
+
+            var response = new TokenResponse
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            };
+
+            return Ok(response);
+        }
+
+        [HttpPost("refresh")]
+        public IActionResult Refresh(TokenResponse tokenResponse)
+        {
+            // For simplicity, assume the refresh token is valid and stored securely
+            // var storedRefreshToken = _userService.GetRefreshToken(userId);
+
+            // Verify refresh token (validate against the stored token)
+            // if (storedRefreshToken != tokenResponse.RefreshToken)
+            //    return Unauthorized();
+
+            // For demonstration, let's just generate a new access token
+            var newAccessToken = TokenUtils.GenerateAccessTokenFromRefreshToken(tokenResponse.RefreshToken, _config["Jwt:Secret"]);
+
+            var response = new TokenResponse
+            {
+                AccessToken = newAccessToken,
+                RefreshToken = tokenResponse.RefreshToken // Return the same refresh token
+            };
+
+            return Ok(response);
         }
 
         [HttpPut("{id}")]
