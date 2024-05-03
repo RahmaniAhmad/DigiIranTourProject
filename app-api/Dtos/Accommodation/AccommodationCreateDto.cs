@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 
-namespace app_api.Model
+namespace app_api.Dtos.Accommodation
 {
     public class AccommodationCreateDto
     {

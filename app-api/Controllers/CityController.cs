@@ -1,7 +1,7 @@
 ﻿using app_api.Data;
 using app_api.Dtos;
 using app_api.Dtos.City;
-using app_api.Model;
+using app_api.Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using static System.Runtime.InteropServices.JavaScript.JSType;

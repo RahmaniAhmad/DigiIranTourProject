@@ -1,7 +1,7 @@
 ﻿using app_api.Data;
 using app_api.Dtos;
 using app_api.Dtos.AccommodationType;
-using app_api.Model;
+using app_api.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app_api.Controllers

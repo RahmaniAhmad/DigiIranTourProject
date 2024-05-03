@@ -1,6 +1,7 @@
 using app_api.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.FileProviders;
@@ -15,7 +16,14 @@ var builder = WebApplication.CreateBuilder(args);
 var secret = builder.Configuration["Jwt:Secret"];
 var key = Encoding.ASCII.GetBytes(secret);
 
-// Add services to the container.
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("Agency", policy => policy.RequireRole("Agency"));
+    options.AddPolicy("Customer", policy => policy.RequireRole("Customer"));
+});
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -28,6 +36,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(key)
         };
     });
+
+
+//builder.Services.AddAuthorization();
+
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+//                .AddEntityFrameworkStores<AppDbContext>()
+//                .AddDefaultTokenProviders()
+//                .AddDefaultUI();
+
+//builder.Services.ConfigureApplicationCookie(options =>
+//{
+//    // Cookie settings  
+//    options.Cookie.HttpOnly = true;
+//    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+//    options.LoginPath = "/auth/Login";  //set the login page.  
+//    options.AccessDeniedPath = "/auth/AccessDenied";
+//    options.SlidingExpiration = true;
+//});
 
 builder.Services.AddCors(options =>
 {
@@ -63,6 +90,7 @@ app.UseHttpsRedirection();
 app.UseCors(SpecificOrigins);
 
 app.UseAuthorization();
+//app.MapIdentityApi<IdentityUser>();
 
 app.UseStaticFiles(new StaticFileOptions
 {

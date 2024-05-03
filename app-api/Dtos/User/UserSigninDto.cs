@@ -1,4 +1,4 @@
-﻿namespace app_api.Dtos.AccommodationType
+﻿namespace app_api.Dtos.User
 {
     public class UserSigninDto
     { 

@@ -5,8 +5,8 @@ export const signInApi = async () => {
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_BASE_API}/user/signin`,
     {
-      mobile: "",
-      code: "",
+      mobile: "09173166118",
+      code: "338666",
     }
   );
 

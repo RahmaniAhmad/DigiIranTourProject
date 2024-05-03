@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Reflection.Emit;
-using app_api.Data.Config;
-using app_api.Model;
+﻿using app_api.Data.Config;
+using app_api.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace app_api.Data
@@ -23,6 +19,7 @@ namespace app_api.Data
             modelBuilder.ApplyConfiguration(new AccommodationConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
             modelBuilder.ApplyConfiguration(new LoginCodeConfig());
+            modelBuilder.ApplyConfiguration(new UserRoleConfig());
         }
 
         public DbSet<Province> Provinces { get; set; }
@@ -31,6 +28,7 @@ namespace app_api.Data
         public DbSet<Accommodation> Accommodations { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<LoginCode> LoginCodes { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
     }
 }

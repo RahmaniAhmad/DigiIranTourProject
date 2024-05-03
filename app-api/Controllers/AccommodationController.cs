@@ -1,9 +1,8 @@
 ﻿using app_api.Data;
-using app_api.Dtos.AccommodationType;
-using app_api.Dtos.Province;
-using app_api.Model;
+using app_api.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using app_api.Dtos.Accommodation;
 
 namespace app_api.Controllers
 {

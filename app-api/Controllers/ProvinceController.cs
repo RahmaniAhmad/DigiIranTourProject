@@ -1,6 +1,6 @@
 ﻿using app_api.Data;
 using app_api.Dtos.Province;
-using app_api.Model;
+using app_api.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +15,7 @@ namespace app_api.Controllers
             _dbContext = dbContext;
         }
 
-        [Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpGet("GetAllPaged")]
         public IActionResult GetAllPaged(int page, string? filter)
         {
@@ -49,7 +49,7 @@ namespace app_api.Controllers
             return Ok(new { data, count });
         }
 
-
+        
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -60,6 +60,8 @@ namespace app_api.Controllers
             }
             return Ok(data);
         }
+
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         public virtual IActionResult Create([FromBody] Province Province)
         {
@@ -68,6 +70,7 @@ namespace app_api.Controllers
             return CreatedAtAction(nameof(GetById), new { Province.Id }, Province);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpPut("{id}")]
         public virtual ActionResult Update(int id, [FromBody] Province data)
         {
@@ -83,6 +86,7 @@ namespace app_api.Controllers
             return Ok(data);
         }
 
+        [Authorize(Policy = "Admin")]
         [HttpDelete("{id}")]
         public virtual ActionResult Delete(int id)
         {

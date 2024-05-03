@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace app_api.Model
+namespace app_api.Domain
 {
     public class User
     {
@@ -29,6 +29,7 @@ namespace app_api.Model
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<LoginCode>? LoginCodes { get; set; }
     }
 }

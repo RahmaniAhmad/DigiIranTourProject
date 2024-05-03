@@ -1,4 +1,4 @@
-﻿using app_api.Model;
+﻿using app_api.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

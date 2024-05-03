@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 
-namespace app_api.Model
+namespace app_api.Domain
 {
     public class Accommodation
     {
