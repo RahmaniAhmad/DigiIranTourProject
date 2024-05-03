@@ -4,8 +4,6 @@ using app_api.Dtos.Province;
 using app_api.Helpers;
 using app_api.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Runtime.InteropServices;
 
 namespace app_api.Controllers
 {
@@ -109,7 +107,7 @@ namespace app_api.Controllers
         }
 
         [HttpPost("SignIn")]
-        public virtual IActionResult SignIn([FromBody] UserSigninDto dto)
+        public IActionResult SignIn([FromBody] UserSigninDto dto)
         {
             var compareDateTime = DateTime.Now.AddDays(-4);
             var loginCode = _dbContext.LoginCodes.Where(w => w.User.Mobile == dto.Mobile)
@@ -133,7 +131,7 @@ namespace app_api.Controllers
             var accessToken = TokenUtils.GenerateAccessToken(user, _config["Jwt:Secret"]);
             var refreshToken = TokenUtils.GenerateRefreshToken();
 
-           
+
             _dbContext.SaveChanges();
 
             var response = new TokenResponse

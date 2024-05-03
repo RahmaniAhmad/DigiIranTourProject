@@ -1,6 +1,7 @@
 ﻿using app_api.Data;
 using app_api.Dtos.Province;
 using app_api.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace app_api.Controllers
@@ -14,6 +15,7 @@ namespace app_api.Controllers
             _dbContext = dbContext;
         }
 
+        [Authorize]
         [HttpGet("GetAllPaged")]
         public IActionResult GetAllPaged(int page, string? filter)
         {
