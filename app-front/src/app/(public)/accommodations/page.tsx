@@ -1,19 +1,26 @@
 "use client";
 
 import AccommodationItem from "@/components/shared/accommodationItem";
-import { useAccommodationsByType } from "@/hooks/accommodation/useAccommodationsByType";
+import { useAccommodations } from "@/hooks/accommodation/useAccommodations";
+import { Button, ButtonGroup } from "@nextui-org/react";
+import Link from "next/link";
 
-interface PageProps {
-  params: {
-    accommodation: string;
-  };
-}
-
-const Page = ({ params }: PageProps) => {
-  const { accommodations } = useAccommodationsByType(params.accommodation);
+const Page = () => {
+  const { accommodations } = useAccommodations();
 
   return (
-    <div className="my-8">
+    <div className="">
+      <ButtonGroup className="my-2 flex justify-center">
+        <Button>
+          <Link href="accommodations/hotel">هتل</Link>
+        </Button>
+        <Button>
+          <Link href="accommodations/apartment">هتل آپارتمان</Link>
+        </Button>
+        <Button>
+          <Link href="accommodations/ecotourism">بومگردی</Link>
+        </Button>
+      </ButtonGroup>
       {accommodations.map((accommodation: any) => {
         return (
           <AccommodationItem

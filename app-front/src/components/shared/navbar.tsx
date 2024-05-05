@@ -45,6 +45,12 @@ const CustomNavbar = () => {
             خانه
           </Link>
         </NavbarItem>
+        <NavbarItem>
+          <Link href="/accommodations" aria-current="page">
+            <p>اقامتگاه</p>
+          </Link>
+        </NavbarItem>
+
         <Dropdown>
           <NavbarItem>
             <DropdownTrigger>
