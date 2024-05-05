@@ -60,14 +60,14 @@ const CustomNavbar = () => {
             </DropdownTrigger>
           </NavbarItem>
           <DropdownMenu
-            aria-label="ACME features"
+            aria-label="accommodation"
             className="w-[340px]"
             itemClasses={{
               base: "gap-4",
             }}
           >
             <DropdownItem
-              key="autoscaling"
+              key="hotel"
               description=""
               //   startContent={icons.scale}
             >

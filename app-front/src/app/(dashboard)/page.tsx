@@ -5,10 +5,6 @@ const Page = () => {
   debugger;
   return (
     <div>
-      <br />
-      <br />
-      <br />
-      <br />
       <button>test</button>
       Dashboard Home Page
     </div>
