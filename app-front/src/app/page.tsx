@@ -1,10 +1,13 @@
-import Home from "./(public)/home/page";
+import Home from "./(public)/(WithHeader)/home/page";
+import PublicLayoutWithHeader from "./(public)/(WithHeader)/layout";
 import PublicLayout from "./(public)/layout";
 
 export default function Page() {
   return (
     <PublicLayout>
-      <Home />
+      <PublicLayoutWithHeader>
+        <Home />
+      </PublicLayoutWithHeader>
     </PublicLayout>
   );
 }
