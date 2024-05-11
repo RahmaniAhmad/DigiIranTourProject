@@ -18,8 +18,7 @@ export default function PublicLayout({
       <div className="w-full">
         <CustomNavbar />
       </div>
-      <div className="min-h-screen max-w-screen-lg">
-        {/* <Header /> */}
+      <div className="w-full min-h-screen">
         <div className="p-4">{children}</div>
         <hr />
         <Footer />

@@ -105,16 +105,46 @@ namespace app_api.Controllers
             return Ok(new { data, count });
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        [HttpGet("GetMyAccommodation/{id}")]
+        public IActionResult GetMyAccommodation(int id)
         {
             var data = _dbContext.Accommodations.Find(id);
+
             if (data == null)
             {
                 return NotFound();
             }
             return Ok(data);
         }
+
+        [HttpGet("GetAccommodation/{id}")]
+        public IActionResult GetAccommodation(int id)
+        {
+            var data = _dbContext.Accommodations
+                .Include(i => i.AccommodationType)
+                .Include(i => i.City)
+                .Include(i => i.City.Province)
+                .FirstOrDefault(f => f.Id == id);
+            if (data == null)
+            {
+                return NotFound();
+            }
+            var result = new AccommodationGetDto
+            {
+                Id = data.Id,
+                ProvinceName = data.City.Province.Name,
+                CityName = data.City.Name,
+                AccommodationTypeName = data.AccommodationType.Name,
+                Title = data.Title,
+                BedroomsCount = data.BedroomsCount,
+                BedsCount = data.BedsCount,
+                Capacity = data.Capacity,
+                Price = data.Price,
+                ImageName = data.ImageName
+            };
+            return Ok(result);
+        }
+
         [HttpPost]
         public virtual IActionResult Create([FromBody] AccommodationCreateDto dto)
         {
@@ -122,7 +152,7 @@ namespace app_api.Controllers
 
             var result = _dbContext.Accommodations.Add(accommodation);
             _dbContext.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new { accommodation.Id }, accommodation);
+            return CreatedAtAction(nameof(GetMyAccommodation), new { accommodation.Id }, accommodation);
         }
 
         [HttpPut("{id}")]

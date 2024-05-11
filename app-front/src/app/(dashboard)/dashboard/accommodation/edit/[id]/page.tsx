@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccommodation } from "@/hooks/accommodation/useAccommodation";
+import { useMyAccommodation } from "@/hooks/accommodation/useMyAccommodation";
 import { useUpdateAccommodation } from "@/hooks/accommodation/useUpdateAccommodation";
 import { IUpdateAccommodation } from "@/type/IAccommodation";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
@@ -17,7 +17,7 @@ interface IPageProps {
 }
 
 const Page = ({ id, onClose, onSuccess }: IPageProps) => {
-  const { accommodation, isLoading } = useAccommodation(id);
+  const { accommodation, isLoading } = useMyAccommodation(id);
   const { updateAccommodation } = useUpdateAccommodation({
     onSuccess,
   });
