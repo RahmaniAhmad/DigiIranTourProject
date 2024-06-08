@@ -1,26 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using app_api.Domain.Base;
 
 namespace app_api.Domain
 {
-    public class City
+    public class City : Entity
     {
-        public City(string name,int provinceId) { 
-            this.Name = name;  
-            this.ProvinceId = provinceId;
+        private readonly List<Accommodation> _accommodations = new List<Accommodation>();
+        public City(Province province, string name)
+        {
+            Province = province ?? throw new ArgumentNullException(nameof(province));
+            ProvinceId = province.Id;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+        }
+        private City() { }
+        public long ProvinceId { get; private set; }
+        public Province Province { get; private set; }
+        public string Name { get; private set; }
+        public IReadOnlyList<Accommodation> Accommodations => _accommodations.AsReadOnly();
+        public void AddAccommodation(string title, string address, int bedroomsCount, string rule)
+        {
+            //var accommodation = new Accommodation(this, title, address, bedroomsCount, rule);
+            //_accommodations.Add(accommodation);
         }
 
-        [Key]
-        public int Id { get; set; }
+        public void RemoveAccommodation(Accommodation accommodation)
+        {
+            if (accommodation == null)
+                throw new ArgumentNullException(nameof(accommodation));
 
-        [Required]
-        public string Name { get; set; }
-
-        [ForeignKey("Province")]
-        public int ProvinceId { get; set; }
-        public Province? Province { get; set; }
-        public ICollection<Accommodation>? Accommodations { get; }
-
-
+            _accommodations.Remove(accommodation);
+        }
     }
 }

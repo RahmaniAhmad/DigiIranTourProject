@@ -8,9 +8,13 @@ namespace app_api.Data.Config
     {
         public void Configure(EntityTypeBuilder<Province> builder)
         {
-            builder.HasKey(o => o.Id);
-            builder.Property(t => t.Name).IsRequired().HasMaxLength(30);
-            builder.HasMany(t => t.Cities).WithOne(t => t.Province).HasForeignKey(t => t.ProvinceId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            builder.HasKey(p => p.Id);
+            builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
+
+            builder.HasMany(p => p.Cities)
+                   .WithOne(c => c.Province)
+                   .HasForeignKey(c => c.ProvinceId)
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

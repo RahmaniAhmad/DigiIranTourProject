@@ -1,33 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using app_api.Domain.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace app_api.Domain
 {
-    public class LoginCode
+    public class LoginCode : Entity
     {
-        public LoginCode(int userId)
-        {
-            this.UserId = userId;
-        }
-
-        private static string GetCode()
-        {
-            var result = "";
-            Random random = new Random();
-            for (int i = 0; i < 6; i++)
-            {
-                result += random.Next(1, 9);
-            }
-            return result;
-        }
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Code { get; set; } = GetCode();
-        [Required]
-        public DateTime CreationDateTime { get; set; } = DateTime.Now;
-        [Required]
-        public int UserId { get; set; }
-        public User User { get;  }
-
+        public required string Code { get; set; }
+        public DateTime SentAt { get; set; } = DateTime.Now;
     }
 }

@@ -8,6 +8,7 @@ const isAuth = (Component: any) => {
     const auth = isAuthenticated;
 
     useEffect(() => {
+      debugger;
       var accessToke = localStorage.getItem("accessToken");
       if (!accessToke) {
         return redirect("/auth/login");

@@ -3,6 +3,6 @@
     public class UserSigninDto
     { 
         public required string Mobile { get; set; }
-        public required string Code { get; set; }
+        public required string VerificationCode { get; set; }
     }
 }

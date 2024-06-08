@@ -1,4 +1,4 @@
-﻿namespace app_api.Model
+﻿namespace app_api.Dtos
 {
     public class TokenResponse
     {

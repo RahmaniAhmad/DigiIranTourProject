@@ -11,11 +11,11 @@ namespace app_api.Data.Config
             builder.HasKey(o => o.Id);
             builder.Property(t => t.Mobile).IsRequired().HasMaxLength(11);
 
-            builder.HasMany(t => t.LoginCodes)
-                .WithOne(t => t.User)
-                .HasForeignKey(t => t.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasMany(t => t.LoginCodes)
+            //    .WithOne(t => t.User)
+            //    .HasForeignKey(t => t.UserId)
+            //    .IsRequired()
+            //    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

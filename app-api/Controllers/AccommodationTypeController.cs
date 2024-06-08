@@ -1,5 +1,4 @@
 ﻿using app_api.Data;
-using app_api.Dtos;
 using app_api.Dtos.AccommodationType;
 using app_api.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -79,7 +78,7 @@ namespace app_api.Controllers
                 return NotFound();
             }
 
-            item.Name = dto.Name;
+            //item.Name = dto.Name;
 
             _dbContext.SaveChanges();
             return Ok(item);

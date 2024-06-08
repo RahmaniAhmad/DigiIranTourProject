@@ -1,11 +1,24 @@
 import { useMutation } from "react-query";
-import { createProvinceApi } from "@/apis/province/createProvince";
-import { signInApi } from "@/apis/user/signIn";
+import { signInApi, verificationCodeApi } from "@/apis/user/auth";
 
+type SignInProps = {
+  mobile: string;
+  verificationCode: string;
+};
 export function useSignIn() {
+  const verificationCode = useMutation(
+    async (mobile: string) => {
+      return await verificationCodeApi(mobile);
+    },
+    {
+      onSuccess: () => {},
+      onError: (error) => {},
+    }
+  );
+
   const signIn = useMutation(
-    async () => {
-      return await signInApi();
+    async ({ mobile, verificationCode }: SignInProps) => {
+      return await signInApi(mobile, verificationCode);
     },
     {
       onSuccess: () => {},
@@ -14,6 +27,7 @@ export function useSignIn() {
   );
 
   return {
+    verificationCode,
     signIn,
   };
 }

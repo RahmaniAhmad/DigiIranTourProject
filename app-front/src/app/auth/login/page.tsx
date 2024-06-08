@@ -1,21 +1,27 @@
 "use client";
 import { useSignIn } from "@/hooks/user/useSignIn";
 import { Button, Input } from "@nextui-org/react";
-import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useState } from "react";
 
 export default function Login() {
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
-  const { signIn } = useSignIn();
+  const [mobile, setMobile] = useState("");
+  const router = useRouter();
+
+  const { verificationCode } = useSignIn();
   const handleSignIn = () => {
-    signIn.mutate();
+    verificationCode.mutate(mobile);
+    router.push(`/auth/verificationCode?mobile=${mobile}`);
   };
+  const handleMobileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setMobile(e.target.value);
+  };
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          ورود به بخش داشبورد
+          ورود یا ثبت نام
         </h2>
       </div>
 
@@ -26,60 +32,20 @@ export default function Login() {
               htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              شماره موبایل
-            </label>
-            <div className="mt-2">
-              <Input name="mobile" type="number" required />
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              کلمه عبور
+              شماره تلفن همراه
             </label>
             <div className="mt-2">
               <Input
-                name="password"
-                type={isVisible ? "text" : "password"}
+                isRequired
+                name="mobile"
+                type="number"
                 required
-                endContent={
-                  <button
-                    className="focus:outline-none"
-                    type="button"
-                    onClick={toggleVisibility}
-                  >
-                    {isVisible ? (
-                      <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
-                    ) : (
-                      <FaEye className="text-2xl text-default-400 pointer-events-none" />
-                    )}
-                  </button>
-                }
+                onChange={handleMobileChange}
               />
             </div>
-          </div>
-          <div>
-            <div className="flex items-center justify-between">
-              <div className="text-sm">
-                <a
-                  href="/auth/forget-password"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  کلمه عبور را فراموش کرده‌ام!
-                </a>
-              </div>
-              <div className="text-sm">
-                <a
-                  href="/auth/register"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  ثبت نام
-                </a>
-              </div>
-            </div>
+            <span className="text-gray-500">
+              پیامک حاوی کد به شماره همراه وارد شده ارسال خواهد شد
+            </span>
           </div>
 
           <div>
@@ -87,7 +53,7 @@ export default function Login() {
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               onClick={handleSignIn}
             >
-              ورود
+              دریافت کد ورود
             </Button>
           </div>
         </form>

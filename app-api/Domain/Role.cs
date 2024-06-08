@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using app_api.Domain.Base;
 
 namespace app_api.Domain
 {
-    public class Role
+    public class Role : AggregateRoot
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
         public required string Name { get; set; }
-        public ICollection<UserRole> UserRoles { get; set; }
 
+        public Role(string name)
+        {
+            Name = name;
+        }
     }
 }

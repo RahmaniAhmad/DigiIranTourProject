@@ -1,4 +1,9 @@
+using app_api.Contracts;
+using app_api.Controllers;
 using app_api.Data;
+using app_api.Data.Repositories;
+using app_api.Domain.Repositories;
+using app_api.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +42,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Register the unit of work and repository
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<IProvinceRepository, ProvinceRepository>();
+//builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
+
+//builder.Services.AddScoped<ProvinceService>();
+//builder.Services.AddScoped<CityService>();
+builder.Services.AddScoped<AccommodationService>();
 
 //builder.Services.AddAuthorization();
 
