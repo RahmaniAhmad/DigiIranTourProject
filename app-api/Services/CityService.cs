@@ -1,29 +1,28 @@
 ﻿using app_api.Contracts;
 using app_api.Domain;
+using app_api.Domain.Repositories;
 
 namespace app_api.Services
 {
     public class CityService
     {
+        private readonly ICityRepository _cityRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CityService(IUnitOfWork unitOfWork)
+        public CityService(ICityRepository cityRepository, IUnitOfWork unitOfWork)
         {
+            _cityRepository = cityRepository;   
             _unitOfWork = unitOfWork;
         }
+        public async Task<IEnumerable<City>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return await _cityRepository.GetAllAsync(cancellationToken);
+        }
 
-        //public async Task AddAccommodationToCityAsync(long cityId,AccommodationType type, string accommodationTitle, string address, int bedroomsCount, string rule, CancellationToken cancellationToken)
-        //{
-        //    var city = await _unitOfWork.Cities.GetByIdAsync(cityId, cancellationToken);
-        //    if (city == null)
-        //    {
-        //        throw new Exception("City not found");
-        //    }
-
-        //    var accommodation = new Accommodation(city,type, accommodationTitle, address, bedroomsCount, rule);
-        //    city.AddAccommodation(accommodationTitle, address, bedroomsCount, rule);
-        //    await _unitOfWork.CompleteAsync(cancellationToken);
-        //}
+        public async Task<City> GetByIdAsync(long id, CancellationToken cancellationToken)
+        {
+            return await _cityRepository.GetByIdAsync(id, cancellationToken);
+        }
     }
 
 }

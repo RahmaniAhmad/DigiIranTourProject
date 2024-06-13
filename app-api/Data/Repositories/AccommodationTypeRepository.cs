@@ -17,12 +17,12 @@ namespace app_api.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<AccommodationType>> GetAll()
+        public async Task<IEnumerable<AccommodationType>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await this.DbContext.AccommodationTypes.ToListAsync();
+            return await this.DbContext.AccommodationTypes.ToListAsync(cancellationToken);
         }
 
-        public async Task<AccommodationType> GetById(long id, CancellationToken cancellationToken)
+        public async Task<AccommodationType> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             var city = await this.DbContext.AccommodationTypes
                 .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);

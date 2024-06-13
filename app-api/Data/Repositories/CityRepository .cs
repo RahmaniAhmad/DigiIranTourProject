@@ -18,12 +18,12 @@ namespace app_api.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<City>> GetAll()
+        public async Task<IEnumerable<City>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await this.DbContext.Cities.ToListAsync();
+            return await this.DbContext.Cities.ToListAsync(cancellationToken);
         }
 
-        public async Task<City> GetById(long id, CancellationToken cancellationToken)
+        public async Task<City> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             var city = await this.DbContext.Cities
                 .Include(i => i.Province)

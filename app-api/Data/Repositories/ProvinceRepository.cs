@@ -18,9 +18,9 @@ namespace app_api.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<Province>> GetAll()
+        public async Task<IEnumerable<Province>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await this.DbContext.Provinces.ToListAsync();
+            return await this.DbContext.Provinces.ToListAsync(cancellationToken);
         }
     }
 }
