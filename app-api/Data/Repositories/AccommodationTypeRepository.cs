@@ -21,5 +21,18 @@ namespace app_api.Data.Repositories
         {
             return await this.DbContext.AccommodationTypes.ToListAsync();
         }
+
+        public async Task<AccommodationType> GetById(long id, CancellationToken cancellationToken)
+        {
+            var city = await this.DbContext.AccommodationTypes
+                .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+
+            if (city == null)
+            {
+                throw new KeyNotFoundException($"AccommodationType with ID {id} not found.");
+            }
+
+            return city;
+        }
     }
 }

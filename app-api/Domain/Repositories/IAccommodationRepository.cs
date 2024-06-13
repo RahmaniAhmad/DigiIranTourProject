@@ -7,6 +7,11 @@ namespace app_api.Domain.Repositories
     public interface IAccommodationRepository
     {
         IQueryable<Accommodation> GetAll();
+        Task<Accommodation> GetByIdAsync(long id, CancellationToken cancellationToken);
+        Task<Accommodation> AddAsync(Accommodation accommodation, CancellationToken cancellationToken);
+        Task<Accommodation> UpdateAsync(Accommodation accommodation, CancellationToken cancellationToken);
+        Task DeleteAsync(long id, CancellationToken cancellationToken);
+
         //IQueryable<Accommodation> GetByFilter(string filter, CancellationToken cancellationToken);
         //IQueryable<Accommodation> GetByType(string type, CancellationToken cancellationToken);
     }

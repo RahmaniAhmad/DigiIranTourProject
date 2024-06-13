@@ -3,6 +3,7 @@ using app_api.Data;
 using app_api.Data.Repositories;
 using app_api.Domain;
 using app_api.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace app_api.Data.Repositories
 {
@@ -11,44 +12,44 @@ namespace app_api.Data.Repositories
 public class UnitOfWork : IUnitOfWork, IDisposable
 
 {
-    private readonly AppDbContext dbContext;
-    private readonly ILogger? logger;
+    private readonly AppDbContext _dbContext;
+    private readonly ILogger? _logger;
 
-    protected internal UnitOfWork(AppDbContext dbContext, ILogger? logger = null)
+    public UnitOfWork(
+         AppDbContext dbContext,
+         ICityRepository cityRepository,
+         IAccommodationTypeRepository accommodationTypeRepository,
+         IAccommodationRepository accommodationRepository,
+         ILogger<UnitOfWork>? logger = null)
     {
-        this.dbContext = dbContext;
-        this.logger = logger;
-        this.Cities = new CityRepository(this);
-        this.AccommodationTypes = new AccommodationTypeRepository(this);
-        this.Accommodations = new AccommodationRepository(this);
+        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        Cities = cityRepository ?? throw new ArgumentNullException(nameof(cityRepository));
+        AccommodationTypes = accommodationTypeRepository ?? throw new ArgumentNullException(nameof(accommodationTypeRepository));
+        Accommodations = accommodationRepository ?? throw new ArgumentNullException(nameof(accommodationRepository));
+        _logger = logger;
     }
 
     public ICityRepository Cities { get; }
     public IAccommodationTypeRepository AccommodationTypes { get; }
     public IAccommodationRepository Accommodations { get; }
 
-    protected internal AppDbContext DbContext => this.dbContext;
 
     public async Task CompleteAsync(CancellationToken cancellationToken = default)
     {
         try
         {
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
         catch (Exception ex)
         {
-            if (this.logger != null)
-            {
-                this.logger.LogError(ex, "Error in completing the unit of work!");
-            }
-
+            _logger?.LogError(ex, "Error in completing the unit of work!");
             throw;
         }
     }
 
     public void Dispose()
     {
-        this.Dispose(true);
+        Dispose(true);
         GC.SuppressFinalize(this);
     }
 
@@ -56,7 +57,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         if (disposing)
         {
-            this.dbContext.Dispose();
+            _dbContext.Dispose();
         }
     }
 

@@ -25,7 +25,7 @@ namespace app_api.Controllers
         {
             try
             {
-                var (accommodations, totalCount) = await _accommodationService.GetAll(skip, take, cancellationToken);
+                var (accommodations, totalCount) = await _accommodationService.GetAllAsync(skip, take, cancellationToken);
                 var result =accommodations.Select(s => new AccommodationModel(s));
                 return Ok(new { result, totalCount });
             }
@@ -34,6 +34,57 @@ namespace app_api.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("GetById/{id}")]
+        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var accommodation = await _accommodationService.GetByIdAsync(id, cancellationToken);
+
+                if (accommodation == null)
+                {
+                    return NotFound();
+                }
+                var result = new AccommodationModel(accommodation);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody] AccommodationCreateModel model, CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var accommodationCreateModel = new AccommodationCreateModel()
+            {
+                Address = model.Address,
+                BedroomsCount = model.BedroomsCount,
+                Rule = model.Rule,
+                CityId = model.CityId,
+                Title = model.Title,
+                Images = model.Images,
+                Rooms = model.Rooms,
+                TypeId = model.TypeId,
+            };
+            try
+            {
+                var result = await _accommodationService.CreateAsync(accommodationCreateModel, cancellationToken);
+                return CreatedAtAction(nameof(GetById), new { id = result.Id }, new AccommodationModel(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
 
         //[HttpGet("GetListByType")]
         //public async Task<IActionResult> GetListByType([FromQuery] int skip = 1, [FromQuery] int take = 10, [FromQuery] string filter = "", CancellationToken cancellationToken = default)

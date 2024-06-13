@@ -22,5 +22,19 @@ namespace app_api.Data.Repositories
         {
             return await this.DbContext.Cities.ToListAsync();
         }
+
+        public async Task<City> GetById(long id, CancellationToken cancellationToken)
+        {
+            var city = await this.DbContext.Cities
+                .Include(i => i.Province)
+                .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+
+            if (city == null)
+            {
+                throw new KeyNotFoundException($"City with ID {id} not found.");
+            }
+
+            return city;
+        }
     }
 }

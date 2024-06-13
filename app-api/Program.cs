@@ -43,9 +43,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // Register the unit of work and repository
-//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddScoped<IProvinceRepository, ProvinceRepository>();
-//builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAccommodationTypeRepository, AccommodationTypeRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
 
 //builder.Services.AddScoped<ProvinceService>();

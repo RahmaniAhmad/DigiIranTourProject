@@ -27,29 +27,48 @@ namespace app_api.Data.Repositories
                 .Include(i => i.Images);
         }
 
-        //public async Task<Accommodation> GetByIdAsync(long id, CancellationToken cancellationToken)
-        //{
-        //    var accommodation= await _context.Set<Accommodation>()
-        //                         .Include(a => a.Rooms)
-        //                         .Include(a => a.Images)
-        //                         .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+        public async Task<Accommodation> GetByIdAsync(long id, CancellationToken cancellationToken)
+        {
+            var accommodation = await this.DbContext.Accommodations
+                .Include(i => i.City)
+                .ThenInclude(t => t.Province)
+                .Include(i => i.AccommodationType)
+                .Include(i => i.Rooms)
+                .Include(i => i.Images)
+                .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
-        //    if (accommodation == null)
-        //    {
-        //        throw new KeyNotFoundException($"Accommodation with ID {id} not found.");
-        //    }
+            if (accommodation == null)
+            {
+                throw new KeyNotFoundException($"Accommodation with ID {id} not found.");
+            }
 
-        //    return accommodation;
-        //}
+            return accommodation;
+        }
 
-        //public void Add(Accommodation accommodation)
-        //{
-        //    _context.Set<Accommodation>().Add(accommodation);
-        //}
+        public async Task<Accommodation> AddAsync(Accommodation accommodation, CancellationToken cancellationToken)
+        {
+            var result = await this.DbContext.Accommodations.AddAsync(accommodation, cancellationToken);
+            await this.DbContext.SaveChangesAsync(cancellationToken);
+            return result.Entity;
+        }
 
-        //public void Update(Accommodation accommodation)
-        //{
-        //    _context.Set<Accommodation>().Update(accommodation);
-        //}
+        public async Task<Accommodation> UpdateAsync(Accommodation accommodation, CancellationToken cancellationToken)
+        {
+            this.DbContext.Accommodations.Update(accommodation);
+            await this.DbContext.SaveChangesAsync(cancellationToken);
+            return accommodation;
+        }
+
+        public async Task DeleteAsync(long id, CancellationToken cancellationToken)
+        {
+            var accommodation = await this.DbContext.Accommodations.FindAsync(new object[] { id }, cancellationToken);
+            if (accommodation == null)
+            {
+                return;
+            }
+            this.DbContext.Accommodations.Remove(accommodation);
+            await this.DbContext.SaveChangesAsync(cancellationToken);
+
+        }
     }
 }
