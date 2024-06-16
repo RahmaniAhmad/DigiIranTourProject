@@ -1,1 +1,0 @@
-{"version":3,"file":"cityTableViewModel.js","sourceRoot":"","sources":["../../../src/viewModels/city/cityTableViewModel.ts"],"names":[],"mappings":";;;AAAA,MAAa,kBAAkB;IAK7B,YAAY,EAAU,EAAE,IAAY,EAAE,YAAoB;QACxD,IAAI,CAAC,EAAE,GAAG,EAAE,CAAC;QACb,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,YAAY,GAAG,YAAY,CAAC;IACnC,CAAC;CACF;AAVD,gDAUC"}

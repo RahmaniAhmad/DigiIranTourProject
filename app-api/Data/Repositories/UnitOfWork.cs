@@ -1,9 +1,6 @@
 ﻿using app_api.Contracts;
 using app_api.Data;
-using app_api.Data.Repositories;
-using app_api.Domain;
 using app_api.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace app_api.Data.Repositories
 {
@@ -17,18 +14,21 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public UnitOfWork(
          AppDbContext dbContext,
+         IProvinceRepository provinceRepository,
          ICityRepository cityRepository,
          IAccommodationTypeRepository accommodationTypeRepository,
          IAccommodationRepository accommodationRepository,
          ILogger<UnitOfWork>? logger = null)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        Provinces = provinceRepository ?? throw new ArgumentNullException(nameof(provinceRepository));
         Cities = cityRepository ?? throw new ArgumentNullException(nameof(cityRepository));
         AccommodationTypes = accommodationTypeRepository ?? throw new ArgumentNullException(nameof(accommodationTypeRepository));
         Accommodations = accommodationRepository ?? throw new ArgumentNullException(nameof(accommodationRepository));
         _logger = logger;
     }
 
+    public IProvinceRepository Provinces{ get; }
     public ICityRepository Cities { get; }
     public IAccommodationTypeRepository AccommodationTypes { get; }
     public IAccommodationRepository Accommodations { get; }

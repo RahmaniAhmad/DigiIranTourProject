@@ -2,6 +2,7 @@
 using app_api.Domain;
 using app_api.Domain.Repositories;
 using app_api.Model;
+using app_api.Model.Accommodation;
 using Microsoft.EntityFrameworkCore;
 
 namespace app_api.Services
@@ -21,25 +22,21 @@ namespace app_api.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<(IEnumerable<Accommodation> accommodations, int totalCount)> GetAllAsync(int skip, int take, CancellationToken cancellationToken)
-        {
-            var query = _accommodationRepository.GetAll();
-
-            var totalCount = await query.CountAsync();
-            var accommodations = await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
-
-            return (accommodations, totalCount);
-        }
-
-        public async Task<Accommodation> GetByIdAsync(long id, CancellationToken cancellationToken)
-        {
-            return await _accommodationRepository.GetByIdAsync(id, cancellationToken);
-        }
-
         public async Task<Accommodation> CreateAsync(AccommodationCreateModel model, CancellationToken cancellationToken)
         {
             var city = await _cityRepository.GetByIdAsync(model.CityId, cancellationToken);
             var type = await _accommodationTypeRepository.GetByIdAsync(model.TypeId, cancellationToken);
+
+            if (city == null)
+            {
+                throw new Exception("City not found.");
+            }
+
+            if (type == null)
+            {
+                throw new Exception("Accommodation type not found.");
+            }
+
             var accommodation = new Accommodation(city, type, model.Title, model.Address, model.BedroomsCount, model.Rule);
 
             foreach (var roomModel in model.Rooms)
@@ -58,7 +55,8 @@ namespace app_api.Services
             return accommodation;
         }
 
-        public async Task<Accommodation> UpdateAsync(AccommodationUpdateModel model, CancellationToken cancellationToken)
+
+        public async Task<Accommodation> UpdateAsync(long id, AccommodationUpdateModel model, CancellationToken cancellationToken)
         {
             var accommodation = await _accommodationRepository.GetByIdAsync(model.Id, cancellationToken);
             if (accommodation == null)

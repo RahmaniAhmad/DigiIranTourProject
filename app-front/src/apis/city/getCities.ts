@@ -1,9 +1,7 @@
 import axios from "axios";
 
-export const getCitiesApi = async (page: number = 1, filter?: string) => {
-  const api = filter
-    ? `${process.env.NEXT_PUBLIC_BASE_API}/city?page=${page}&filter=${filter}`
-    : `${process.env.NEXT_PUBLIC_BASE_API}/city?page=${page}`;
+export const getCitiesApi = async () => {
+  const api = `${process.env.NEXT_PUBLIC_BASE_API}/city`;
 
   const data = await axios.get(api).then((response) => {
     return response.data;

@@ -2,7 +2,6 @@
 import isAuth from "@/components/auth/isAuth";
 
 const Page = () => {
-  debugger;
   return (
     <div>
       <button>test</button>

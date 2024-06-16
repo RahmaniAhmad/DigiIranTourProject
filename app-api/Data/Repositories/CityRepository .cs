@@ -20,7 +20,7 @@ namespace app_api.Data.Repositories
 
         public async Task<IEnumerable<City>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await this.DbContext.Cities.ToListAsync(cancellationToken);
+            return await this.DbContext.Cities.Include(i => i.Province).ToListAsync(cancellationToken);
         }
 
         public async Task<City> GetByIdAsync(long id, CancellationToken cancellationToken)
