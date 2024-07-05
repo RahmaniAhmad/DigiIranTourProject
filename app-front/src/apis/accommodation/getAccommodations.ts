@@ -6,15 +6,12 @@ const mapToViewModel = (model: Array<any>): AccommodationTableViewModel[] => {
   model.map((item) => {
     viewModel.push({
       id: item.id,
-      provinceName: item.provinceName,
-      cityName: item.cityName,
-      accommodationTypeTitle: item.accommodationTypeTitle,
+      province: item.city.province.name,
+      city: item.city.name,
+      type: item.accommodationType.name,
       title: item.title,
       address: item.address,
       bedroomsCount: item.bedroomsCount,
-      bedsCount: item.bedsCount,
-      capacity: item.capacity,
-      imageName: item.imageName,
     });
   });
   return viewModel;
@@ -27,14 +24,15 @@ export const getAccommodationsApi = async (
 ) => {
   let api = "";
   if (isPagination) {
-    api = filter
-      ? `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/getallpaged?page=${page}&filter=${filter}`
-      : `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/getallpaged?page=${page}`;
+    api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/?page=${page}`;
   } else {
-    api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/getall`;
+    api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation`;
   }
   const data = await axios.get(api).then((response) => {
-    return response.data;
+    return {
+      count: response.data.totalCount,
+      data: mapToViewModel(response.data.data),
+    };
   });
 
   return data;

@@ -11,6 +11,7 @@ export function useAccommodations(isPagination = true) {
     ["accomodations", currentPage, filter, debounceFilter],
     () => getAccommodationsApi(isPagination, currentPage, debounceFilter)
   );
+
   const accommodations = data ? data.data : [];
   const count = data ? data.count : 0;
 

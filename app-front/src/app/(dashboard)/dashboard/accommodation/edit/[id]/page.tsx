@@ -2,7 +2,6 @@
 
 import { useMyAccommodation } from "@/hooks/accommodation/useMyAccommodation";
 import { useUpdateAccommodation } from "@/hooks/accommodation/useUpdateAccommodation";
-import { IUpdateAccommodation } from "@/type/IAccommodation";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useAccommodationTypes } from "../../../../../../hooks/accommodationType/useAccommodationTypes";
@@ -21,7 +20,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const { updateAccommodation } = useUpdateAccommodation({
     onSuccess,
   });
-  const { accommodationTypes } = useAccommodationTypes(false);
+  const { accommodationTypes } = useAccommodationTypes();
   const { cities } = useCities();
 
   const {
@@ -38,22 +37,12 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
       {
         id,
         data: {
-          title: data.title,
           accommodationTypeId: Number(data.accommodationTypeId),
           cityId: Number(data.cityId),
+          title: data.title,
           address: data.address,
           bedroomsCount: data.bedroomsCount,
-          bedsCount: data.bedsCount,
-          capacity: data.capacity,
-          price: data.price,
-          imageName:
-            filedValues.accommodationImage.length > 0
-              ? filedValues.accommodationImage[0].name
-              : null,
-          accommodationImage:
-            filedValues.accommodationImage.length > 0
-              ? filedValues.accommodationImage[0]
-              : null,
+          rule: data.rule,
         },
       },
       {
@@ -109,12 +98,6 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         </Select>
       </div>
       <div className="mb-4">
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="title">
-            تصویر
-          </label>
-          <input type="file" {...register("accommodationImage")} />
-        </div>
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           عنوان
         </label>
@@ -150,37 +133,15 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-bold mb-2" htmlFor="title">
-          تعداد تخت
+        <label className="block text-sm font-bold mb-2" htmlFor="rule">
+          قوانین
         </label>
         <Input
           size="lg"
-          {...register("bedsCount", { required: true })}
-          defaultValue={accommodation?.bedsCount}
+          {...register("rule", { required: true })}
+          defaultValue={accommodation?.rule}
         />
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-bold mb-2" htmlFor="title">
-          ظرفیت
-        </label>
-        <Input
-          size="lg"
-          {...register("capacity", { required: true })}
-          defaultValue={accommodation?.capacity}
-        />
-        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-bold mb-2" htmlFor="price">
-          قیمت
-        </label>
-        <Input
-          size="lg"
-          {...register("price", { required: true })}
-          defaultValue={accommodation?.price}
-        />
-        {errors.title && <p className="text-danger-600">قیمت اجباری می باشد</p>}
       </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">
         <Button

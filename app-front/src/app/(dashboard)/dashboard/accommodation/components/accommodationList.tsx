@@ -28,9 +28,11 @@ export default function AccommodationList() {
     filter,
     setFilter,
   } = useAccommodations();
+
   const { deleteAccommodation } = useDeleteAccommodation({
     onSuccess: refetch,
   });
+
   const openDeleteConfirm = async (id: number) => {
     const accommodation = accommodations.find((f: any) => f.id == id);
     setAccommodationName(accommodation?.title ?? "");
@@ -50,7 +52,7 @@ export default function AccommodationList() {
           toast.success("success");
         },
         onError: (error: any) => {
-          toast.error(error.response.data.message);
+          toast.error(error.message);
         },
       });
     setShowDeleteConfirm(false);
@@ -116,10 +118,6 @@ export default function AccommodationList() {
             "عنوان اقامتگاه",
             "آدرس",
             "تعداد اتاق",
-            "تعداد تخت",
-            "ظرفیت",
-            "قیمت",
-            "تصویر",
           ]}
           data={accommodations}
           actions={{

@@ -1,4 +1,3 @@
-import { ICreateAccommodation } from "@/type/IAccommodation";
 import axios from "axios";
 
 export const createAccommodationApi = async (data: any) => {

@@ -7,8 +7,7 @@ export class AccommodationViewModel {
   public cityName: string;
   public address: string;
   public bedroomsCount: string;
-  public bedsCount: string;
-  public capacity: string;
+  public rule: string;
 
   constructor(
     id: number,
@@ -19,8 +18,7 @@ export class AccommodationViewModel {
     cityName: string,
     address: string,
     bedroomsCount: string,
-    bedsCount: string,
-    capacity: string
+    ruel: string
   ) {
     this.id = id;
     this.title = title;
@@ -30,7 +28,6 @@ export class AccommodationViewModel {
     this.cityName = cityName;
     this.address = address;
     this.bedroomsCount = bedroomsCount;
-    this.bedsCount = bedsCount;
-    this.capacity = capacity;
+    this.rule = ruel;
   }
 }

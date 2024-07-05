@@ -58,7 +58,7 @@ namespace app_api.Services
 
         public async Task<Accommodation> UpdateAsync(long id, AccommodationUpdateModel model, CancellationToken cancellationToken)
         {
-            var accommodation = await _accommodationRepository.GetByIdAsync(model.Id, cancellationToken);
+            var accommodation = await _accommodationRepository.GetByIdAsync(id, cancellationToken);
             if (accommodation == null)
             {
                 throw new KeyNotFoundException("Accommodation not found.");
@@ -69,7 +69,7 @@ namespace app_api.Services
                 throw new KeyNotFoundException("City not found.");
             }
 
-            var type = await _accommodationTypeRepository.GetByIdAsync(model.TypeId, cancellationToken);
+            var type = await _accommodationTypeRepository.GetByIdAsync(model.AccommodationTypeId, cancellationToken);
             if (type == null)
             {
                 throw new KeyNotFoundException("Accommodation type not found.");

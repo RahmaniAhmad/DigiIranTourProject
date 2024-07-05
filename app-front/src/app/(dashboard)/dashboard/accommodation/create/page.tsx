@@ -29,16 +29,12 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
 
     createAccommodation.mutate(
       {
-        title: data.title,
-        accommodationTypeId: Number(data.accommodationTypeId),
+        typeId: Number(data.accommodationTypeId),
         cityId: Number(data.cityId),
+        title: data.title,
         address: data.address,
         bedroomsCount: data.bedroomsCount,
-        bedsCount: data.bedsCount,
-        capacity: data.capacity,
-        price: data.price,
-        imageName: filedValues.accommodationImage[0].name,
-        accommodationImage: filedValues.accommodationImage[0],
+        rule: data.rule,
       },
       {
         onSuccess: () => {
@@ -84,12 +80,6 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
       </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">
-          تصویر
-        </label>
-        <input type="file" {...register("accommodationImage")} />
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-bold mb-2" htmlFor="title">
           عنوان
         </label>
         <Input {...register("title", { required: true })} />
@@ -112,26 +102,12 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-bold mb-2" htmlFor="title">
-          تعداد تخت
+        <label className="block text-sm font-bold mb-2" htmlFor="rule">
+          قوانین
         </label>
-        <Input {...register("bedsCount", { required: true })} />
-        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
+        <Input {...register("rule")} />
       </div>
-      <div className="mb-4">
-        <label className="block text-sm font-bold mb-2" htmlFor="title">
-          ظرفیت
-        </label>
-        <Input {...register("capacity", { required: true })} />
-        {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
-      </div>
-      <div className="mb-4">
-        <label className="block text-sm font-bold mb-2" htmlFor="price">
-          قیمت
-        </label>
-        <Input {...register("price", { required: true })} />
-        {errors.price && <p className="text-danger-600">قیمت اجباری می باشد</p>}
-      </div>
+
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">
         <Button
           isDisabled={!isValid}

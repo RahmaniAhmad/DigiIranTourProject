@@ -1,36 +1,27 @@
 export class AccommodationTableViewModel {
   public id?: number;
-  public provinceName: string;
-  public cityName: string;
+  public province: string;
+  public city: string;
+  public type: string;
   public title: string;
-  public accommodationTypeTitle: string;
   public address: string;
   public bedroomsCount: string;
-  public bedsCount: string;
-  public capacity: string;
-  public imageName: string;
 
   constructor(
     id: number,
+    province: string,
+    city: string,
+    type: string,
     title: string,
-    accommodationTypeTitle: string,
-    provinceNmae: string,
-    cityName: string,
     address: string,
-    bedroomsCount: string,
-    bedsCount: string,
-    capacity: string,
-    imageName: string
+    bedroomsCount: string
   ) {
     this.id = id;
-    this.provinceName = provinceNmae;
-    this.cityName = cityName;
+    this.province = province;
+    this.city = city;
     this.title = title;
-    this.accommodationTypeTitle = accommodationTypeTitle;
+    this.type = type;
     this.address = address;
     this.bedroomsCount = bedroomsCount;
-    this.bedsCount = bedsCount;
-    this.capacity = capacity;
-    this.imageName = imageName;
   }
 }

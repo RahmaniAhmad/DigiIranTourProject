@@ -5,6 +5,7 @@ using app_api.Model;
 using app_api.Model.Accommodation;
 using app_api.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace app_api.Controllers
 {
@@ -31,9 +32,9 @@ namespace app_api.Controllers
 
                 var totalCount = await query.CountAsync();
                 var accommodations = await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
-                var result = accommodations.Select(s => new AccommodationDto(s));
+                var data = accommodations.Select(s => new AccommodationDto(s));
 
-                return Ok(new { result, totalCount });
+                return Ok(new { data, totalCount });
             }
             catch (Exception ex)
             {
@@ -99,6 +100,21 @@ namespace app_api.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public virtual async Task<ActionResult> Delete(long id, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                await _accommodationService.DeleteAsync(id, cancellationToken);
+            }
+            catch(Exception ex)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+
+        }
 
 
         //[HttpGet("GetListByType")]
