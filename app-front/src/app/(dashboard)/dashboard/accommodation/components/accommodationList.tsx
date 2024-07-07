@@ -121,6 +121,8 @@ export default function AccommodationList() {
           ]}
           data={accommodations}
           actions={{
+            showImage: true,
+            showRoom: true,
             showEdit: true,
             showDelete: true,
             baseActionURL: "/dashboard/accommodation",

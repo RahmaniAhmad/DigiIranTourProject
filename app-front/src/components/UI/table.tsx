@@ -1,11 +1,13 @@
 "use client";
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaImage, FaList, FaPlus, FaTrash } from "react-icons/fa";
 
 export interface IAction {
   showEdit: boolean;
   showDelete: boolean;
+  showImage?: boolean;
+  showRoom?: boolean;
   onDelete?: (id: number) => void;
   baseActionURL?: string;
 }
@@ -15,6 +17,8 @@ interface ITable {
   data?: object[];
   showId?: boolean;
   actions?: IAction;
+  showImage?: (id: number) => void;
+  showRoom?: (id: number) => void;
   onEdit?: (id: number) => void;
   onDelete?: (id: number) => void;
 }
@@ -25,6 +29,8 @@ const Table = ({
   data,
   showId = false,
   actions = {
+    showImage: false,
+    showRoom: false,
     showEdit: true,
     showDelete: true,
     baseActionURL: "",
@@ -44,6 +50,8 @@ const Table = ({
                 </th>
               );
             })}
+            {actions?.showImage && <th className="px-6 py-4">تصویر</th>}
+            {actions?.showRoom && <th className="px-6 py-4">اتاق</th>}
             {actions?.showEdit && <th className="px-6 py-4">ویرایش</th>}
             {actions?.showDelete && <th className="px-6 py-4">حذف</th>}
           </tr>
@@ -87,7 +95,28 @@ const Table = ({
                       </td>
                     );
                   })}
-
+                  {actions?.showImage && (
+                    <td key={dataIndex} className="px-6 py-4">
+                      <Button
+                        className="text-green-800 hover:text-green-600"
+                        onClick={() => onEdit && onEdit(row.id)}
+                      >
+                        <FaImage />
+                        تصویر
+                      </Button>
+                    </td>
+                  )}
+                  {actions?.showRoom && (
+                    <td key={dataIndex} className="px-6 py-4">
+                      <Button
+                        className="text-green-800 hover:text-green-600"
+                        onClick={() => onEdit && onEdit(row.id)}
+                      >
+                        <FaList />
+                        اتاق
+                      </Button>
+                    </td>
+                  )}
                   {actions?.showEdit && (
                     <td key={dataIndex} className="px-6 py-4">
                       <Button
