@@ -18,10 +18,10 @@ namespace app_api.Dtos.Accommodation
         }
 
         public string Title { get; private set; }
-        public int BedsCount { get; private set; }
-        public int Capacity { get; private set; }
-        public decimal Price { get; private set; }
-        public string Description { get; private set; }
+        public int? BedsCount { get; private set; }
+        public int? Capacity { get; private set; }
+        public decimal? Price { get; private set; }
+        public string? Description { get; private set; }
 
     }
 }

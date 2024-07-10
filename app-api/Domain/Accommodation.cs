@@ -45,43 +45,5 @@ namespace app_api.Domain
             BedroomsCount = bedroomsCount;
             Rule = rule;
         }
-
-        public void AddRoom(string title, int bedsCount, int capacity, decimal price, string description)
-        {
-            var room = new AccommodationRoom(this, title, bedsCount, capacity, price, description);
-            _rooms.Add(room);
-        }
-
-        public void RemoveRoom(AccommodationRoom room)
-        {
-            if (room == null)
-                throw new ArgumentNullException(nameof(room));
-
-            _rooms.Remove(room);
-        }
-
-        public void AddImage(string url)
-        {
-            var image = new AccommodationImage(this, url);
-            _images.Add(image);
-        }
-
-        public void RemoveImage(AccommodationImage image)
-        {
-            if (image == null)
-                throw new ArgumentNullException(nameof(image));
-
-            _images.Remove(image);
-        }
-        public void ClearRooms()
-        {
-            _rooms.Clear();
-        }
-
-        public void ClearImages()
-        {
-            _images.Clear();
-        }
-
     }
 }

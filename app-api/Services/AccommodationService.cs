@@ -39,16 +39,6 @@ namespace app_api.Services
 
             var accommodation = new Accommodation(city, type, model.Title, model.Address, model.BedroomsCount, model.Rule);
 
-            foreach (var roomModel in model.Rooms)
-            {
-                accommodation.AddRoom(roomModel.Title, roomModel.BedsCount, roomModel.Capacity, roomModel.Price, roomModel.Description);
-            }
-
-            foreach (var imageModel in model.Images)
-            {
-                accommodation.AddImage(imageModel.Url);
-            }
-
             await _accommodationRepository.AddAsync(accommodation, cancellationToken);
             await _unitOfWork.CompleteAsync(cancellationToken);
 
@@ -76,18 +66,6 @@ namespace app_api.Services
             }
             accommodation.UpdateDetails(city, type, model.Title, model.Address, model.BedroomsCount, model.Rule);
 
-            accommodation.ClearRooms();
-            accommodation.ClearImages();
-
-            foreach (var roomModel in model.Rooms)
-            {
-                accommodation.AddRoom(roomModel.Title, roomModel.BedsCount, roomModel.Capacity, roomModel.Price, roomModel.Description);
-            }
-
-            foreach (var imageModel in model.Images)
-            {
-                accommodation.AddImage(imageModel.Url);
-            }
 
             await _accommodationRepository.UpdateAsync(accommodation, cancellationToken);
             await _unitOfWork.CompleteAsync(cancellationToken);

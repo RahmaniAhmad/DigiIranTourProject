@@ -23,7 +23,5 @@ namespace app_api.Model.Accommodation
 
         [Required]
         public long TypeId { get; set; }
-        public List<AccommodationRoomModel> Rooms { get; set; } = new List<AccommodationRoomModel>();
-        public List<AccommodationImageModel> Images { get; set; } = new List<AccommodationImageModel>();
     }
 }

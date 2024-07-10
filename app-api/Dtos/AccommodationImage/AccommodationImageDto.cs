@@ -1,19 +1,14 @@
-﻿
-using app_api.Domain;
-using app_api.Dtos.AccommodationType;
-using app_api.Dtos.City;
-using app_api.Model;
-
-namespace app_api.Dtos.Accommodation
+﻿namespace app_api.Dtos.AccommodationImage
 {
     public class AccommodationImageDto
     {
         public AccommodationImageDto(Domain.AccommodationImage accommodationImage)
         {
             this.Url = accommodationImage.Url;
+            this.Title = accommodationImage.Title;
         }
 
-        public string Url { get; private set; }
-
+        public string Url { get; set; }
+        public string? Title { get; set; }
     }
 }

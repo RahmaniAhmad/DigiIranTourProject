@@ -8,6 +8,7 @@ namespace app_api.Contracts
         ICityRepository Cities { get; }
         IAccommodationTypeRepository AccommodationTypes { get; }
         IAccommodationRepository Accommodations { get; }
+        IAccommodationRoomRepository AccommodationRooms { get; }
         Task CompleteAsync(CancellationToken cancellationToken);
     }
 }
