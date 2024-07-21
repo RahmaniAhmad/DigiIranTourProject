@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { ConfirmModal, CustomModal } from "@/components/UI";
-import CreatePage from "@/app/(dashboard)/dashboard/accommodation/create/page";
+import CreatePage from "@/app/(dashboard)/dashboard/accommodationRoom/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/accommodation/edit/[id]/page";
 import { toast } from "react-toastify";
 import { useDeleteAccommodation } from "@/hooks/accommodation/useDeleteAccommodation";
