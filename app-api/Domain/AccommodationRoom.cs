@@ -17,6 +17,8 @@ namespace app_api.Domain
             Description = description;
         }
 
+        private AccommodationRoom() { }
+
         public long AccommodationId { get; private set; }
         public Accommodation Accommodation { get; private set; }
         public string Title { get; private set; }

@@ -31,11 +31,12 @@ namespace app_api.Controllers
                 var query = await _unitOfWork.Accommodations.GetByIdAsync(accommodationId, cancellationToken);
                 
 
-                var totalCount = query.Images.Count();
-                var images =  query.Images.Skip(skip).Take(take).ToList();
-                var data = images.Select(s => new AccommodationImageDto(s));
+                //var totalCount = query.Images.Count();
+                //var images =  query.Images.Skip(skip).Take(take).ToList();
+                //var data = images.Select(s => new AccommodationImageDto(s));
 
-                return Ok(new { data, totalCount });
+                //return Ok(new { data, totalCount });
+                return Ok(new { });
             }
             catch (Exception ex)
             {

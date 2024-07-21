@@ -5,9 +5,6 @@ namespace app_api.Domain
 {
     public class Accommodation: AggregateRoot
     {
-        private readonly List<AccommodationRoom> _rooms = new List<AccommodationRoom>();
-        private readonly List<AccommodationImage> _images = new List<AccommodationImage>();
-
         public Accommodation(City city, AccommodationType accommodationType, string title, string address, int bedroomsCount, string rule)
         {
             City = city ?? throw new ArgumentNullException(nameof(city));
@@ -30,9 +27,9 @@ namespace app_api.Domain
         public string Address { get; private set; }
         public int BedroomsCount { get; private set; }
         public string Rule { get; private set; }
+        public ICollection<AccommodationRoom> AccommodationRooms { get; set; }
 
-        public IReadOnlyList<AccommodationRoom> Rooms => _rooms.AsReadOnly();
-        public IReadOnlyList<AccommodationImage> Images => _images.AsReadOnly();
+        public ICollection<AccommodationImage> AccommodationImages { get; set; }
 
         public void UpdateDetails(City city, AccommodationType type, string title, string address, int bedroomsCount, string rule)
         {

@@ -10,11 +10,6 @@ namespace app_api.Data.Config
         {
             builder.HasKey(i => i.Id);
             builder.Property(i => i.Url).IsRequired().HasMaxLength(1000);
-
-            builder.HasOne(i => i.Accommodation)
-                   .WithMany(a => a.Images)
-                   .HasForeignKey(i => i.AccommodationId)
-                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

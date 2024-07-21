@@ -10,6 +10,7 @@ namespace app_api.Dtos.Accommodation
     {
         public AccommodationRoomDto(Domain.AccommodationRoom accommodationRoom)
         {
+            this.Id = accommodationRoom.Id;
             this.Title = accommodationRoom.Title;
             this.BedsCount = accommodationRoom.BedsCount;
             this.Capacity = accommodationRoom.Capacity;
@@ -17,6 +18,7 @@ namespace app_api.Dtos.Accommodation
             this.Description = accommodationRoom.Description;
         }
 
+        public long Id { get; private set; }
         public string Title { get; private set; }
         public int? BedsCount { get; private set; }
         public int? Capacity { get; private set; }

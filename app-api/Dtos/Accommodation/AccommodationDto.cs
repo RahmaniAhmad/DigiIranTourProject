@@ -14,8 +14,8 @@ namespace app_api.Dtos.Accommodation
             this.Address = accommodation.Address;
             this.BedroomsCount = accommodation.BedroomsCount;
             this.Rule = accommodation.Rule;
-            this.AccommodationRooms = accommodation.Rooms.Select(s => new AccommodationRoomDto(s));
-            this.AccommodationImages = accommodation.Images.Select(s => new AccommodationImageDto(s));
+            this.AccommodationRooms = accommodation.AccommodationRooms.Select(s => new AccommodationRoomDto(s));
+            this.AccommodationImages = accommodation.AccommodationImages.Select(s => new AccommodationImageDto(s));
 
         }
         public long Id { get; set; }

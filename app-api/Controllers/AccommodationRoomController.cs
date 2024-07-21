@@ -23,7 +23,7 @@ namespace app_api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] int skip = 0,[FromQuery]int take=10, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
             try
             {
@@ -31,8 +31,8 @@ namespace app_api.Controllers
                 var query = _unitOfWork.AccommodationRooms.GetAll();
 
                 var totalCount = await query.CountAsync();
-                var accommodations = await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
-                var data = accommodations.Select(s => new AccommodationRoomDto(s));
+                var accommodationRooms = await query.ToListAsync(cancellationToken);
+                var data = accommodationRooms.Select(s => new AccommodationRoomDto(s));
 
                 return Ok(new { data, totalCount });
             }

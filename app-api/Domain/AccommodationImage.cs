@@ -13,6 +13,8 @@ namespace app_api.Domain
             Title = title;
         }
 
+        private AccommodationImage() { }
+
         public long AccommodationId { get; private set; }
         public Accommodation Accommodation { get; private set; }
         public string Url { get; private set; }

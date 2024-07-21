@@ -24,15 +24,13 @@ namespace app_api.Data.Config
                     .WithMany()
                     .HasForeignKey(a => a.AccommodationTypeId);
 
-            builder.HasMany(a => a.Rooms)
-                   .WithOne(r => r.Accommodation)
-                   .HasForeignKey(r => r.AccommodationId)
-                   .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(h => h.AccommodationRooms)
+                   .WithOne(w=>w.Accommodation)
+                   .HasForeignKey(h=>h.AccommodationId);
 
-            builder.HasMany(a => a.Images)
-                   .WithOne(i => i.Accommodation)
-                   .HasForeignKey(i => i.AccommodationId)
-                   .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(h => h.AccommodationImages)
+                   .WithOne(w => w.Accommodation)
+                   .HasForeignKey(h => h.AccommodationId);
         }
     }
 }

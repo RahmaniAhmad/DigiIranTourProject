@@ -14,11 +14,6 @@ namespace app_api.Data.Config
             builder.Property(r => r.Capacity).IsRequired();
             builder.Property(r => r.Price).IsRequired().HasColumnType("decimal(18,2)");
             builder.Property(r => r.Description).IsRequired().HasMaxLength(1000);
-
-            builder.HasOne(r => r.Accommodation)
-                   .WithMany(a => a.Rooms)
-                   .HasForeignKey(r => r.AccommodationId)
-                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

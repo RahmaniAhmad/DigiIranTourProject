@@ -23,8 +23,8 @@ namespace app_api.Data.Repositories
                 .Include(i => i.City)
                 .ThenInclude(t => t.Province)
                 .Include(i => i.AccommodationType)
-                .Include(i => i.Rooms)
-                .Include(i => i.Images);
+                .Include(i => i.AccommodationRooms)
+                .Include(i => i.AccommodationImages);
         }
 
         public async Task<Accommodation> GetByIdAsync(long id, CancellationToken cancellationToken)
@@ -33,8 +33,8 @@ namespace app_api.Data.Repositories
                 .Include(i => i.City)
                 .ThenInclude(t => t.Province)
                 .Include(i => i.AccommodationType)
-                .Include(i => i.Rooms)
-                .Include(i => i.Images)
+                .Include(i => i.AccommodationRooms)
+                .Include(i => i.AccommodationImages)
                 .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
             if (accommodation == null)

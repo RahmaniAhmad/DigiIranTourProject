@@ -48,8 +48,10 @@ builder.Services.AddScoped<IProvinceRepository, ProvinceRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IAccommodationTypeRepository, AccommodationTypeRepository>();
 builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
+builder.Services.AddScoped<IAccommodationRoomRepository, AccommodationRoomRepository>();
 
 builder.Services.AddScoped<AccommodationService>();
+builder.Services.AddScoped<AccommodationRoomService>();
 
 //builder.Services.AddAuthorization();
 
