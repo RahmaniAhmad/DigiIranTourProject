@@ -22,19 +22,16 @@ namespace app_api.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+        [HttpGet("GetByAccommodationId/{accommodationId}")]
+        public async Task<IActionResult> GetByAccommodationId(long accommodationId,CancellationToken cancellationToken = default)
         {
             try
             {
+                var accommodationRooms =await _unitOfWork.AccommodationRooms.GetByAccommodationId(accommodationId);
 
-                var query = _unitOfWork.AccommodationRooms.GetAll();
-
-                var totalCount = await query.CountAsync();
-                var accommodationRooms = await query.ToListAsync(cancellationToken);
                 var data = accommodationRooms.Select(s => new AccommodationRoomDto(s));
 
-                return Ok(new { data, totalCount });
+                return Ok(new { data });
             }
             catch (Exception ex)
             {
@@ -42,8 +39,8 @@ namespace app_api.Controllers
             }
         }
 
-        [HttpGet("GetById/{id}")]
-        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+        [HttpGet("GetMyAccommodationId/{id}")]
+        public async Task<IActionResult> GetMyAccommodationId(int id, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -73,7 +70,7 @@ namespace app_api.Controllers
             try
             {
                 var result = await _accommodationRoomService.CreateAsync(model, cancellationToken);
-                return CreatedAtAction(nameof(GetById), new { id = result.Id }, new AccommodationRoomDto(result));
+                return StatusCode(201);
             }
             catch (Exception ex)
             {

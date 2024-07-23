@@ -6,7 +6,7 @@ namespace app_api.Domain.Repositories
 {
     public interface IAccommodationRoomRepository
     {
-        IQueryable<AccommodationRoom> GetAll();
+        Task<IEnumerable<AccommodationRoom>> GetByAccommodationId(long accommodationId);
         Task<AccommodationRoom> GetByIdAsync(long id, CancellationToken cancellationToken);
         Task<AccommodationRoom> AddAsync(AccommodationRoom accommodation, CancellationToken cancellationToken);
         Task<AccommodationRoom> UpdateAsync(AccommodationRoom accommodation, CancellationToken cancellationToken);

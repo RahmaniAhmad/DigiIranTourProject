@@ -17,9 +17,9 @@ namespace app_api.Data.Repositories
         {
         }
 
-        public IQueryable<AccommodationRoom> GetAll()
+        public async Task<IEnumerable<AccommodationRoom>> GetByAccommodationId(long accommodationId)
         {
-            return this.DbContext.AccommodationRooms;
+            return await this.DbContext.AccommodationRooms.Where(w=>w.AccommodationId==accommodationId).ToListAsync();
         }
 
         public async Task<AccommodationRoom> GetByIdAsync(long id, CancellationToken cancellationToken)

@@ -4,7 +4,7 @@ namespace app_api.Domain
 {
     public class User : AggregateRoot
     {
-        public string Mobile { get; set; } // Mobile number as username
+        public string Mobile { get; set; }
         public bool IsActive { get; set; } = false;
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
@@ -12,10 +12,9 @@ namespace app_api.Domain
         public List<Role> Roles { get; set; }
         public ICollection<LoginCode> LoginCodes { get; set; }
 
-        public User()
+        public User(string mobile)
         {
-            LoginCodes = new List<LoginCode>();
-            Roles = new List<Role>();
+            Mobile = mobile;
         }
 
         public void UpdateDetails(string firstName ,string lastName, string email)
@@ -35,7 +34,7 @@ namespace app_api.Domain
             this.IsActive = false;
         }
 
-        public void SendLoginCode()
+        public string CreateLoginCode()
         {
             var code = "";
             Random random = new Random();
@@ -44,13 +43,26 @@ namespace app_api.Domain
                 code += random.Next(1, 9);
             }
 
-            var codeEntry = new LoginCode
-            {
-                Code = code,
-                SentAt = DateTime.Now
-            };
+            return code;
+        }
 
-            LoginCodes.Add(codeEntry);
+        public void SendLoginCode(string code)
+        {
+            //var code = "";
+            //Random random = new Random();
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    code += random.Next(1, 9);
+            //}
+            
+            //var loginCode = new LoginCode
+            //{
+            //    Code = code,
+            //    SentAt = DateTime.Now
+            //};
+
+
+            //LoginCodes.Add(loginCode);
 
 
             // Simulate sending SMS (replace with actual SMS gateway integration)

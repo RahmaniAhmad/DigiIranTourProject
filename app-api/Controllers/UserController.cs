@@ -30,7 +30,7 @@ namespace app_api.Controllers
         //                        LastName = s.LastName,
         //                        Email = s.Email,
         //                        Mobile = s.Mobile,
-              
+
         //                    })
         //                    .ToList();
 
@@ -82,66 +82,6 @@ namespace app_api.Controllers
         //    return Ok(data);
         //}
 
-        //[HttpPost("VerificationCode")]
-        //public virtual IActionResult VerificationCode([FromBody] UserCreateDto dto)
-        //{
-        //    var code = "";
-        //    var existUser = _dbContext.Users.Where(w => w.Mobile == dto.Mobile).FirstOrDefault();
-        //    if (existUser != null)
-        //    {
-        //        var loginCode = new LoginCode(existUser.Id);
-        //        _dbContext.LoginCodes.Add(loginCode);
-        //        code = loginCode.Code;
-
-        //    }
-        //    else
-        //    {
-        //        var newUser = new User(dto.Mobile);
-        //        _dbContext.Users.Add(newUser);
-        //        var loginCode = new LoginCode(newUser.Id);
-        //        _dbContext.LoginCodes.Add(loginCode);
-        //        code = loginCode.Code;
-        //    }
-        //    _dbContext.SaveChanges();
-        //    return Ok();
-        //}
-
-        //[HttpPost("SignIn")]
-        //public IActionResult SignIn([FromBody] UserSigninDto dto)
-        //{
-        //    var compareDateTime = DateTime.Now.AddDays(-4);
-        //    var loginCode = _dbContext.LoginCodes.Where(w => w.User.Mobile == dto.Mobile)
-        //        .Where(w => w.CreationDateTime > compareDateTime).OrderBy(o => o.Id).LastOrDefault();
-
-        //    if (loginCode == null)
-        //    {
-        //        return NotFound(loginCode);
-        //    }
-
-        //    if (loginCode.Code != dto.VerificationCode)
-        //    {
-        //        return Unauthorized();
-        //    }
-        //    var user = _dbContext.Users.Where(w => w.Mobile == dto.Mobile).FirstOrDefault();
-        //    if (user != null)
-        //    {
-        //        user.IsActive = true;
-        //    }
-
-        //    var accessToken = TokenUtils.GenerateAccessToken(user, _config["Jwt:Secret"]);
-        //    var refreshToken = TokenUtils.GenerateRefreshToken();
-
-
-        //    _dbContext.SaveChanges();
-
-        //    var response = new TokenResponse
-        //    {
-        //        AccessToken = accessToken,
-        //        RefreshToken = refreshToken
-        //    };
-
-        //    return Ok(response);
-        //}
 
         //[HttpPost("refresh")]
         //public IActionResult Refresh(TokenResponse tokenResponse)
