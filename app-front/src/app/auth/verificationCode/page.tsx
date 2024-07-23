@@ -1,5 +1,5 @@
 "use client";
-import { useSignIn } from "@/hooks/user/useSignIn";
+import { useAuth } from "@/hooks/mutations/useAuth";
 import { Button, Input, Spacer } from "@nextui-org/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -10,10 +10,10 @@ export default function VerificationCode() {
 
   const searchParams = useSearchParams();
   const mobile = searchParams.get("mobile");
-  const { signIn } = useSignIn();
-  const handleSignIn = () => {
+  const { login } = useAuth();
+  const handleLogin = () => {
     mobile &&
-      signIn.mutate({ mobile: mobile, verificationCode: verificationCode });
+      login.mutate({ mobile: mobile, verificationCode: verificationCode });
   };
   const handleVerificationCodeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setVerificationCode(e.target.value);
@@ -48,7 +48,7 @@ export default function VerificationCode() {
           </div>
 
           <div>
-            <Button className="w-full" color="primary" onClick={handleSignIn}>
+            <Button className="w-full" color="primary" onClick={handleLogin}>
               ورود / ثبت نام
             </Button>
             <Spacer />
@@ -57,7 +57,7 @@ export default function VerificationCode() {
               href="/auth/login"
               className="w-full"
               color="default"
-              onClick={handleSignIn}
+              onClick={handleLogin}
             >
               تغییر شماره همراه
             </Button>

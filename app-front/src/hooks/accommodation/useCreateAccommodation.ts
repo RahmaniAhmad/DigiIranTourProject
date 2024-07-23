@@ -1,13 +1,13 @@
 import { useMutation } from "react-query";
 import { createAccommodationApi } from "../../apis/accommodation/createAccommodation";
-import { AccommodationViewModel } from "@/viewModels/accommodation/accommodationViewModel";
-import { ICreateAccommodation } from "@/type/IAccommodation";
 
 interface UseCreateAccommodationProps {
   onSuccess?: () => void;
+  onError?: (error: any) => void;
 }
 export function useCreateAccommodation({
   onSuccess,
+  onError,
 }: UseCreateAccommodationProps) {
   const createAccommodation = useMutation(
     async (data: any) => {
@@ -15,7 +15,14 @@ export function useCreateAccommodation({
     },
     {
       onSuccess: () => {
-        onSuccess && onSuccess();
+        if (onSuccess) {
+          onSuccess();
+        }
+      },
+      onError: (error) => {
+        if (onError) {
+          onError(error);
+        }
       },
     }
   );

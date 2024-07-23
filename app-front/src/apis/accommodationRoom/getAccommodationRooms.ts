@@ -18,12 +18,10 @@ const mapToViewModel = (
   return viewModel;
 };
 
-export const getAccommodationRoomsApi = async () => {
-  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodationRoom`;
-
+export const getAccommodationRoomsApi = async (accommodationId: number) => {
+  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodationRoom/GetByAccommodationId/${accommodationId}`;
   const data = await axios.get(api).then((response) => {
     return {
-      count: response.data.totalCount,
       data: mapToViewModel(response.data.data),
     };
   });

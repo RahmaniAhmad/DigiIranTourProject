@@ -1,5 +1,5 @@
 "use client";
-import { useSignIn } from "@/hooks/user/useSignIn";
+import { useAuth } from "@/hooks/mutations/useAuth";
 import { Button, Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -8,9 +8,9 @@ export default function Login() {
   const [mobile, setMobile] = useState("");
   const router = useRouter();
 
-  const { verificationCode } = useSignIn();
-  const handleSignIn = () => {
-    verificationCode.mutate(mobile);
+  const { sendVerificationCode } = useAuth();
+  const handleLogin = () => {
+    sendVerificationCode.mutate(mobile);
     router.push(`/auth/verificationCode?mobile=${mobile}`);
   };
   const handleMobileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +51,7 @@ export default function Login() {
           <div>
             <Button
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={handleSignIn}
+              onClick={handleLogin}
             >
               دریافت کد ورود
             </Button>

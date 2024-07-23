@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getAccommodationApi } from "../../apis/accommodation/getAccommodation";
+import { getAccommodationRoomsApi } from "@/apis/accommodationRoom/getAccommodationRooms";
 
 export function useAccommodation(id: number) {
   const {
@@ -7,8 +7,8 @@ export function useAccommodation(id: number) {
     isLoading,
     data: accommodation,
   } = useQuery(
-    ["accommodation", id],
-    async () => await getAccommodationApi(id)
+    ["accommodationRoom", id],
+    async () => await getAccommodationRoomsApi(id)
   );
 
   return {

@@ -1,11 +1,9 @@
 "use client";
 import { Input, Button, Select, SelectItem } from "@nextui-org/react";
 import { useForm, FieldValues } from "react-hook-form";
-import { useProvinces } from "../../../../../hooks/province/useProvinces";
 import { useAccommodationTypes } from "../../../../../hooks/accommodationType/useAccommodationTypes";
 import { useCities } from "../../../../../hooks/city/useCities";
 import { useCreateAccommodation } from "@/hooks/accommodation/useCreateAccommodation";
-import { ICreateAccommodation } from "@/type/IAccommodation";
 import { toast } from "react-toastify";
 import { IAccommodationType } from "@/type/IAccommodationType";
 import { ICity } from "@/type/ICity";
@@ -13,9 +11,13 @@ import { ICity } from "@/type/ICity";
 interface IPageProps {
   onClose?: () => void;
   onSuccess?: () => void;
+  onError?: (error: any) => void;
 }
-const Page = ({ onSuccess, onClose }: IPageProps) => {
-  const { createAccommodation } = useCreateAccommodation({ onSuccess });
+const Page = ({ onSuccess, onError, onClose }: IPageProps) => {
+  const { createAccommodation } = useCreateAccommodation({
+    onSuccess,
+    onError,
+  });
   const { accommodationTypes } = useAccommodationTypes();
   const { cities } = useCities();
   const {

@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { ConfirmModal, CustomModal } from "@/components/UI";
-import CreatePage from "@/app/(dashboard)/dashboard/accommodationRoom/create/page";
+import CreatePage from "@/app/(dashboard)/dashboard/accommodation/[accommodationId]/accommodationRoom/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/accommodation/edit/[id]/page";
 import { toast } from "react-toastify";
 import { useDeleteAccommodation } from "@/hooks/accommodation/useDeleteAccommodation";
@@ -20,9 +20,10 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useAccommodationRooms } from "@/hooks/accommodationRoom/useAccommodationRooms";
 import { accommodationRoomTableViewModel } from "@/viewModels/accommodationRoom/accommodationRoomTableViewModel";
 
-export default function Page() {
-  const { accommodationRooms, count, refetch, isLoading } =
-    useAccommodationRooms();
+export default function Page({ params }: { params: { id: string } }) {
+  const { accommodationRooms, refetch, isLoading } = useAccommodationRooms(
+    Number(params.id)
+  );
 
   const columns = [
     { name: "عنوان", uid: "title" },
@@ -109,6 +110,7 @@ export default function Page() {
         onCloseModal={() => setShowCreateModal(false)}
       >
         <CreatePage
+          accommodationId={params.id}
           onSuccess={() => refetch()}
           onClose={() => setShowCreateModal(false)}
         />

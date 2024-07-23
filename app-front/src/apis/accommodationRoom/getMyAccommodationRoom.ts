@@ -17,21 +17,10 @@ const mapToViewModel = (model: any): AccommodationViewModel => {
   return viewModel;
 };
 
-export const getMyAccommodationApi = async (id: number) => {
-  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/getById/${id}`;
+export const getMyAccommodationRoomApi = async (id: number) => {
+  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodationRoom/getMyAccommodationRoom/${id}`;
   const data = await axios.get(api).then((response) => {
     return mapToViewModel(response.data);
-  });
-
-  return data;
-};
-
-export const getAccommodationApi = async (id: number) => {
-  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/GetById/${id}`;
-  const data = await axios.get(api).then((response) => {
-    return {
-      data: mapToViewModel(response.data.data),
-    };
   });
 
   return data;

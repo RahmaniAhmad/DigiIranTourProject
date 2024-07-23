@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getMyAccommodationApi } from "../../apis/accommodation/getAccommodation";
+import { getMyAccommodationRoomApi } from "@/apis/accommodationRoom/getMyAccommodationRoom";
 
 export function useMyAccommodation(id: number) {
   const {
@@ -8,7 +8,7 @@ export function useMyAccommodation(id: number) {
     data: accommodation,
   } = useQuery(
     ["myAccommodation", id],
-    async () => await getMyAccommodationApi(id)
+    async () => await getMyAccommodationRoomApi(id)
   );
 
   return {

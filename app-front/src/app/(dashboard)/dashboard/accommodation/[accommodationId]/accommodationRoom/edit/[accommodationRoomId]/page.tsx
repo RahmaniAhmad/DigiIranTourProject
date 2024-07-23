@@ -1,40 +1,44 @@
 "use client";
-import { Input, Button, Select, SelectItem } from "@nextui-org/react";
-import { useForm, FieldValues } from "react-hook-form";
-import { useProvinces } from "../../../../../hooks/province/useProvinces";
-import { useAccommodationTypes } from "../../../../../hooks/accommodationType/useAccommodationTypes";
-import { useCities } from "../../../../../hooks/city/useCities";
-import { useCreateAccommodation } from "@/hooks/accommodation/useCreateAccommodation";
-import { ICreateAccommodation } from "@/type/IAccommodation";
+
+import { useMyAccommodation } from "@/hooks/accommodationRoom/useMyAccommodationRoom";
+import { useUpdateAccommodation } from "@/hooks/accommodation/useUpdateAccommodation";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { IAccommodationType } from "@/type/IAccommodationType";
-import { ICity } from "@/type/ICity";
-import { useCreateAccommodationRoom } from "@/hooks/accommodationRoom/useCreateAccommodationRoom";
 
 interface IPageProps {
+  id: number;
   onClose?: () => void;
   onSuccess?: () => void;
 }
-const Page = ({ onSuccess, onClose }: IPageProps) => {
-  const { createAccommodationRoom } = useCreateAccommodationRoom({ onSuccess });
+
+const Page = ({ id, onClose, onSuccess }: IPageProps) => {
+  const { accommodation, isLoading } = useMyAccommodation(id);
+  const { updateAccommodation } = useUpdateAccommodation({
+    onSuccess,
+  });
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    setValue,
   } = useForm();
 
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as any;
-
-    createAccommodationRoom.mutate(
+    data.id = id;
+    updateAccommodation.mutate(
       {
-        accommodationId: 2,
-        title: data.title,
-        bedsCount: data.bedsCount,
-        capacity: data.capacity,
-        price: data.price,
-        description: data.description,
+        id,
+        data: {
+          accommodationTypeId: Number(data.accommodationTypeId),
+          cityId: Number(data.cityId),
+          title: data.title,
+          address: data.address,
+          bedroomsCount: data.bedroomsCount,
+          rule: data.rule,
+        },
       },
       {
         onSuccess: () => {
@@ -47,8 +51,12 @@ const Page = ({ onSuccess, onClose }: IPageProps) => {
     );
     onClose && onClose();
   };
+  if (isLoading) {
+    //TODO
+    return <p>Loading...</p>;
+  }
   return (
-    <form onSubmit={handleSubmit(formSubmit)} encType="multipart/form-data">
+    <form onSubmit={handleSubmit(formSubmit)}>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           عنوان

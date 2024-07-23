@@ -1,18 +1,16 @@
 import { getAccommodationRoomsApi } from "@/apis/accommodationRoom/getAccommodationRooms";
 import { useQuery } from "react-query";
 
-export function useAccommodationRooms() {
+export function useAccommodationRooms(accommodationId: number) {
   const { data, error, isLoading, refetch } = useQuery(
     ["accomodationRooms"],
-    () => getAccommodationRoomsApi()
+    () => getAccommodationRoomsApi(accommodationId)
   );
 
   const accommodationRooms = data ? data.data : [];
-  const count = data ? data.count : 0;
 
   return {
     accommodationRooms,
-    count,
     refetch,
     isLoading,
   };
