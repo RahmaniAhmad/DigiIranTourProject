@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccommodation } from "@/hooks/accommodation/useAccommodation";
+import { useAccommodation } from "@/hooks/queries";
 import Image from "next/image";
 import { useMemo } from "react";
 import { FaShareAlt } from "react-icons/fa";

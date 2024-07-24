@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 // import type { Metadata } from "next";
 import Header from "../../components/shared/dashboard/header";
 import isAuth from "@/components/auth/isAuth";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -22,9 +23,6 @@ const DashboardLayout = ({
     router.push("/");
   };
 
-  if (!localStorage.getItem("accessToken")) {
-    router.push(`/auth/login`);
-  }
   return (
     <div className="dark:bg-gray-950 min-h-screen">
       <Header onSingOut={handleSignOut} />
@@ -33,4 +31,4 @@ const DashboardLayout = ({
   );
 };
 
-export default DashboardLayout;
+export default ProtectedRoute(DashboardLayout);

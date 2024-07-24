@@ -1,4 +1,3 @@
-import { AccommodationTableViewModel } from "@/viewModels/accommodation/accommodationTableViewModel";
 import axios from "axios";
 
 export const getAccommodationsByTypeApi = async (

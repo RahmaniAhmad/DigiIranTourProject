@@ -1,8 +1,8 @@
-import { AccommodationTableViewModel } from "@/viewModels/accommodation/accommodationTableViewModel";
+import { AccommodationListModel } from "@/inferfaces";
 import axios from "axios";
 
-const mapToViewModel = (model: Array<any>): AccommodationTableViewModel[] => {
-  const viewModel: AccommodationTableViewModel[] = [];
+const mapToViewModel = (model: Array<any>): AccommodationListModel[] => {
+  const viewModel: AccommodationListModel[] = [];
   model.map((item) => {
     viewModel.push({
       id: item.id,

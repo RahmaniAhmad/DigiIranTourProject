@@ -1,8 +1,8 @@
-import { AccommodationModel } from "@/inferfaces";
+import { AccommodationRoomModel } from "@/inferfaces";
 import axios from "axios";
 
-const mapToViewModel = (model: any): AccommodationModel => {
-  const viewModel: AccommodationModel = {
+const mapToViewModel = (model: any): AccommodationRoomModel => {
+  const viewModel: AccommodationRoomModel = {
     id: model.id,
     accommodationTypeId: model.accommodationType.id,
     accommodationTypeTitle: model.accommodationType.name,
@@ -17,10 +17,10 @@ const mapToViewModel = (model: any): AccommodationModel => {
   return viewModel;
 };
 
-export const getAccommodationApi = async (id: number) => {
-  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/GetById/${id}`;
+export const getAccommodationRoomApi = async (id: number) => {
+  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodationRoom/getById/${id}`;
   const data = await axios.get(api).then((response) => {
-    return mapToViewModel(response.data.data);
+    return mapToViewModel(response.data);
   });
 
   return data;

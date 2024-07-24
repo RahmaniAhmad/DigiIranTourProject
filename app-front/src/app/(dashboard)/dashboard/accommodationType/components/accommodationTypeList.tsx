@@ -1,7 +1,7 @@
 "use client";
 
 import Table from "@/components/UI/table";
-import { useAccommodationTypes } from "../../../../../hooks/accommodationType/useAccommodationTypes";
+import { useAccommodationTypes } from "@/hooks/queries";
 
 export default function AccommodationTypeList() {
   const { accommodationTypes, count, refetch, isLoading } =

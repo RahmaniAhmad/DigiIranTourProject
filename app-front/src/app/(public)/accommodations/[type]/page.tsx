@@ -1,7 +1,7 @@
 "use client";
 
 import AccommodationItem from "@/components/shared/accommodationItem";
-import { useAccommodationsByType } from "@/hooks/accommodation/useAccommodationsByType";
+import { useAccommodationsByType } from "@/hooks/queries";
 import { Button, ButtonGroup } from "@nextui-org/react";
 import Link from "next/link";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Table from "@/components/UI/table";
-import { useProvinces } from "@/hooks/province/useProvinces";
+import { useProvinces } from "@/hooks/queries";
 
 export default function ProvinceList() {
   const { provinces, count, refetch, isLoading } = useProvinces();

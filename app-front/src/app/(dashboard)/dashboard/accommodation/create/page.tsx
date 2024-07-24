@@ -1,12 +1,9 @@
 "use client";
 import { Input, Button, Select, SelectItem } from "@nextui-org/react";
 import { useForm, FieldValues } from "react-hook-form";
-import { useAccommodationTypes } from "../../../../../hooks/accommodationType/useAccommodationTypes";
-import { useCities } from "../../../../../hooks/city/useCities";
-import { useCreateAccommodation } from "@/hooks/accommodation/useCreateAccommodation";
 import { toast } from "react-toastify";
-import { IAccommodationType } from "@/type/IAccommodationType";
-import { ICity } from "@/type/ICity";
+import { useAccommodationMutation } from "@/hooks/mutations";
+import { useAccommodationTypes, useCities } from "@/hooks/queries";
 
 interface IPageProps {
   onClose?: () => void;
@@ -14,7 +11,7 @@ interface IPageProps {
   onError?: (error: any) => void;
 }
 const Page = ({ onSuccess, onError, onClose }: IPageProps) => {
-  const { createAccommodation } = useCreateAccommodation({
+  const { createAccommodation } = useAccommodationMutation({
     onSuccess,
     onError,
   });
@@ -57,7 +54,7 @@ const Page = ({ onSuccess, onError, onClose }: IPageProps) => {
         </label>
         <Select {...register("accommodationTypeId")}>
           {accommodationTypes &&
-            accommodationTypes.map((accommodationType: IAccommodationType) => (
+            accommodationTypes.map((accommodationType: any) => (
               <SelectItem
                 key={accommodationType.id}
                 value={accommodationType.id}
@@ -73,7 +70,7 @@ const Page = ({ onSuccess, onError, onClose }: IPageProps) => {
         </label>
         <Select {...register("cityId")}>
           {cities &&
-            cities.map((city: ICity) => (
+            cities.map((city: any) => (
               <SelectItem key={city.id} value={city.id}>
                 {city.name}
               </SelectItem>

@@ -15,14 +15,18 @@ import { ConfirmModal, CustomModal } from "@/components/UI";
 import CreatePage from "@/app/(dashboard)/dashboard/accommodation/[accommodationId]/accommodationRoom/create/page";
 import EditPage from "@/app/(dashboard)/dashboard/accommodation/edit/[id]/page";
 import { toast } from "react-toastify";
-import { useDeleteAccommodation } from "@/hooks/accommodation/useDeleteAccommodation";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { useAccommodationRooms } from "@/hooks/accommodationRoom/useAccommodationRooms";
+import { useAccommodationRooms } from "@/hooks/queries";
 import { accommodationRoomTableViewModel } from "@/viewModels/accommodationRoom/accommodationRoomTableViewModel";
+import { useAccommodationRoomMutation } from "@/hooks/mutations";
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({
+  params,
+}: {
+  params: { accommodationId: string };
+}) {
   const { accommodationRooms, refetch, isLoading } = useAccommodationRooms(
-    Number(params.id)
+    Number(params.accommodationId)
   );
 
   const columns = [
@@ -71,7 +75,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [accommodationName, setAccommodationName] = useState("");
   const [selectedId, setSelectedId] = useState<number | undefined>();
 
-  const { deleteAccommodation } = useDeleteAccommodation({
+  const { deleteAccommodationRoom } = useAccommodationRoomMutation({
     onSuccess: refetch,
   });
 
@@ -89,7 +93,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const handleDeleteConfirmed = () => {
     selectedId &&
-      deleteAccommodation.mutate(selectedId, {
+      deleteAccommodationRoom.mutate(selectedId, {
         onSuccess: () => {
           toast.success("success");
         },
@@ -110,7 +114,7 @@ export default function Page({ params }: { params: { id: string } }) {
         onCloseModal={() => setShowCreateModal(false)}
       >
         <CreatePage
-          accommodationId={params.id}
+          accommodationId={params.accommodationId}
           onSuccess={() => refetch()}
           onClose={() => setShowCreateModal(false)}
         />

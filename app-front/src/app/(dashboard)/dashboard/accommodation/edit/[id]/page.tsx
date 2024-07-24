@@ -1,13 +1,14 @@
 "use client";
 
-import { useMyAccommodation } from "@/hooks/accommodation/useMyAccommodation";
-import { useUpdateAccommodation } from "@/hooks/accommodation/useUpdateAccommodation";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useAccommodationTypes } from "../../../../../../hooks/accommodationType/useAccommodationTypes";
 import { toast } from "react-toastify";
-import { useCities } from "@/hooks/city/useCities";
-import { ICity } from "@/type/ICity";
+import { useAccommodationMutation } from "@/hooks/mutations";
+import {
+  useAccommodationTypes,
+  useCities,
+  useMyAccommodation,
+} from "@/hooks/queries";
 
 interface IPageProps {
   id: number;
@@ -17,7 +18,7 @@ interface IPageProps {
 
 const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const { accommodation, isLoading } = useMyAccommodation(id);
-  const { updateAccommodation } = useUpdateAccommodation({
+  const { updateAccommodation } = useAccommodationMutation({
     onSuccess,
   });
   const { accommodationTypes } = useAccommodationTypes();
@@ -90,7 +91,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           defaultSelectedKeys={accommodation?.cityId.toString()}
         >
           {cities &&
-            cities.map((city: ICity) => (
+            cities.map((city: any) => (
               <SelectItem key={city.id} value={city.id}>
                 {city.name}
               </SelectItem>

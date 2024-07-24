@@ -1,8 +1,8 @@
 "use client";
 
-import { useMyAccommodation } from "@/hooks/accommodationRoom/useMyAccommodationRoom";
-import { useUpdateAccommodation } from "@/hooks/accommodation/useUpdateAccommodation";
-import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { useAccommodationRoomMutation } from "@/hooks/mutations";
+import { useMyAccommodationRoom } from "@/hooks/queries";
+import { Button, Input } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -13,8 +13,8 @@ interface IPageProps {
 }
 
 const Page = ({ id, onClose, onSuccess }: IPageProps) => {
-  const { accommodation, isLoading } = useMyAccommodation(id);
-  const { updateAccommodation } = useUpdateAccommodation({
+  const { accommodation, isLoading } = useMyAccommodationRoom(id);
+  const { updateAccommodationRoom } = useAccommodationRoomMutation({
     onSuccess,
   });
 
@@ -28,7 +28,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as any;
     data.id = id;
-    updateAccommodation.mutate(
+    updateAccommodationRoom.mutate(
       {
         id,
         data: {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const updateAccommodationApi = async (id: number, data: any) => {
+export const updateAccommodationRoomApi = async (id: number, data: any) => {
   const response = await axios.put(
     `${process.env.NEXT_PUBLIC_BASE_API}/accommodationRoom/${id}`,
     data,

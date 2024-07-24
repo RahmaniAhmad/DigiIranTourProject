@@ -14,15 +14,16 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { ChangeEvent, useCallback, useState } from "react";
-import { useAccommodations } from "@/hooks/accommodation/useAccommodations";
-import { useDeleteAccommodation } from "@/hooks/accommodation/useDeleteAccommodation";
+// import { useAccommodations } from "@/hooks/accommodation/useAccommodations";
+// import { useDeleteAccommodation } from "@/hooks/accommodation/useDeleteAccommodation";
 import CreatePage from "./create/page";
 import EditPage from "./edit/[id]/page";
 import { toast } from "react-toastify";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { AccommodationTableViewModel } from "@/viewModels/accommodation/accommodationTableViewModel";
 import { useRouter } from "next/navigation";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { useAccommodationMutation } from "@/hooks/mutations";
+import { useAccommodations } from "@/hooks/queries";
 
 const Page = () => {
   const router = useRouter();
@@ -98,12 +99,12 @@ const Page = () => {
     setFilter,
   } = useAccommodations();
 
-  const { deleteAccommodation } = useDeleteAccommodation({
+  const { deleteAccommodation } = useAccommodationMutation({
     onSuccess: refetch,
   });
 
   const openDeleteConfirm = async (id: number) => {
-    const accommodation = accommodations.find((f: any) => f.id == id);
+    const accommodation = accommodations?.find((f: any) => f.id == id);
     setAccommodationName(accommodation?.title ?? "");
     setSelectedId(id);
     setShowDeleteConfirm(true);
@@ -130,11 +131,11 @@ const Page = () => {
   };
 
   const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
-    setCurrentPage(1);
-    setFilter(event.target.value);
+    setCurrentPage && setCurrentPage(1);
+    setFilter && setFilter(event.target.value);
   };
   const handleClearSearch = () => {
-    setFilter("");
+    setFilter && setFilter("");
   };
   return (
     <>
@@ -144,7 +145,7 @@ const Page = () => {
         onCloseModal={() => setShowCreateModal(false)}
       >
         <CreatePage
-          onSuccess={() => refetch()}
+          onSuccess={() => refetch && refetch()}
           onError={(error: string) => {
             toast.warning(error);
           }}
@@ -158,7 +159,7 @@ const Page = () => {
       >
         <EditPage
           id={selectedId ?? 0}
-          onSuccess={() => refetch()}
+          onSuccess={() => refetch && refetch()}
           onClose={() => setShowEditModal(false)}
         />
       </CustomModal>
@@ -170,16 +171,8 @@ const Page = () => {
         onConfirm={handleDeleteConfirmed}
       />
       <Button onClick={() => setShowCreateModal(true)} color="primary">
-        ایجاد نوع اقامت جدید
+        اقامتگاه جدید
       </Button>
-      <Input
-        isClearable
-        placeholder="Search..."
-        name="filter"
-        value={filter}
-        onChange={handleSearch}
-        onClear={handleClearSearch}
-      />
       <Table aria-label="Example table with custom cells">
         <TableHeader columns={columns}>
           {(column) => (
@@ -215,4 +208,4 @@ const Page = () => {
   );
 };
 
-export default ProtectedRoute(Page);
+export default Page;

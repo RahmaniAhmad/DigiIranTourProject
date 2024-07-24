@@ -2,10 +2,11 @@ import { useMutation } from "react-query";
 import { loginApi, sendVerificationCodeApi } from "@/apis/auth/authApis";
 import { useRouter } from "next/navigation";
 
-type SignInProps = {
+type LoginProps = {
   mobile: string;
   verificationCode: string;
 };
+
 export function useAuth() {
   const router = useRouter();
 
@@ -22,7 +23,7 @@ export function useAuth() {
   );
 
   const login = useMutation(
-    async ({ mobile, verificationCode }: SignInProps) => {
+    async ({ mobile, verificationCode }: LoginProps) => {
       return await loginApi(mobile, verificationCode)
         .then((response) => {
           if (response.accessToken != null) {

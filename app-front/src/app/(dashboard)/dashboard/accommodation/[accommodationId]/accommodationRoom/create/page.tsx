@@ -1,9 +1,8 @@
 "use client";
+import { useAccommodationRoomMutation } from "@/hooks/mutations";
 import { Input, Button } from "@nextui-org/react";
 import { useForm, FieldValues } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useCreateAccommodationRoom } from "@/hooks/accommodationRoom/useCreateAccommodationRoom";
-import { useRouter } from "next/router";
 
 interface IPageProps {
   accommodationId: string;
@@ -11,7 +10,9 @@ interface IPageProps {
   onSuccess?: () => void;
 }
 const Page = ({ accommodationId, onSuccess, onClose }: IPageProps) => {
-  const { createAccommodationRoom } = useCreateAccommodationRoom({ onSuccess });
+  const { createAccommodationRoom } = useAccommodationRoomMutation({
+    onSuccess,
+  });
 
   const {
     register,

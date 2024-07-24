@@ -1,5 +1,5 @@
 "use client";
-import { useAuth } from "@/hooks/mutations/useAuth";
+import { useAuth } from "@/hooks/mutations";
 import { Button, Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
