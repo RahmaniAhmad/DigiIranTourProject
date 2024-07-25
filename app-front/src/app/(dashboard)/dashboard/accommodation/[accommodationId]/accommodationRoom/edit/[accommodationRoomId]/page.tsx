@@ -2,18 +2,19 @@
 
 import { useAccommodationRoomMutation } from "@/hooks/mutations";
 import { useMyAccommodationRoom } from "@/hooks/queries";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 interface IPageProps {
-  id: number;
+  accommodationRoomId: number;
   onClose?: () => void;
   onSuccess?: () => void;
 }
 
-const Page = ({ id, onClose, onSuccess }: IPageProps) => {
-  const { accommodation, isLoading } = useMyAccommodationRoom(id);
+const Page = ({ accommodationRoomId, onClose, onSuccess }: IPageProps) => {
+  const { accommodationRoom, isLoading } =
+    useMyAccommodationRoom(accommodationRoomId);
   const { updateAccommodationRoom } = useAccommodationRoomMutation({
     onSuccess,
   });
@@ -27,17 +28,17 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
 
   const formSubmit = async (filedValues: FieldValues) => {
     const data = filedValues as any;
-    data.id = id;
+    data.id = accommodationRoomId;
     updateAccommodationRoom.mutate(
       {
-        id,
+        id: accommodationRoomId,
         data: {
-          accommodationTypeId: Number(data.accommodationTypeId),
-          cityId: Number(data.cityId),
+          id: data.id,
           title: data.title,
-          address: data.address,
-          bedroomsCount: data.bedroomsCount,
-          rule: data.rule,
+          bedsCount: data.bedsCount,
+          capacity: data.capacity,
+          price: data.price,
+          description: data.description,
         },
       },
       {
@@ -56,12 +57,15 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
     return <p>Loading...</p>;
   }
   return (
-    <form onSubmit={handleSubmit(formSubmit)}>
+    <form onSubmit={handleSubmit(formSubmit)} encType="multipart/form-data">
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           عنوان
         </label>
-        <Input {...register("title", { required: true })} />
+        <Input
+          {...register("title", { required: true })}
+          defaultValue={accommodationRoom?.title}
+        />
         {errors.title && (
           <p className="text-danger-600">نوع اقامت اجباری می باشد</p>
         )}
@@ -71,26 +75,35 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         <label className="block text-sm font-bold mb-2" htmlFor="title">
           تعداد تخت
         </label>
-        <Input {...register("bedsCount", { required: true })} />
+        <Input
+          {...register("bedsCount", { required: true })}
+          defaultValue={accommodationRoom?.bedsCount}
+        />
         {errors.title && <p className="text-danger-600">آدرس اجباری می باشد</p>}
       </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="rule">
           ظرفیت
         </label>
-        <Input {...register("capacity")} />
+        <Input
+          {...register("capacity")}
+          defaultValue={accommodationRoom?.capacity}
+        />
       </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="rule">
           قیمت
         </label>
-        <Input {...register("price")} />
+        <Input {...register("price")} defaultValue={accommodationRoom?.price} />
       </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="rule">
           توضیحات
         </label>
-        <Input {...register("description")} />
+        <Input
+          {...register("description")}
+          defaultValue={accommodationRoom?.description}
+        />
       </div>
       <div className=" grid md:grid-cols-2 place-items-center gap-2 mt-4">
         <Button

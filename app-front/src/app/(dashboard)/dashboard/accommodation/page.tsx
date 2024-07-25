@@ -20,10 +20,10 @@ import CreatePage from "./create/page";
 import EditPage from "./edit/[id]/page";
 import { toast } from "react-toastify";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { AccommodationTableViewModel } from "@/viewModels/accommodation/accommodationTableViewModel";
 import { useRouter } from "next/navigation";
 import { useAccommodationMutation } from "@/hooks/mutations";
 import { useAccommodations } from "@/hooks/queries";
+import { AccommodationListModel } from "@/interfaces";
 
 const Page = () => {
   const router = useRouter();
@@ -44,9 +44,9 @@ const Page = () => {
   ];
 
   const renderCell = useCallback(
-    (accommodation: AccommodationTableViewModel, columnKey: React.Key) => {
+    (accommodation: AccommodationListModel, columnKey: React.Key) => {
       const cellValue =
-        accommodation[columnKey as keyof AccommodationTableViewModel];
+        accommodation[columnKey as keyof AccommodationListModel];
       if (columnKey == "actions") {
         return (
           <div className="relative flex items-center gap-8">

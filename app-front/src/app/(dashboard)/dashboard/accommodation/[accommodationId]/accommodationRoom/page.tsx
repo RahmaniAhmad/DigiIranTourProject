@@ -13,12 +13,12 @@ import {
 } from "@nextui-org/react";
 import { ConfirmModal, CustomModal } from "@/components/UI";
 import CreatePage from "@/app/(dashboard)/dashboard/accommodation/[accommodationId]/accommodationRoom/create/page";
-import EditPage from "@/app/(dashboard)/dashboard/accommodation/edit/[id]/page";
+import EditPage from "@/app/(dashboard)/dashboard/accommodation/[accommodationId]/accommodationRoom/edit/[accommodationRoomId]/page";
 import { toast } from "react-toastify";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useAccommodationRooms } from "@/hooks/queries";
-import { accommodationRoomTableViewModel } from "@/viewModels/accommodationRoom/accommodationRoomTableViewModel";
 import { useAccommodationRoomMutation } from "@/hooks/mutations";
+import { AccommodationRoomListModel } from "@/interfaces";
 
 export default function Page({
   params,
@@ -38,9 +38,9 @@ export default function Page({
   ];
 
   const renderCell = useCallback(
-    (accommodation: accommodationRoomTableViewModel, columnKey: React.Key) => {
+    (accommodation: AccommodationRoomListModel, columnKey: React.Key) => {
       const cellValue =
-        accommodation[columnKey as keyof accommodationRoomTableViewModel];
+        accommodation[columnKey as keyof AccommodationRoomListModel];
       if (columnKey == "actions") {
         return (
           <div className="relative flex items-center gap-2">
@@ -125,7 +125,7 @@ export default function Page({
         onCloseModal={() => setShowEditModal(false)}
       >
         <EditPage
-          id={selectedId ?? 0}
+          accommodationRoomId={selectedId ?? 0}
           onSuccess={() => refetch()}
           onClose={() => setShowEditModal(false)}
         />

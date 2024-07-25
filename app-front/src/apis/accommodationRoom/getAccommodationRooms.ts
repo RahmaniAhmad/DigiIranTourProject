@@ -1,4 +1,4 @@
-import { AccommodationRoomListModel } from "@/inferfaces";
+import { AccommodationRoomListModel } from "@/interfaces";
 import axios from "axios";
 import { error } from "console";
 

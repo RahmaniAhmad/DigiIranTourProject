@@ -1,4 +1,4 @@
-import { AccommodationModel } from "@/inferfaces";
+import { AccommodationModel } from "@/interfaces";
 import axios from "axios";
 
 const mapToViewModel = (model: any): AccommodationModel => {
