@@ -5,7 +5,7 @@ namespace app_api.Domain
 {
     public class AccommodationImage : Entity
     {
-        public AccommodationImage(Accommodation accommodation, string url, string title)
+        public AccommodationImage(Accommodation accommodation, string url, string? title)
         {
             Accommodation = accommodation ?? throw new ArgumentNullException(nameof(accommodation));
             AccommodationId = accommodation.Id;
@@ -19,5 +19,11 @@ namespace app_api.Domain
         public Accommodation Accommodation { get; private set; }
         public string Url { get; private set; }
         public string? Title { get; private set; }
+
+        public void UpdateDetails(string url, string? title)
+        {
+            this.Url = url;
+            this.Title = title;
+        }
     }
 }

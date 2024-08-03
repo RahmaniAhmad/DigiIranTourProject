@@ -13,13 +13,49 @@ namespace app_api.Controllers
     [Route("api/[controller]")]
     public class AccommodationImageController : Controller
     {
-        private readonly AccommodationService _accommodationService;
+        private readonly AccommodationImageService _accommodationImageService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AccommodationImageController(AccommodationService accommodationService, IUnitOfWork unitOfWork)
+        public AccommodationImageController(AccommodationImageService accommodationImageService, IUnitOfWork unitOfWork)
         {
-            _accommodationService = accommodationService;
+            _accommodationImageService = accommodationImageService;
             _unitOfWork = unitOfWork;
+        }
+        [HttpGet("GetByAccommodationId/{accommodationId}")]
+        public async Task<IActionResult> GetByAccommodationId(long accommodationId, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var accommodationImages = await _unitOfWork.AccommodationImages.GetByAccommodationId(accommodationId);
+
+                var data = accommodationImages.Select(s => new AccommodationImageDto(s));
+
+                return Ok(new { data });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("GetMyAccommodationImage/{id}")]
+        public async Task<IActionResult> GetMyAccommodationId(int id, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var accommodationImage = await _unitOfWork.AccommodationImages.GetByIdAsync(id, cancellationToken);
+
+                if (accommodationImage == null)
+                {
+                    return NotFound();
+                }
+                var result = new AccommodationImageDto(accommodationImage);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
@@ -28,14 +64,8 @@ namespace app_api.Controllers
             try
             {
 
-                var query = await _unitOfWork.Accommodations.GetByIdAsync(accommodationId, cancellationToken);
+                var query = await _unitOfWork.AccommodationImages.GetByIdAsync(accommodationId, cancellationToken);
                 
-
-                //var totalCount = query.Images.Count();
-                //var images =  query.Images.Skip(skip).Take(take).ToList();
-                //var data = images.Select(s => new AccommodationImageDto(s));
-
-                //return Ok(new { data, totalCount });
                 return Ok(new { });
             }
             catch (Exception ex)
@@ -49,13 +79,13 @@ namespace app_api.Controllers
         {
             try
             {
-                var accommodation = await _unitOfWork.Accommodations.GetByIdAsync(id, cancellationToken);
+                var accommodationImage = await _unitOfWork.AccommodationImages.GetByIdAsync(id, cancellationToken);
 
-                if (accommodation == null)
+                if (accommodationImage == null)
                 {
                     return NotFound();
                 }
-                var result = new AccommodationDto(accommodation);
+                var result = new AccommodationImageDto(accommodationImage);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -65,7 +95,7 @@ namespace app_api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] AccommodationCreateModel model, CancellationToken cancellationToken = default)
+        public async Task<ActionResult> Create([FromForm] AccommodationImageCreateModel model, CancellationToken cancellationToken = default)
         {
             if (!ModelState.IsValid)
             {
@@ -74,27 +104,71 @@ namespace app_api.Controllers
 
             try
             {
-                var result = await _accommodationService.CreateAsync(model, cancellationToken);
-                return CreatedAtAction(nameof(GetById), new { id = result.Id }, new AccommodationDto(result));
+                if (model.AccommodationImage!= null && model.AccommodationImage.Length > 0)
+                {
+                    var uniqueFileName = $"{Guid.NewGuid().ToString()}_{model.AccommodationImage.FileName}";
+                    DateTime now = DateTime.Now;
+                    var uploadsFolder = Path.Combine("uploads", now.Year.ToString(), now.Month.ToString("00"), now.Day.ToString("00"));
+                    Directory.CreateDirectory(uploadsFolder);
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.AccommodationImage.CopyToAsync(stream);
+                    }
+
+                    model.Url = Path.Combine(now.Year.ToString(), now.Month.ToString("00"), now.Day.ToString("00"), uniqueFileName);
+                }
+
+                await _accommodationImageService.CreateAsync(model, cancellationToken);
+                return StatusCode(201);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while creating the accommodation.");
             }
         }
-
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update(long id, [FromForm] AccommodationUpdateModel model, CancellationToken cancellationToken = default)
+        public async Task<ActionResult> Update(int id, [FromForm] AccommodationImageUpdateModel model, CancellationToken cancellationToken = default)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
-                var updatedAccommodation = await _accommodationService.UpdateAsync(id, model, cancellationToken);
-                if (updatedAccommodation == null)
+                var existingImage = await _unitOfWork.AccommodationImages.GetByIdAsync(id, cancellationToken);
+                if (existingImage == null)
                 {
                     return NotFound();
                 }
-                var accommodationDto = new AccommodationDto(updatedAccommodation);
-                return Ok(accommodationDto);
+
+                if (model.AccommodationImage != null && model.AccommodationImage.Length > 0)
+                {
+                    var uniqueFileName = $"{Guid.NewGuid().ToString()}_{model.AccommodationImage.FileName}";
+                    DateTime now = DateTime.Now;
+                    var uploadsFolder = Path.Combine("uploads", now.Year.ToString(), now.Month.ToString("00"), now.Day.ToString("00"));
+                    Directory.CreateDirectory(uploadsFolder);
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Delete the old file if exists
+                    var oldFilePath = Path.Combine("uploads", existingImage.Url);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.AccommodationImage.CopyToAsync(stream);
+                    }
+
+                    model.Url = Path.Combine(now.Year.ToString(), now.Month.ToString("00"), now.Day.ToString("00"), uniqueFileName);
+                }
+
+                await _accommodationImageService.UpdateAsync(id, model, cancellationToken);
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -103,132 +177,30 @@ namespace app_api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<ActionResult> Delete(long id, CancellationToken cancellationToken = default)
+        public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken = default)
         {
             try
             {
-                await _accommodationService.DeleteAsync(id, cancellationToken);
+                var existingImage = await _unitOfWork.AccommodationImages.GetByIdAsync(id, cancellationToken);
+                if (existingImage == null)
+                {
+                    return NotFound();
+                }
+
+                // Delete the file if exists
+                var filePath = Path.Combine("uploads", existingImage.Url);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                await _accommodationImageService.DeleteAsync(id, cancellationToken);
+                return NoContent();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(500, "An error occurred while deleting the accommodation.");
             }
-
-            return Ok();
-
         }
-
-
-        //[HttpGet("GetListByType")]
-        //public async Task<IActionResult> GetListByType([FromQuery] int skip = 1, [FromQuery] int take = 10, [FromQuery] string filter = "", CancellationToken cancellationToken = default)
-        //{
-        //    try
-        //    {
-        //        var (accommodations, totalCount) = await _accommodationService.GetListByTypeAsync(skip, take, filter, cancellationToken);
-        //        accommodations.Select(s => new AccommodationModel(s));
-        //        return Ok(new { accommodations, totalCount });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
-
-        //[HttpGet("GetById/{id}")]
-        //public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
-        //{
-        //    var data = await _accommodationService.GetByIdAsync(id, cancellationToken);
-
-        //    if (data == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(data);
-        //}
-
-
-        //[HttpPost]
-        //public async Task<ActionResult> Create([FromBody] AccommodationCreateModel model, CancellationToken cancellationToken = default)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    var accommodationCreateModel = new AccommodationCreateModel()
-        //    {
-        //        Address = model.Address,
-        //        BedroomsCount = model.BedroomsCount,
-        //        Rule = model.Rule,
-        //        CityId = model.CityId,
-        //        Title = model.Title,
-        //        Images = model.Images,
-        //        Rooms = model.Rooms,
-        //        TypeId = model.TypeId,
-        //    };
-        //    try
-        //    {
-        //        var result= await _accommodationService.CreateAsync(accommodationCreateModel, cancellationToken);
-        //        return CreatedAtAction(nameof(GetById), new { id = result.Id }, new AccommodationModel(result));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
-
-        //[HttpPut("{id}")]
-        //public virtual async Task<ActionResult> Update(int id, [FromForm] AccommodationUpdateDto data)
-        //{
-        //    var item = _dbContext.Accommodations.Find(id);
-        //    if (item == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    item.CityId = data.CityId;
-        //    item.AccommodationTypeId = data.AccommodationTypeId;
-        //    item.Title = data.Title;
-        //    item.Address = data.Address;
-        //    item.BedroomsCount = data.BedroomsCount;
-        //    item.BedsCount = data.BedsCount;
-        //    item.Capacity = data.Capacity;
-        //    item.Price = data.Price;
-
-        //    if (data.AccommodationImage != null && data.AccommodationImage.Length > 0)
-        //    {
-        //        var uniqueFileName = $"{Guid.NewGuid().ToString()}_{data.AccommodationImage.FileName}";
-        //        DateTime now = DateTime.Now;
-        //        var uploadsFolder = Path.Combine("uploads", now.Year.ToString(), now.Month.ToString("00"), now.Day.ToString("00"));
-        //        Directory.CreateDirectory(uploadsFolder);
-        //        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-        //        using (var stream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            await data.AccommodationImage.CopyToAsync(stream);
-        //        }
-
-        //        item.ImageName = Path.Combine(now.Year.ToString(), now.Month.ToString("00"), now.Day.ToString("00"), uniqueFileName);
-        //    }
-
-        //    _dbContext.SaveChanges();
-        //    return Ok(data);
-        //}
-
-        //[HttpDelete("{id}")]
-        //public virtual ActionResult Delete(int id)
-        //{
-        //    var item = _dbContext.Accommodations.Find(id);
-
-        //    if (item == null)
-        //        return NotFound();
-
-        //    _dbContext.Accommodations.Remove(item);
-        //    _dbContext.SaveChanges();
-        //    return Ok();
-
-        //}
-
-
     }
 }

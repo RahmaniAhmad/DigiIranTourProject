@@ -9,6 +9,7 @@ namespace app_api.Contracts
         IAccommodationTypeRepository AccommodationTypes { get; }
         IAccommodationRepository Accommodations { get; }
         IAccommodationRoomRepository AccommodationRooms { get; }
+        IAccommodationImageRepository AccommodationImages { get; }
         Task CompleteAsync(CancellationToken cancellationToken);
     }
 }

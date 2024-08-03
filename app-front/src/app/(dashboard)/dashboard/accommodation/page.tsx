@@ -62,6 +62,18 @@ const Page = () => {
                 اتاق ها
               </span>
             </Tooltip>
+            <Tooltip content="مشاهده تصاویر">
+              <span
+                onClick={() => {
+                  router.push(
+                    `/dashboard/accommodation/${accommodation.id}/accommodationImage`
+                  );
+                }}
+                className="text-lg text-default-400 cursor-pointer active:opacity-50"
+              >
+                تصاویر
+              </span>
+            </Tooltip>
             <Tooltip content="ویرایش اقامتگاه">
               <span className="text-lg text-success-400 cursor-pointer active:opacity-50">
                 <FaEdit

@@ -49,9 +49,11 @@ builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IAccommodationTypeRepository, AccommodationTypeRepository>();
 builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
 builder.Services.AddScoped<IAccommodationRoomRepository, AccommodationRoomRepository>();
+builder.Services.AddScoped<IAccommodationImageRepository, AccommodationImageRepository>();
 
 builder.Services.AddScoped<AccommodationService>();
 builder.Services.AddScoped<AccommodationRoomService>();
+builder.Services.AddScoped<AccommodationImageService>();
 
 //builder.Services.AddAuthorization();
 

@@ -69,7 +69,7 @@ namespace app_api.Controllers
 
             try
             {
-                var result = await _accommodationRoomService.CreateAsync(model, cancellationToken);
+                await _accommodationRoomService.CreateAsync(model, cancellationToken);
                 return StatusCode(201);
             }
             catch (Exception ex)

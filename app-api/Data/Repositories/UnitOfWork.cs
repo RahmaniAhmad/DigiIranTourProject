@@ -19,6 +19,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
          IAccommodationTypeRepository accommodationTypeRepository,
          IAccommodationRepository accommodationRepository,
          IAccommodationRoomRepository accommodationRoomRepository,
+         IAccommodationImageRepository accommodationImageRepository,
          ILogger<UnitOfWork>? logger = null)
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -27,6 +28,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         AccommodationTypes = accommodationTypeRepository ?? throw new ArgumentNullException(nameof(accommodationTypeRepository));
         Accommodations = accommodationRepository ?? throw new ArgumentNullException(nameof(accommodationRepository));
         AccommodationRooms = accommodationRoomRepository ?? throw new ArgumentNullException(nameof(accommodationRoomRepository));
+        AccommodationImages = accommodationImageRepository ?? throw new ArgumentNullException(nameof(accommodationImageRepository));
         _logger = logger;
     }
 
@@ -35,6 +37,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     public IAccommodationTypeRepository AccommodationTypes { get; }
     public IAccommodationRepository Accommodations { get; }
     public IAccommodationRoomRepository AccommodationRooms { get; }
+    public IAccommodationImageRepository AccommodationImages { get; }
 
 
     public async Task CompleteAsync(CancellationToken cancellationToken = default)
