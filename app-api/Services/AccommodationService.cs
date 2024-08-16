@@ -37,7 +37,7 @@ namespace app_api.Services
                 throw new Exception("Accommodation type not found.");
             }
 
-            var accommodation = new Accommodation(city, type, model.Title, model.Address, model.BedroomsCount, model.Rule);
+            var accommodation = new Accommodation(city, type, model.Title, model.Star, model.Address, model.BedroomsCount, model.Rule);
 
             await _accommodationRepository.AddAsync(accommodation, cancellationToken);
             await _unitOfWork.CompleteAsync(cancellationToken);
@@ -64,7 +64,7 @@ namespace app_api.Services
             {
                 throw new KeyNotFoundException("Accommodation type not found.");
             }
-            accommodation.UpdateDetails(city, type, model.Title, model.Address, model.BedroomsCount, model.Rule);
+            accommodation.UpdateDetails(city, type, model.Title, model.Star, model.Address, model.BedroomsCount, model.Rule);
 
 
             await _accommodationRepository.UpdateAsync(accommodation, cancellationToken);

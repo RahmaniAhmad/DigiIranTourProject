@@ -38,6 +38,7 @@ const Page = () => {
     { name: "شهر", uid: "city" },
     { name: "نوع اقامتگاه", uid: "type" },
     { name: "عنوان", uid: "title" },
+    { name: "ستاره", uid: "star" },
     { name: "آدرس", uid: "address" },
     { name: "تعداد اتاق", uid: "bedroomsCount" },
     { name: "", uid: "actions" },

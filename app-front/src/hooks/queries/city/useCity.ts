@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getCityApi } from "../../../apis/city/getCity";
+import { getCityApi } from "../../../apis/queries/city/getCity";
 
 export function useCity(id: number) {
   const {

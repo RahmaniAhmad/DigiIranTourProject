@@ -1,6 +1,6 @@
-import { createAccommodationRoomApi } from "@/apis/accommodationRoom/createAccommodationRoom";
-import { deleteAccommodationRoomApi } from "@/apis/accommodationRoom/deleteAccommodationRoom";
-import { updateAccommodationRoomApi } from "@/apis/accommodationRoom/updateAccommodationRoom";
+import { createAccommodationRoomApi } from "@/apis/mutations/accommodationRoom/createAccommodationRoom";
+import { deleteAccommodationRoomApi } from "@/apis/mutations/accommodationRoom/deleteAccommodationRoom";
+import { updateAccommodationRoomApi } from "@/apis/mutations/accommodationRoom/updateAccommodationRoom";
 import { useMutation } from "react-query";
 
 interface UseAccommodationProps {

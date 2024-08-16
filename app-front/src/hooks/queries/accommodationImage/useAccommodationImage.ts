@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getAccommodationImageApi } from "@/apis/accommodationImage/getAccommodationImage";
+import { getAccommodationImageApi } from "@/apis/queries/accommodationImage/getAccommodationImage";
 
 export function useAccommodationImage(id: number) {
   const {

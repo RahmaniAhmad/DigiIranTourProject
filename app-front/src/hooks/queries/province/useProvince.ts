@@ -1,4 +1,4 @@
-import { getProvinceApi } from "@/apis/province/getProvince";
+import { getProvinceApi } from "@/apis/queries/province/getProvince";
 import { useQuery } from "react-query";
 
 export function useProvince(id: number) {

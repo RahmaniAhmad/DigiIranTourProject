@@ -1,4 +1,4 @@
-import { getProvinces } from "@/apis/province/getProvinces";
+import { getProvinces } from "@/apis/queries/province/getProvinces";
 import { useQuery } from "react-query";
 
 export function useProvinces() {

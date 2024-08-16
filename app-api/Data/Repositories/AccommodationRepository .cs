@@ -45,6 +45,20 @@ namespace app_api.Data.Repositories
             return accommodation;
         }
 
+        public async Task<IEnumerable<Accommodation>> GetByTypeIdAsync(long typeId, CancellationToken cancellationToken)
+        {
+            var accommodations = await this.DbContext.Accommodations
+                .Where(w => w.AccommodationTypeId == typeId)
+                .Include(i => i.City)
+                .ThenInclude(t => t.Province)
+                .Include(i => i.AccommodationType)
+                .Include(i => i.AccommodationRooms)
+                .Include(i => i.AccommodationImages)
+                .ToListAsync();
+
+            return accommodations;
+        }
+
         public async Task<Accommodation> AddAsync(Accommodation accommodation, CancellationToken cancellationToken)
         {
             var result = await this.DbContext.Accommodations.AddAsync(accommodation, cancellationToken);

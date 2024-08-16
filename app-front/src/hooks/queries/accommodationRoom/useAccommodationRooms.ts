@@ -1,4 +1,4 @@
-import { getAccommodationRoomsApi } from "@/apis/accommodationRoom/getAccommodationRooms";
+import { getAccommodationRoomsApi } from "@/apis/queries/accommodationRoom/getAccommodationRooms";
 import { useQuery } from "react-query";
 
 export function useAccommodationRooms(accommodationId: number) {

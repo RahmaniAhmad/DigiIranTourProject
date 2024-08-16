@@ -45,11 +45,9 @@ const Page = ({ params }: PageProps) => {
             key={accommodation.id}
             id={accommodation.id}
             title={accommodation.title}
-            provinceName={accommodation.provinceName}
-            cityName={accommodation.cityName}
+            province={accommodation.provinceName}
+            city={accommodation.cityName}
             bedroomsCount={accommodation.bedroomsCount}
-            bedsCount={accommodation.bedsCount}
-            capacity={accommodation.capacity}
             price={accommodation.price}
             imageSrc={`https://localhost:44390/uploads/${accommodation.imageName}`}
           />

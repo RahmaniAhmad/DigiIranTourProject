@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getMyAccommodationRoomApi } from "@/apis/accommodationRoom/getMyAccommodationRoom";
+import { getMyAccommodationRoomApi } from "@/apis/queries/accommodationRoom/getMyAccommodationRoom";
 
 export function useMyAccommodationRoom(id: number) {
   const {

@@ -1,4 +1,4 @@
-import { getAccommodationsApi } from "@/apis/accommodation/getAccommodations";
+import { getAccommodationsApi } from "@/apis/queries/accommodation/public/getAccommodations";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { useDebounce } from "use-debounce";

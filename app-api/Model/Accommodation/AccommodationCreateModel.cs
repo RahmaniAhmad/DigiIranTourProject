@@ -11,6 +11,8 @@ namespace app_api.Model.Accommodation
         [MaxLength(100)]
         public required string Title { get; set; }
 
+        public int Star { get; set; }
+
         [Required]
         [MaxLength(200)]
         public required string Address { get; set; }

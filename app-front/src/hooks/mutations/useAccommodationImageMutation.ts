@@ -1,6 +1,6 @@
-import { createAccommodationImageApi } from "@/apis/accommodationImage/createAccommodationImage";
-import { deleteAccommodationImageApi } from "@/apis/accommodationImage/deleteAccommodationImage";
-import { updateAccommodationImageApi } from "@/apis/accommodationImage/updateAccommodationImage";
+import { createAccommodationImageApi } from "@/apis/mutations/accommodationImage/createAccommodationImage";
+import { deleteAccommodationImageApi } from "@/apis/mutations/accommodationImage/deleteAccommodationImage";
+import { updateAccommodationImageApi } from "@/apis/mutations/accommodationImage/updateAccommodationImage";
 import { useMutation } from "react-query";
 
 interface UseAccommodationProps {

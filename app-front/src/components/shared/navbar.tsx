@@ -16,12 +16,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import styles from "./navbar.module.css";
 
 const CustomNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <Navbar isBordered>
+    <Navbar isBordered className={styles.customNavbar}>
       <NavbarContent justify="center">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}

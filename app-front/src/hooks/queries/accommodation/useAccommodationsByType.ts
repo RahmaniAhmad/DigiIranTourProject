@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
-import { getAccommodationsByTypeApi } from "@/apis/accommodation/getAccommodationsByType";
+import { getAccommodationsByTypeApi } from "@/apis/queries/accommodation/public/getAccommodationsByType";
 
 export function useAccommodationsByType(type: string) {
   const [currentPage, setCurrentPage] = useState(1);

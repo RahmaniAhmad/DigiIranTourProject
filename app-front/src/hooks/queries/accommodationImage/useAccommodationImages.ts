@@ -1,4 +1,4 @@
-import { getAccommodationImagesApi } from "@/apis/accommodationImage/getAccommodationImages";
+import { getAccommodationImagesApi } from "@/apis/queries/accommodationImage/getAccommodationImages";
 import { useQuery } from "react-query";
 
 export function useAccommodationImages(accommodationId: number) {

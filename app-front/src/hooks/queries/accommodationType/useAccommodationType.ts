@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getAccommodationType } from "../../../apis/accommodationType/getAccommodationType";
+import { getAccommodationType } from "../../../apis/queries/accommodationType/getAccommodationType";
 
 export function useAccommodationType(id: number) {
   const {

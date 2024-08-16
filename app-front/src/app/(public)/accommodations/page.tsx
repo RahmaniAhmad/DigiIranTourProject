@@ -9,8 +9,8 @@ const Page = () => {
   const { accommodations } = useAccommodations();
 
   return (
-    <div className="">
-      <ButtonGroup className="my-2 flex justify-center">
+    <div className="w-full">
+      <ButtonGroup className="mt-4 mb-8 flex justify-center">
         <Button>
           <Link href="accommodations/hotel">هتل</Link>
         </Button>
@@ -27,13 +27,12 @@ const Page = () => {
             key={accommodation.id}
             id={accommodation.id}
             title={accommodation.title}
-            provinceName={accommodation.provinceName}
-            cityName={accommodation.cityName}
+            star={accommodation.star}
+            province={accommodation.province}
+            city={accommodation.city}
             bedroomsCount={accommodation.bedroomsCount}
-            bedsCount={accommodation.bedsCount}
-            capacity={accommodation.capacity}
             price={accommodation.price}
-            imageSrc={`https://localhost:44390/uploads/${accommodation.imageName}`}
+            imageSrc={`https://localhost:44390/uploads/${accommodation.imageUrl}`}
           />
         );
       })}

@@ -22,6 +22,46 @@ namespace app_api.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAccommodationRooms([FromQuery] int skip = 0, [FromQuery] int take = 10, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+
+                var query = _unitOfWork.Accommodations.GetAll();
+
+                var totalCount = await query.CountAsync();
+                var accommodations = await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
+                var data = accommodations.Select(s => new AccommodationDto(s));
+
+                return Ok(new { data, totalCount });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("GetById/{id}")]
+        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var accommodationRoom = await _unitOfWork.AccommodationRooms.GetByIdAsync(id, cancellationToken);
+
+                if (accommodationRoom == null)
+                {
+                    return NotFound();
+                }
+                var result = new AccommodationRoomDto(accommodationRoom);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet("GetByAccommodationId/{accommodationId}")]
         public async Task<IActionResult> GetByAccommodationId(long accommodationId,CancellationToken cancellationToken = default)
         {

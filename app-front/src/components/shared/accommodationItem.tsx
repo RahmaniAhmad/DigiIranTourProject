@@ -5,23 +5,21 @@ import Link from "next/link";
 interface AccommodationItemProps {
   id?: number;
   title?: string;
-  provinceName?: string;
-  cityName?: string;
+  star?: string;
+  province?: string;
+  city?: string;
   imageSrc?: string;
   bedroomsCount?: string;
-  bedsCount?: string;
-  capacity?: string;
   price?: string;
 }
 const AccommodationItem = ({
   id,
   title,
-  provinceName,
-  cityName,
+  star,
+  province,
+  city,
   imageSrc,
   bedroomsCount,
-  bedsCount,
-  capacity,
   price,
 }: AccommodationItemProps) => {
   return (
@@ -47,25 +45,21 @@ const AccommodationItem = ({
         <div className="grid md:grid-cols-2 sm:grid-cols-1">
           <div className="grid gap-2">
             <h3 className="font-medium">{title}</h3>
-            <p className="mt-1 text-sm text-gray-500">
-              تعداد اتاق: {bedroomsCount}
-            </p>
-            <p className="mt-1 text-sm text-gray-500">ظرفیت: {capacity}</p>
-            <p className="mt-1 text-sm text-gray-500">تعداد تخت: {bedsCount}</p>
+            <p className="mt-1 text-sm">{star} ستاره</p>
+            <p className="text-sm text-gray-500">تعداد اتاق: {bedroomsCount}</p>
             <p className="text-gray-500">
-              {provinceName} , {cityName}
+              {province} , {city}
             </p>
           </div>
           <div className="grid gap-2">
-            <p>قیمت برای یک شب</p>
-            <p className="mt-1 text-sm text-gray-500">{price}</p>
+            <p>قیمت برای یک شب {price}</p>
             <Button
               href={`/accommodations/hotel/${id}`}
               as={Link}
               color="primary"
               variant="solid"
             >
-              مشاهده و رزرو
+              مشاهده اتاقها و رزرو
             </Button>
           </div>
         </div>

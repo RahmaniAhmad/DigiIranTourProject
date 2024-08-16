@@ -9,6 +9,7 @@ const mapToViewModel = (model: any): AccommodationModel => {
     cityId: model.city.id,
     cityName: model.city.name,
     title: model.title,
+    star: model.star,
     address: model.address,
     bedroomsCount: model.bedroomsCount,
     rule: model.rule,
@@ -17,10 +18,10 @@ const mapToViewModel = (model: any): AccommodationModel => {
   return viewModel;
 };
 
-export const getAccommodationApi = async (id: number) => {
-  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/GetById/${id}`;
+export const getMyAccommodationApi = async (id: number) => {
+  const api = `${process.env.NEXT_PUBLIC_BASE_API}/accommodation/getById/${id}`;
   const data = await axios.get(api).then((response) => {
-    return mapToViewModel(response.data.data);
+    return mapToViewModel(response.data);
   });
 
   return data;

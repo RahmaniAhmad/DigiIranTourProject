@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Footer from "@/components/shared/footer";
-import CustomNavbar from "@/components/shared/navbar";
 import Header from "@/components/shared/header";
 
 export const metadata: Metadata = {
@@ -15,7 +13,7 @@ export default function PublicLayoutWithHeader({
 }>) {
   return (
     <div className="flex items-center flex-col">
-      <div className="min-h-screen max-w-screen-lg">
+      <div className="min-h-screen max-w-screen-xl">
         <Header />
         <div className="p-4">{children}</div>
       </div>

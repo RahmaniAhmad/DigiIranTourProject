@@ -1,0 +1,8 @@
+.customNavbar {
+}
+
+.customNavbar header {
+  max-width: 1280px;
+  margin: 0;
+  padding: 0 10px 0 10px;
+}

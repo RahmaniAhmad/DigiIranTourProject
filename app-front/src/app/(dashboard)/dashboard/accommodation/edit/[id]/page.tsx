@@ -41,6 +41,7 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
           accommodationTypeId: Number(data.accommodationTypeId),
           cityId: Number(data.cityId),
           title: data.title,
+          star: data.star,
           address: data.address,
           bedroomsCount: data.bedroomsCount,
           rule: data.rule,
@@ -110,6 +111,12 @@ const Page = ({ id, onClose, onSuccess }: IPageProps) => {
         {errors.title && (
           <p className="text-danger-600">نوع اقامت اجباری می باشد</p>
         )}
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-bold mb-2" htmlFor="title">
+          ستاره
+        </label>
+        <Input {...register("star")} defaultValue={accommodation?.star} />
       </div>
       <div className="mb-4">
         <label className="block text-sm font-bold mb-2" htmlFor="title">

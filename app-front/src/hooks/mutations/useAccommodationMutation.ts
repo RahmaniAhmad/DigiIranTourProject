@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
-import { createAccommodationApi } from "../../apis/accommodation/createAccommodation";
-import { updateAccommodationApi } from "@/apis/accommodation/updateAccommodation";
-import { deleteAccommodationApi } from "@/apis/accommodation/deleteAccommodation";
+import { createAccommodationApi } from "../../apis/mutations/accommodation/createAccommodation";
+import { updateAccommodationApi } from "@/apis/mutations/accommodation/updateAccommodation";
+import { deleteAccommodationApi } from "@/apis/mutations/accommodation/deleteAccommodation";
 
 interface UseAccommodationProps {
   onSuccess?: () => void;

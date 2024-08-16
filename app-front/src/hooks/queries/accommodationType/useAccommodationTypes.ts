@@ -1,4 +1,4 @@
-import { getAccommodationTypes } from "@/apis/accommodationType/getAccommodationTypes";
+import { getAccommodationTypes } from "@/apis/queries/accommodationType/getAccommodationTypes";
 import { useQuery } from "react-query";
 
 export function useAccommodationTypes() {

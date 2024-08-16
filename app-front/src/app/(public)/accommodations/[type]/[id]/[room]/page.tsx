@@ -59,14 +59,8 @@ const Page = ({ params }: PageProps) => {
             {accommodation.address}
           </span>
         </div>
-      </div>
-      <div className="grid md:grid-cols-1">
         {accommodation.rooms.map((m) => (
-          <AccommodationRoomItem
-            key={m.id}
-            accommodationId={params.id}
-            data={m}
-          />
+          <AccommodationRoomItem key={m.id} data={m} />
         ))}
       </div>
     </>

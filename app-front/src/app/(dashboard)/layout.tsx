@@ -24,7 +24,7 @@ const DashboardLayout = ({
   };
 
   return (
-    <div className="dark:bg-gray-950 min-h-screen">
+    <div className="min-h-screen">
       <Header onSingOut={handleSignOut} />
       {children}
     </div>

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Header from "../../components/shared/header";
 import Footer from "@/components/shared/footer";
 import CustomNavbar from "@/components/shared/navbar";
 
@@ -14,13 +13,15 @@ export default function PublicLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex items-center flex-col">
-      <div className="w-full">
-        <CustomNavbar />
-      </div>
-      <div className="w-full min-h-screen">
-        <div className="p-4">{children}</div>
-        <hr />
+    <div className="w-full min-h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center flex-col max-w-screen-xl w-full">
+        <div className="w-full">
+          <CustomNavbar />
+        </div>
+        <div className="w-full grid md:grid-cols-4 sm:grid-cols-2 min-h-screen justify-center">
+          <div className="col-span-3 p-2">{children}</div>
+          <div className="col-span-1 p-2 bg-red-50">ads</div>
+        </div>
         <Footer />
       </div>
     </div>
