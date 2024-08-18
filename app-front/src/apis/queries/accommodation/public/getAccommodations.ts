@@ -18,7 +18,7 @@ const mapToViewModel = (model: Array<any>): AccommodationListModel[] => {
       id: item.id,
       province: item.city.province.name,
       city: item.city.name,
-      type: item.accommodationType.name,
+      type: item.accommodationType.title,
       title: item.title,
       star: item.star,
       address: item.address,

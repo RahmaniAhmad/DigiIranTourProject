@@ -13,7 +13,6 @@ interface PageProps {
 
 const Page = ({ params }: PageProps) => {
   const { accommodations } = useAccommodationsByType(params.type);
-
   return (
     <div>
       <ButtonGroup className="my-2 flex justify-center">
@@ -49,7 +48,7 @@ const Page = ({ params }: PageProps) => {
             city={accommodation.cityName}
             bedroomsCount={accommodation.bedroomsCount}
             price={accommodation.price}
-            imageSrc={`https://localhost:44390/uploads/${accommodation.imageName}`}
+            imageSrc={`https://localhost:44390/uploads/${accommodation.imageUrl}`}
           />
         );
       })}

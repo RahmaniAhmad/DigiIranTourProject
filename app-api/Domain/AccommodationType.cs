@@ -5,11 +5,13 @@ namespace app_api.Domain
 {
     public class AccommodationType : Entity
     {
-        public AccommodationType(string name)
+        public AccommodationType(string title,string enTitle)
         {
-            this.Name = name ?? throw new ArgumentNullException(nameof(name));
+            this.Title = title ?? throw new ArgumentNullException(nameof(title));
+            this.EnTitle = enTitle ?? throw new ArgumentNullException(nameof(enTitle));
         }
 
-        public string Name { get; private set; }
+        public string Title { get; private set; }
+        public string EnTitle { get; private set; }
     }
 }

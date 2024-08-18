@@ -4,7 +4,7 @@ import axios from "axios";
 const mapToViewModel = (model: any): PublicAccommodationModel => {
   const viewModel: PublicAccommodationModel = {
     id: model.id,
-    type: model.accommodationType.name,
+    type: model.accommodationType.title,
     city: model.city.name,
     title: model.title,
     star: model.star,

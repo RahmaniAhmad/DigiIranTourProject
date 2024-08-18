@@ -16,18 +16,5 @@ namespace app_api.Domain
         public Province Province { get; private set; }
         public string Name { get; private set; }
         public IReadOnlyList<Accommodation> Accommodations => _accommodations.AsReadOnly();
-        public void AddAccommodation(string title, string address, int bedroomsCount, string rule)
-        {
-            //var accommodation = new Accommodation(this, title, address, bedroomsCount, rule);
-            //_accommodations.Add(accommodation);
-        }
-
-        public void RemoveAccommodation(Accommodation accommodation)
-        {
-            if (accommodation == null)
-                throw new ArgumentNullException(nameof(accommodation));
-
-            _accommodations.Remove(accommodation);
-        }
     }
 }

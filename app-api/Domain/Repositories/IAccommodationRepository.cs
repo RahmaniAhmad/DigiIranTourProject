@@ -8,7 +8,7 @@ namespace app_api.Domain.Repositories
     {
         IQueryable<Accommodation> GetAll();
         Task<Accommodation> GetByIdAsync(long id, CancellationToken cancellationToken);
-        Task<IEnumerable<Accommodation>> GetByTypeIdAsync(long typeId, CancellationToken cancellationToken);
+        Task<IEnumerable<Accommodation>> GetByTypeAsync(string typeId, CancellationToken cancellationToken);
         Task<Accommodation> AddAsync(Accommodation accommodation, CancellationToken cancellationToken);
         Task<Accommodation> UpdateAsync(Accommodation accommodation, CancellationToken cancellationToken);
         Task DeleteAsync(long id, CancellationToken cancellationToken);

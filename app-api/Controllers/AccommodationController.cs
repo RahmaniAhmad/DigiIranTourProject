@@ -6,6 +6,7 @@ using app_api.Model.Accommodation;
 using app_api.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace app_api.Controllers
 {
@@ -82,14 +83,15 @@ namespace app_api.Controllers
             }
         }
 
-        [HttpGet("GetByTypeId/{typeId}")]
-        public async Task<IActionResult> GetByTypeId(long typeId, CancellationToken cancellationToken = default)
+        [HttpGet("GetByType/{type}")]
+        public async Task<IActionResult> GetByTypeId(string type, CancellationToken cancellationToken = default)
         {
             try
             {
-                var accommodations = await _unitOfWork.Accommodations.GetByTypeIdAsync(typeId, cancellationToken);
-                var result = accommodations.Select(s => new AccommodationDto(s));
-                return Ok(result);
+                var accommodations = await _unitOfWork.Accommodations.GetByTypeAsync(type, cancellationToken);
+                var data = accommodations.Select(s => new AccommodationDto(s));
+
+                return Ok(new { data, totalCount = 1 });
             }
             catch (Exception ex)
             {

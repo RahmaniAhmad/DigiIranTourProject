@@ -45,10 +45,10 @@ namespace app_api.Data.Repositories
             return accommodation;
         }
 
-        public async Task<IEnumerable<Accommodation>> GetByTypeIdAsync(long typeId, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Accommodation>> GetByTypeAsync(string type, CancellationToken cancellationToken)
         {
             var accommodations = await this.DbContext.Accommodations
-                .Where(w => w.AccommodationTypeId == typeId)
+                .Where(w => w.AccommodationType.EnTitle.ToLower() == type.ToLower())
                 .Include(i => i.City)
                 .ThenInclude(t => t.Province)
                 .Include(i => i.AccommodationType)
