@@ -18,9 +18,13 @@ export default function PublicLayout({
         <div className="w-full">
           <CustomNavbar />
         </div>
-        <div className="w-full grid md:grid-cols-4 sm:grid-cols-2 min-h-screen justify-center">
-          <div className="col-span-3 p-2">{children}</div>
-          <div className="col-span-1 p-2 bg-red-50">ads</div>
+        <div className="w-full grid md:grid-cols-4 sm:grid-cols-1 min-h-screen">
+          <div className="md:col-span-3 sm:col-span-1 w-full p-2">
+            {children}
+          </div>
+          <div className="md:col-span-1 sm:col-span-1 w-full p-2 bg-red-50">
+            ads
+          </div>
         </div>
         <Footer />
       </div>

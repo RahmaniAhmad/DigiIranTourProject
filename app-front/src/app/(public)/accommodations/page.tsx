@@ -1,39 +1,37 @@
 "use client";
 
 import AccommodationItem from "@/components/shared/accommodationItem";
+import AccommodationTypes from "@/components/shared/accommodationTypes";
+import AccommodationsSkeleton from "@/components/shared/skeleton/accommodationsSkeleton";
 import { useAccommodations } from "@/hooks/queries";
-import { Button, ButtonGroup } from "@nextui-org/react";
-import Link from "next/link";
+import { Card, CardBody } from "@nextui-org/react";
 
 const Page = () => {
-  const { accommodations } = useAccommodations();
+  const { accommodations, isLoading } = useAccommodations();
+
+  if (isLoading) {
+    return (
+      <>
+        <AccommodationsSkeleton />
+        <AccommodationsSkeleton />
+        <AccommodationsSkeleton />
+      </>
+    );
+  }
 
   return (
     <div className="w-full">
-      <ButtonGroup className="mt-4 mb-8 flex justify-center">
-        <Button>
-          <Link href="accommodations/hotel">هتل</Link>
-        </Button>
-        <Button>
-          <Link href="accommodations/apartment">هتل آپارتمان</Link>
-        </Button>
-        <Button>
-          <Link href="accommodations/ecotourism">بومگردی</Link>
-        </Button>
-      </ButtonGroup>
+      <AccommodationTypes />
       {accommodations.map((accommodation: any) => {
         return (
-          <AccommodationItem
-            key={accommodation.id}
-            id={accommodation.id}
-            title={accommodation.title}
-            star={accommodation.star}
-            province={accommodation.province}
-            city={accommodation.city}
-            bedroomsCount={accommodation.bedroomsCount}
-            price={accommodation.price}
-            imageSrc={`https://localhost:44390/uploads/${accommodation.imageUrl}`}
-          />
+          <Card key={accommodation.id} radius="sm" className="bg-gray-50 mb-4">
+            <CardBody className="text-right">
+              <AccommodationItem
+                data={accommodation}
+                imageSrc={`https://localhost:44390/uploads/${accommodation.imageUrl}`}
+              />
+            </CardBody>
+          </Card>
         );
       })}
     </div>

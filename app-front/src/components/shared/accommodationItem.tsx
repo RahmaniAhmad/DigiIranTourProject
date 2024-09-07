@@ -1,33 +1,28 @@
-import { Button } from "@nextui-org/react";
+import { Button, Skeleton } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
+import { FaStar } from "react-icons/fa";
 
 interface AccommodationItemProps {
-  id?: number;
-  title?: string;
-  star?: string;
-  province?: string;
-  city?: string;
+  data: {
+    id?: number;
+    title?: string;
+    star?: string;
+    province?: string;
+    city?: string;
+    bedroomsCount?: string;
+    price?: string;
+  };
   imageSrc?: string;
-  bedroomsCount?: string;
-  price?: string;
 }
-const AccommodationItem = ({
-  id,
-  title,
-  star,
-  province,
-  city,
-  imageSrc,
-  bedroomsCount,
-  price,
-}: AccommodationItemProps) => {
+const AccommodationItem = ({ data, imageSrc }: AccommodationItemProps) => {
+  if (!data) return;
   return (
-    <div className="grid md:grid-cols-3 sm:grid-cols-1 mb-12 pb-2 border-b-1">
+    <div className="grid md:grid-cols-3 sm:grid-cols-1 pb-2">
       <div className="md:col-span-1 h-128 w-128 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
         <Image
           src={imageSrc ?? ""}
-          alt={title ?? "image"}
+          alt={data.title ?? "image"}
           loader={({ src, width, quality }) => {
             const url = new URL(imageSrc ?? "");
             url.searchParams.append("src", src);
@@ -44,17 +39,20 @@ const AccommodationItem = ({
       <div className="md:col-span-2 mr-4 flex flex-1 flex-col py-4">
         <div className="grid md:grid-cols-2 sm:grid-cols-1">
           <div className="grid gap-2">
-            <h3 className="font-medium">{title}</h3>
-            <p className="mt-1 text-sm">{star} ستاره</p>
-            <p className="text-sm text-gray-500">تعداد اتاق: {bedroomsCount}</p>
+            <h3 className="font-medium">{data.title}</h3>
+            <div className="flex items-center text-sm">
+              <FaStar className="inline ml-2" />
+              {data.star} ستاره
+            </div>
+
             <p className="text-gray-500">
-              {province} , {city}
+              {data.province} , {data.city}
             </p>
           </div>
           <div className="grid gap-2">
-            <p>قیمت برای یک شب {price}</p>
+            <p>قیمت برای یک شب {data.price}</p>
             <Button
-              href={`/accommodations/hotel/${id}`}
+              href={`/accommodations/hotel/${data.id}`}
               as={Link}
               color="primary"
               variant="solid"

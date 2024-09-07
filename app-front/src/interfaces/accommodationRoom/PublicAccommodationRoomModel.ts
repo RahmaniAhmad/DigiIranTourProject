@@ -1,5 +1,5 @@
 export interface PublicAccommodationRoomModel {
-  id?: number;
+  id: number;
   title: string;
   bedsCount: string;
   capacity: string;

@@ -1,10 +1,12 @@
 "use client";
 
 import AccommodationRoomItem from "@/components/shared/accommodationRoomItem";
+import AccommodationItemSkeleton from "@/components/shared/skeleton/accommodationItemSkeleton";
 import { useAccommodation } from "@/hooks/queries";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import Image from "next/image";
 import { useMemo } from "react";
-import { FaShareAlt } from "react-icons/fa";
+import { FaStar, FaShareAlt } from "react-icons/fa";
 
 interface PageProps {
   params: {
@@ -22,17 +24,29 @@ const Page = ({ params }: PageProps) => {
       return `https://localhost:44390/uploads/${accommodation.imageUrl}`;
   }, [accommodation]);
 
+  if (isLoading) {
+    return (
+      <>
+        <AccommodationItemSkeleton />
+      </>
+    );
+  }
+
   if (!accommodation) return <></>;
   return (
     <>
-      <div className="col-span-2">
-        <div className="font-medium flex items-center">
-          <FaShareAlt />
-          <a href="#">اشتراک گذاری اقامتگاه</a>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:w-full gap-x-6 md:gap-y-10 xl:gap-x-8">
-        <div className="h-128 w-128 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+      <Breadcrumbs
+        className="my-2"
+        separator="/"
+        itemClasses={{
+          separator: "px-2",
+        }}
+      >
+        <BreadcrumbItem href="/accommodations">اقامتگاه</BreadcrumbItem>
+        <BreadcrumbItem href="../">{accommodation.title}</BreadcrumbItem>
+      </Breadcrumbs>
+      <div className="grid md:grid-cols-2 sm:grid-cols-1 mb-12 pb-2">
+        <div className="md:col-span-1 h-128 w-128 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
           <Image
             src={imageSrc ?? ""}
             alt={accommodation.title ?? "image"}
@@ -48,18 +62,25 @@ const Page = ({ params }: PageProps) => {
             className="h-full w-full object-cover object-center"
           />
         </div>
-        <div className="col-span-2 flex flex-1 flex-col">
-          <span className="font-bold flex items-center">
-            {accommodation.title}
-          </span>
+      </div>
+      <div className="grid md:grid-cols-2 sm:grid-cols-1  my-4">
+        <div className="col-span-1 space-y-2">
+          <div className="font-bold">{accommodation.title}</div>
+          <div>
+            <span className="font-normal flex items-center">
+              <FaStar className="inline ml-2" />
+              {accommodation.star} ستاره {accommodation.city},{" "}
+              {accommodation.address}
+            </span>
+          </div>
         </div>
-        <div className="col-span-2 flex flex-1 flex-col">
-          <span className="font-normal flex items-center">
-            {accommodation.star} ستاره {accommodation.city},{" "}
-            {accommodation.address}
-          </span>
+        <div className="col-span-1 font-medium flex justify-end items-baseline">
+          <FaShareAlt className="inline ml-2" />
+          <a href="#">اشتراک گذاری اقامتگاه</a>
         </div>
       </div>
+      <hr />
+
       <div className="grid md:grid-cols-1">
         {accommodation.rooms.map((m) => (
           <AccommodationRoomItem

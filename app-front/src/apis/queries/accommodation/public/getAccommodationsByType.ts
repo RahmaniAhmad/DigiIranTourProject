@@ -27,7 +27,7 @@ const mapToViewModel = (model: Array<any>): AccommodationListModel[] => {
         item.accommodationImages.length > 0 && item.accommodationImages[0].url,
       price:
         minPrice != maxPrice
-          ? formatMoney(minPrice) + " تا " + formatMoney(maxPrice)
+          ? "از " + formatMoney(minPrice) + " تا " + formatMoney(maxPrice)
           : formatMoney(minPrice),
     });
   });

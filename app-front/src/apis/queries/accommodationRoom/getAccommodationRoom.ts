@@ -1,8 +1,8 @@
-import { AccommodationRoomModel } from "@/interfaces";
+import { PublicAccommodationRoomModel } from "@/interfaces";
 import axios from "axios";
 
-const mapToViewModel = (model: any): AccommodationRoomModel => {
-  const viewModel: AccommodationRoomModel = {
+const mapToViewModel = (model: any): PublicAccommodationRoomModel => {
+  const viewModel: PublicAccommodationRoomModel = {
     id: model.id,
     title: model.title,
     bedsCount: model.bedsCount,
