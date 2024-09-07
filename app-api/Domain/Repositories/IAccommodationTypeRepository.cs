@@ -6,7 +6,7 @@ namespace app_api.Domain.Repositories
 {
     public interface IAccommodationTypeRepository
     {
-        Task<IEnumerable<AccommodationType>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<AccommodationType>> GetListAsync(CancellationToken cancellationToken);
         Task<AccommodationType> GetByIdAsync(long id, CancellationToken cancellationToken);
     }
 

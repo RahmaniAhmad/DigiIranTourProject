@@ -1,7 +1,6 @@
 ﻿using app_api.Domain;
 using app_api.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace app_api.Data.Repositories
 {
@@ -17,9 +16,9 @@ namespace app_api.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<AccommodationRoom>> GetByAccommodationId(long accommodationId)
+        public async Task<IEnumerable<AccommodationRoom>> GetByAccommodationId(long accommodationId, CancellationToken cancellationToken)
         {
-            return await this.DbContext.AccommodationRooms.Where(w=>w.AccommodationId==accommodationId).ToListAsync();
+            return await this.DbContext.AccommodationRooms.Where(w=>w.AccommodationId==accommodationId).ToListAsync(cancellationToken);
         }
 
         public async Task<AccommodationRoom> GetByIdAsync(long id, CancellationToken cancellationToken)
@@ -42,23 +41,9 @@ namespace app_api.Data.Repositories
             return result.Entity;
         }
 
-        public async Task<AccommodationRoom> UpdateAsync(AccommodationRoom room, CancellationToken cancellationToken)
+        public void Delete(AccommodationRoom room, CancellationToken cancellationToken)
         {
-            this.DbContext.AccommodationRooms.Update(room);
-            await this.DbContext.SaveChangesAsync(cancellationToken);
-            return room;
-        }
-
-        public async Task DeleteAsync(long id, CancellationToken cancellationToken)
-        {
-            var room = await this.DbContext.AccommodationRooms.FindAsync(new object[] { id }, cancellationToken);
-            if (room == null)
-            {
-                return;
-            }
             this.DbContext.AccommodationRooms.Remove(room);
-            await this.DbContext.SaveChangesAsync(cancellationToken);
-
         }
     }
 }

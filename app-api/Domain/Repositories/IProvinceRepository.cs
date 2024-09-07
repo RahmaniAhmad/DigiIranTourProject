@@ -6,6 +6,6 @@ namespace app_api.Domain.Repositories
 {
     public interface IProvinceRepository
     {
-        Task<IEnumerable<Province>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<Province>> GetListAsync(CancellationToken cancellationToken);
     }
 }

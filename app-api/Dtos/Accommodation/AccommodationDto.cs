@@ -15,19 +15,15 @@ namespace app_api.Dtos.Accommodation
             this.Address = accommodation.Address;
             this.BedroomsCount = accommodation.BedroomsCount;
             this.Rule = accommodation.Rule;
-            this.AccommodationRooms = accommodation.AccommodationRooms.Select(s => new AccommodationRoomDto(s));
-            this.AccommodationImages = accommodation.AccommodationImages.Select(s => new AccommodationImageDto(s));
 
         }
         public long Id { get; set; }
         public CityDto City { get; private set; }
         public AccommodationTypeDto AccommodationType { get; private set; }
         public string Title { get; private set; }
-        public int? Star { get; private set; }
         public string Address { get; private set; }
-        public int BedroomsCount { get; private set; }
-        public string Rule { get; private set; }
-        public IEnumerable<AccommodationRoomDto>? AccommodationRooms { get; }
-        public IEnumerable<AccommodationImageDto>? AccommodationImages { get; }
+        public int? BedroomsCount { get; private set; }
+        public int? Star { get; private set; }
+        public string? Rule { get; private set; }
     }
 }

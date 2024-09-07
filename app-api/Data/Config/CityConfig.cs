@@ -16,11 +16,6 @@ namespace app_api.Data.Config
                    .WithMany(p => p.Cities)
                    .HasForeignKey(c => c.ProvinceId)
                    .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(c => c.Accommodations)
-               .WithOne(a => a.City)
-               .HasForeignKey(a => a.CityId)
-               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

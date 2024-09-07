@@ -6,7 +6,7 @@ namespace app_api.Domain.Repositories
 {
     public interface ICityRepository
     {
-        Task<IEnumerable<City>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<City>> GetListAsync(CancellationToken cancellationToken);
         Task<City> GetByIdAsync(long id, CancellationToken cancellationToken);
 
     }

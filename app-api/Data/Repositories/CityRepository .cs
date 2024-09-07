@@ -1,7 +1,6 @@
 ﻿using app_api.Domain;
 using app_api.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace app_api.Data.Repositories
 {
@@ -18,7 +17,7 @@ namespace app_api.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<City>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<City>> GetListAsync(CancellationToken cancellationToken)
         {
             return await this.DbContext.Cities.Include(i => i.Province).ToListAsync(cancellationToken);
         }

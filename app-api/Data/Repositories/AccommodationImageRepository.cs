@@ -42,22 +42,9 @@ namespace app_api.Data.Repositories
             return result.Entity;
         }
 
-        public async Task<AccommodationImage> UpdateAsync(AccommodationImage image, CancellationToken cancellationToken)
+        public  void Delete(AccommodationImage image, CancellationToken cancellationToken)
         {
-            this.DbContext.AccommodationImages.Update(image);
-            await this.DbContext.SaveChangesAsync(cancellationToken);
-            return image;
-        }
-
-        public async Task DeleteAsync(long id, CancellationToken cancellationToken)
-        {
-            var image = await this.DbContext.AccommodationImages.FindAsync(new object[] { id }, cancellationToken);
-            if (image == null)
-            {
-                return;
-            }
             this.DbContext.AccommodationImages.Remove(image);
-            await this.DbContext.SaveChangesAsync(cancellationToken);
 
         }
     }

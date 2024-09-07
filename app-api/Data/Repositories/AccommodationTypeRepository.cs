@@ -1,8 +1,6 @@
 ﻿using app_api.Domain;
 using app_api.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-
 namespace app_api.Data.Repositories
 {
     public class AccommodationTypeRepository :  IAccommodationTypeRepository
@@ -17,7 +15,7 @@ namespace app_api.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<AccommodationType>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<AccommodationType>> GetListAsync(CancellationToken cancellationToken)
         {
             return await this.DbContext.AccommodationTypes.ToListAsync(cancellationToken);
         }

@@ -8,14 +8,13 @@ namespace app_api.Domain
 
         public Province(string name)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Name = name;
         }
 
-        private Province() { }
+        protected Province() { }
 
-        public string Name { get; set; }
-
-        public IReadOnlyList<City> Cities => cities.AsReadOnly();
+        public virtual string Name { get; set; }
+        public virtual IReadOnlyList<City> Cities => cities.AsReadOnly();
 
     }
 }

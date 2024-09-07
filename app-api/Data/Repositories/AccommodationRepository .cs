@@ -1,7 +1,6 @@
 ﻿using app_api.Domain;
 using app_api.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace app_api.Data.Repositories
 {
@@ -17,14 +16,17 @@ namespace app_api.Data.Repositories
         {
         }
 
-        public IQueryable<Accommodation> GetAll()
+        public async Task<(IEnumerable<Accommodation> Items, int TotalCount)> GetListAsync(int skip, int take, CancellationToken cancellationToken)
         {
-            return this.DbContext.Accommodations
-                .Include(i => i.City)
-                .ThenInclude(t => t.Province)
-                .Include(i => i.AccommodationType)
-                .Include(i => i.AccommodationRooms)
-                .Include(i => i.AccommodationImages);
+            var query = this.DbContext.Accommodations.Include(i => i.City).ThenInclude(t => t.Province).Include(i => i.AccommodationType).AsQueryable();
+
+            var count = await query.CountAsync(cancellationToken);
+
+            query = query.Skip(skip).Take(take);
+
+            var result = await query.ToListAsync(cancellationToken);
+
+            return (result, count);
         }
 
         public async Task<Accommodation> GetByIdAsync(long id, CancellationToken cancellationToken)
@@ -45,44 +47,28 @@ namespace app_api.Data.Repositories
             return accommodation;
         }
 
-        public async Task<IEnumerable<Accommodation>> GetByTypeAsync(string type, CancellationToken cancellationToken)
+        public async Task<(IEnumerable<Accommodation> Items, int TotalCount)> GetByTypeAsync(string type, int skip, int take, CancellationToken cancellationToken)
         {
-            var accommodations = await this.DbContext.Accommodations
-                .Where(w => w.AccommodationType.EnTitle.ToLower() == type.ToLower())
-                .Include(i => i.City)
-                .ThenInclude(t => t.Province)
-                .Include(i => i.AccommodationType)
-                .Include(i => i.AccommodationRooms)
-                .Include(i => i.AccommodationImages)
-                .ToListAsync();
+            var query = this.DbContext.Accommodations.Where(w => w.AccommodationType.EnTitle.ToLower() == type.ToLower()).AsQueryable();
 
-            return accommodations;
+            var count = await query.CountAsync(cancellationToken);
+
+            query = query.Skip(skip).Take(take);
+
+            var result = await query.ToListAsync(cancellationToken);
+
+            return (result, count);
         }
 
         public async Task<Accommodation> AddAsync(Accommodation accommodation, CancellationToken cancellationToken)
         {
             var result = await this.DbContext.Accommodations.AddAsync(accommodation, cancellationToken);
-            await this.DbContext.SaveChangesAsync(cancellationToken);
             return result.Entity;
         }
 
-        public async Task<Accommodation> UpdateAsync(Accommodation accommodation, CancellationToken cancellationToken)
+        public void Delete(Accommodation accommodation, CancellationToken cancellationToken)
         {
-            this.DbContext.Accommodations.Update(accommodation);
-            await this.DbContext.SaveChangesAsync(cancellationToken);
-            return accommodation;
-        }
-
-        public async Task DeleteAsync(long id, CancellationToken cancellationToken)
-        {
-            var accommodation = await this.DbContext.Accommodations.FindAsync(new object[] { id }, cancellationToken);
-            if (accommodation == null)
-            {
-                return;
-            }
             this.DbContext.Accommodations.Remove(accommodation);
-            await this.DbContext.SaveChangesAsync(cancellationToken);
-
         }
     }
 }

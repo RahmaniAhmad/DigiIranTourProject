@@ -1,16 +1,11 @@
-﻿using app_api.Contracts;
-using app_api.Domain;
-using app_api.Domain.Base;
-
-namespace app_api.Domain.Repositories
+﻿namespace app_api.Domain.Repositories
 {
     public interface IAccommodationRepository
     {
-        IQueryable<Accommodation> GetAll();
+        Task<(IEnumerable<Accommodation> Items, int TotalCount)> GetListAsync(int skip, int take, CancellationToken cancellationToken);
         Task<Accommodation> GetByIdAsync(long id, CancellationToken cancellationToken);
-        Task<IEnumerable<Accommodation>> GetByTypeAsync(string typeId, CancellationToken cancellationToken);
+        Task<(IEnumerable<Accommodation> Items, int TotalCount)> GetByTypeAsync(string typeId, int skip, int take, CancellationToken cancellationToken);
         Task<Accommodation> AddAsync(Accommodation accommodation, CancellationToken cancellationToken);
-        Task<Accommodation> UpdateAsync(Accommodation accommodation, CancellationToken cancellationToken);
-        Task DeleteAsync(long id, CancellationToken cancellationToken);
+        void Delete(Accommodation accommodation, CancellationToken cancellationToken);
     }
 }

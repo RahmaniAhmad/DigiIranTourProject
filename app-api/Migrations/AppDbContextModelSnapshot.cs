@@ -18,6 +18,9 @@ namespace app_api.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -38,16 +41,15 @@ namespace app_api.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("BedroomsCount")
+                    b.Property<int?>("BedroomsCount")
                         .HasColumnType("int");
 
                     b.Property<long>("CityId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Rule")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int?>("Star")
                         .HasColumnType("int");
@@ -222,6 +224,35 @@ namespace app_api.Migrations
                     b.ToTable("Provinces");
                 });
 
+            modelBuilder.Entity("app_api.Domain.Reserve", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AccommodationRoomId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccommodationRoomId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reserves");
+                });
+
             modelBuilder.Entity("app_api.Domain.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -277,15 +308,15 @@ namespace app_api.Migrations
             modelBuilder.Entity("app_api.Domain.Accommodation", b =>
                 {
                     b.HasOne("app_api.Domain.AccommodationType", "AccommodationType")
-                        .WithMany()
+                        .WithMany("Accommodations")
                         .HasForeignKey("AccommodationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("app_api.Domain.City", "City")
                         .WithMany("Accommodations")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("AccommodationType");
@@ -337,6 +368,25 @@ namespace app_api.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("app_api.Domain.Reserve", b =>
+                {
+                    b.HasOne("app_api.Domain.AccommodationRoom", "AccommodationRoom")
+                        .WithMany()
+                        .HasForeignKey("AccommodationRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("app_api.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccommodationRoom");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("app_api.Domain.Role", b =>
                 {
                     b.HasOne("app_api.Domain.User", null)
@@ -349,6 +399,11 @@ namespace app_api.Migrations
                     b.Navigation("AccommodationImages");
 
                     b.Navigation("AccommodationRooms");
+                });
+
+            modelBuilder.Entity("app_api.Domain.AccommodationType", b =>
+                {
+                    b.Navigation("Accommodations");
                 });
 
             modelBuilder.Entity("app_api.Domain.City", b =>

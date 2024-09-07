@@ -4,13 +4,13 @@ namespace app_api.Domain
 {
     public class User : AggregateRoot
     {
-        public string Mobile { get; set; }
-        public bool IsActive { get; set; } = false;
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Email { get; set; }
-        public List<Role> Roles { get; set; }
-        public ICollection<LoginCode> LoginCodes { get; set; }
+        public virtual string Mobile { get; set; }
+        public virtual bool IsActive { get; set; } = false;
+        public virtual string? FirstName { get; set; }
+        public virtual string? LastName { get; set; }
+        public virtual string? Email { get; set; }
+        public virtual List<Role> Roles { get; set; }
+        public virtual ICollection<LoginCode> LoginCodes { get; set; }
 
         public User(string mobile)
         {

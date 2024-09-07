@@ -12,25 +12,27 @@ namespace app_api.Data.Config
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Title).IsRequired().HasMaxLength(100);
             builder.Property(a => a.Address).IsRequired().HasMaxLength(200);
-            builder.Property(a => a.BedroomsCount).IsRequired();
-            builder.Property(a => a.Rule).IsRequired().HasMaxLength(500);
+            builder.Property(a => a.Rule).HasMaxLength(1000);
 
-            builder.HasOne(a => a.City)
-                   .WithMany(c => c.Accommodations)
-                   .HasForeignKey(a => a.CityId)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(a => a.AccommodationType)
-                    .WithMany()
-                    .HasForeignKey(a => a.AccommodationTypeId);
+            builder.HasOne(c => c.City)
+                   .WithMany(p => p.Accommodations)
+                   .HasForeignKey(c => c.CityId)
+                   .OnDelete(DeleteBehavior.NoAction);
+            
+            builder.HasOne(c => c.AccommodationType)
+                .WithMany(p => p.Accommodations)
+                .HasForeignKey(c => c.AccommodationTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasMany(h => h.AccommodationRooms)
-                   .WithOne(w=>w.Accommodation)
-                   .HasForeignKey(h=>h.AccommodationId);
+                   .WithOne(w => w.Accommodation)
+                   .HasForeignKey(h => h.AccommodationId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(h => h.AccommodationImages)
                    .WithOne(w => w.Accommodation)
-                   .HasForeignKey(h => h.AccommodationId);
+                   .HasForeignKey(h => h.AccommodationId)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

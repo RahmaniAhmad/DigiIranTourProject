@@ -1,17 +1,15 @@
 using app_api.Contracts;
-using app_api.Controllers;
 using app_api.Data;
 using app_api.Data.Repositories;
 using app_api.Domain.Repositories;
 using app_api.Services;
-using Microsoft.AspNetCore.Authentication;
+using app_api.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 using System.Text;
 
 var SpecificOrigins = "_specificOrigins";
@@ -28,6 +26,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Customer", policy => policy.RequireRole("Customer"));
 });
 
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -50,10 +50,13 @@ builder.Services.AddScoped<IAccommodationTypeRepository, AccommodationTypeReposi
 builder.Services.AddScoped<IAccommodationRepository, AccommodationRepository>();
 builder.Services.AddScoped<IAccommodationRoomRepository, AccommodationRoomRepository>();
 builder.Services.AddScoped<IAccommodationImageRepository, AccommodationImageRepository>();
+builder.Services.AddScoped<IReserveRepository, ReserveRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddScoped<AccommodationService>();
-builder.Services.AddScoped<AccommodationRoomService>();
-builder.Services.AddScoped<AccommodationImageService>();
+builder.Services.AddTransient<ImageStorageService>();
+
+
+builder.Services.Configure<FileUploadSettings>(builder.Configuration.GetSection("FileUploadSettings"));
 
 //builder.Services.AddAuthorization();
 
@@ -89,7 +92,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
+builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies(false).UseSqlServer(
 builder.Configuration.GetConnectionString("AppConnectionString")
 ));
 

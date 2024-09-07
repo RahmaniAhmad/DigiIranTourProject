@@ -9,7 +9,8 @@ namespace app_api.Domain.Repositories
         Task<IEnumerable<AccommodationImage>> GetByAccommodationId(long accommodationId);
         Task<AccommodationImage> GetByIdAsync(long id, CancellationToken cancellationToken);
         Task<AccommodationImage> AddAsync(AccommodationImage accommodationImage, CancellationToken cancellationToken);
-        Task<AccommodationImage> UpdateAsync(AccommodationImage accommodationImage, CancellationToken cancellationToken);
-        Task DeleteAsync(long id, CancellationToken cancellationToken);
+        void Delete(AccommodationImage accommodationImage, CancellationToken cancellationToken);
+
+
     }
 }
